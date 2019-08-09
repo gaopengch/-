@@ -1,0 +1,113 @@
+<extend name="Public/publicHTML"/>
+
+
+<block name='content'>
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="__CSS__/user/user.css"/>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i> 留言列表
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form id="form" data-url="{:U('ajaxGetData')}" data-delurl = "{:U('del')}"  data-detailurl = "{:U('detail')}" class="navbar-form form-inline">
+                            <div class="form-group ">
+                                <label class="control-label" for="input-date-added">留言日期-开始</label>
+                                <div class="input-group">
+                                    <input type="text" name="timeStart" id="timeStart"
+                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                                           value="" placeholder="下单日期"
+                                           class="input-sm">
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label class="control-label" for="input-date-added">留言日期-结束</label>
+                                <div class="input-group">
+                                    <input type="text" name="timeEnd" id="timeEnd"
+                                           onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                                           value="" placeholder="下单日期"
+                                           class="input-sm">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-plus" onclick="iHaveGood.select(1)">查询</i>
+                            </button>
+                            <button type="button" data-id="0" onclick="iHaveGood.del(this)"  class="btn btn-danger">
+                                <i class="fa fa-trash-o"   >批量删除</i>
+                            </button>
+                            <div class="form-group">
+                                <a href="javascript:void(0)"
+                                   onclick="iHaveGood.export()"
+                                   id="button-filter current-export" class="btn btn-primary"> 导出excel</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="ajaxGetData">
+
+                        <form >
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <td style="width: 1px;" class="text-center"><input
+                                                type="checkbox"
+                                                onclick="$('input[name*=\'selected\']').prop('checked', this.checked);">
+                                        </td>
+
+                                        <td class="text-center"><a
+                                                href="javascript:">ID</a>
+                                        </td>
+                                        <td class="text-center">会员ID</td>
+                                        <td class="text-center">会员昵称</td>
+                                        <td class="text-center">商品名称</td>
+
+                                        <td class="text-center">供货商名称</td>
+
+                                        <td class="text-center"><a
+                                                href="javascript:">联系电话</a>
+                                        </td>
+                                        <td class="text-center"><a
+                                                href="javascript:">邮箱</a>
+                                        </td>
+
+                                        <td class="text-center"><a
+                                                href="javascript:">留言时间</a>
+                                        </td>
+                                        <td class="text-center"><a
+                                                href="javascript:">商品描述</a>
+                                        </td>
+                                        <td class="text-center">操作</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-sm-3 text-left"></div>
+                            <div class="col-sm-6 text-right" id="page"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <script src="__COMMON__/My97Date/WdatePicker.js"></script>
+
+    <script src="__JS__/iHaveGood/iHaveGood.js"></script>
+    <script>
+        var EXCEL_URL = '{:U("User/expGoods")}';
+        var export_url = '{:U("expGoods")}';
+        var detail_url = '{:U("detail",["id"=>json])}';
+    </script>
+</block>

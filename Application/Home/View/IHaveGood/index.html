@@ -1,0 +1,173 @@
+<extend name="Public/indexEdit"/>
+
+<block name="content">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Common/uploadify/uploadify-base.css" />
+    <link rel="stylesheet" type="text/css" href="__CSS__/comment.css" />
+    <!--当前位置-->
+    <!--<div class="paper-current-main w">-->
+    <!--当前位置：<span>首页</span> > <span>招商加盟</span>-->
+    <!--</div>-->
+    <div class="join-centent w clearfix">
+        <dl class="fl join-cententFl">
+            <dt>
+                <h2>我有好货</h2>
+                <h5>I Have Good</h5>
+            </dt>
+            <dd class="clearfix active">
+                <em class="fl"></em>
+                <span class="fl">供货说明</span>
+            </dd>
+            <dd class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">我要留言</span>
+            </dd>
+        </dl>
+        <div class="fr join-cententFr">
+            <div class="join-cententFr-child active">
+                <div class="join-cententFr-title">
+                    <span>供货说明</span>
+                </div>
+                <dl>
+                    <dt>供货说明</dt>
+                    <dd>
+                        2天聚清致力于全球寻找好货，以清仓的价格回馈会员。如果您有好货想清仓，请留言给我们，我们会安排工作人员第一时间联系您！
+                    </dd>
+                    <dd>
+                        清仓商品需要保证质量，做到价优质美，为我们的会员提供真正物美价廉的产品！
+                    </dd>
+                </dl>
+            </div>
+            <div class="join-cententFr-child">
+                <div class="join-cententFr-title">
+                    <span>我要留言</span>
+                </div>
+                <div class="mordrMain fr personaM-content-wrap">
+                    <form id="mYform">
+                        <dl class="content-main">
+                            <dd class="clearfix">
+                                <span class="fl">商品名称：</span>
+                                <input type="text" id="goods_title" title="商品名称"  class="txt fl" name="goods_title" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">供货商：</span>
+                                <input type="text" id="supplier" title="供货商" class="txt fl" name="supplier" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">供货商地址：</span>
+                                <input type="text" id="buss_address" title="供货商" class="txt fl" name="buss_address" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">供货时间：</span>
+                                <input type="text" id="delivery_time" title="供货商" class="txt fl" name="delivery_time" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">发货能力：</span>
+                                <input type="text" id="delivery_capacity" title="供货商" class="txt fl" name="delivery_capacity" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">联系人名称：</span>
+                                <input type="text" id="linkman" title="供货商" class="txt fl" name="linkman" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">联系电话：</span>
+                                <input type="text" id="mobile"  title="联系电话" class="txt fl" name="mobile">
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">邮箱地址：</span>
+                                <input type="text" id="email"  title="邮箱地址" class="txt fl" name="email">
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">商品描述：</span>
+                                <textarea class="fl" id="goods_dec" rows="3" cols="20"  title="商品描述" name="goods_dec" ></textarea>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl degree-title" style="width: 102px;">附图：</span>
+                                <div class="fl">
+                                    <form>
+                                        <div id="upload_queue"></div>
+                                        <input id="file_upload" name="file_upload" type="file" multiple="true">
+                                    </form>
+                                </div>
+                            </dd>
+                       <dd class="clearfix">
+                                <span class="fl"></span>
+                                <input type="button" onclick="sub()" value="提交" class="sub">
+                            </dd>
+                        </dl>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script src="__JS__/expansion.js"></script>
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/latestPromotion.js"></script>
+    <script src="__JS__/navbannerurl.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Common/uploadify/jquery.uploadify.js"></script>
+    <script>
+        $('.join-centent .join-cententFl dd').on('click', function () {
+            $('.join-centent .join-cententFl dd').removeClass('active').eq($(this).index() - 1).addClass('active');
+            $('.join-centent .join-cententFr .join-cententFr-child').removeClass('active').eq($(this).index() - 1).addClass('active');
+        });
+        function sub() {
+            var formObj = $('#mYform').serializeArray();
+            var json = {};
+            for(var i = 0;i<formObj.length;i++){
+                var _this = formObj[i];
+                if(!formObj[i].value){
+                    layer.tips($('#'+_this.name).attr('title')+'不能为空', '#'+_this.name);
+                    return false;
+                }
+                json[_this.name] = _this.value;
+            }
+//            show_pic: images
+            json['img'] = images;
+
+            $.post("{:U('add')}",json,function (res) {
+                layer.msg(res.message);
+                if(res.status == 1){
+                    location.replace(location.href);
+                }
+            },'json');
+        };
+
+        // 图片上传
+        var images = ',';
+        var status = 0;
+        $('#file_upload').uploadify({
+            queueID: 'upload_queue',
+            removeCompleted : false,
+            fileTypeExts:   '*.gif; *.jpg; *.jpeg, *.png',
+            swf:            '__PUBLIC__/Common/uploadify/uploadify.swf',
+            uploader:       "{:U('uploadImage')}",
+            auto:           true,
+            queueSizeLimit: 3,
+            buttonText: '选择图片',
+            onUploadStart:  function() {
+                status = 1;
+            },
+            onUploadSuccess:function(file, ret, response) {
+                eval('var data = '+ret+';');
+                if (data.length < 1) {
+                    layer.msg('图片上传失败,请刷新重试');
+                    return false;
+                }
+                $.each(data, function(index, ele){
+                    images += ele + ',';
+                });
+            },
+            onUploadError:function(file, errorCode, errorMsg, errorString) {
+                layer.msg('图片上传失败,请刷新重试');
+            },
+            onUploadComplete:function(file) {
+                status = 0;
+            },
+            onCancel : function(file) {
+                console.log(file.name);
+            }
+        });
+    </script>
+</block>

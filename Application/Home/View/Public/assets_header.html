@@ -1,0 +1,212 @@
+<!--左分类-->
+    <div class="ficationFl fl">
+         <dl data="false" <if condition="$active eq 1"> class="active"</if>>
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">我的返利</span>
+            </dt>
+            <dd>
+               <a href="{:U('Distribution/index',['active'=>1])}">·&nbsp;&nbsp;我的返利</a>
+
+            </dd>
+        </dl>
+        <dl data="false" <if condition="$active eq 2"> class="active"</if>>
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">我的团队</span>
+            </dt>
+             <dd>
+                <a href="{:U('Distribution/MyTeam',['active'=>2])}">·&nbsp;&nbsp;会员团队</a>
+            </dd>
+            <dd>
+                <a href="{:U('Distribution/MyTeam2',['active'=>2])}">·&nbsp;&nbsp;经销商团队</a>
+            </dd>
+        </dl>
+        <dl data="false" <if condition="$active eq 3"> class="active"</if> >
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">订单中心</span>
+            </dt>
+            <dd>
+                <a href="{:U('Order/order_myorder',['active'=>3])}">·&nbsp;&nbsp;我的订单</a>
+            </dd>
+            <if condition="(member_status eq '1') Or (member_status eq '3')">
+                <dd>
+                    <a href="{:U('OrderGroup/order_group',['active'=>3])}">·&nbsp;&nbsp;团购订单</a>
+                </dd>
+            </if>
+            <dd>
+                <a href="{:U('Order/cancel_order_record',['active'=>3])}">·&nbsp;&nbsp;取消订单记录</a>
+            </dd>
+        </dl>
+        <dl data="false" <if condition="$active eq 4"> class="active"</if> >
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">我的收藏</span>
+            </dt>
+            <!--<dd>-->
+                <!--<a href="{:U('Assets/balance',['active'=>2])}">·&nbsp;&nbsp;余额</a>-->
+            <!--</dd>-->
+            <dd>
+                <a href="{:U('Cart/goods')}">·&nbsp;&nbsp;我的购物车</a>
+            </dd>
+            <dd>
+                <a href="{:U('Assets/myCollection',['active'=>4])}">·&nbsp;&nbsp;我的收藏</a>
+            </dd>
+            <dd>
+                <a href="{:U('Assets/myComment',['active'=>4])}">·&nbsp;&nbsp;我的评价</a>
+            </dd>
+            <!--<dd>-->
+                <!--<a href="{:U('Assets/coupon',['active'=>2])}">·&nbsp;&nbsp;优惠券</a>-->
+            <!--</dd>-->
+            <dd>
+                <a href="{:U('Assets/integral',['active'=>2])}">·&nbsp;&nbsp;积分</a>
+            </dd>
+            <dd>
+                <a href="{:U('Assets/punkte',['active'=>2])}">·&nbsp;&nbsp;积分兑换</a>
+            </dd>
+            <dd>
+                <a href="{:U('Assets/gekauft',['active'=>4])}">·&nbsp;&nbsp;我购买过的产品</a>
+            </dd>
+            <dd>
+                <a href="{:U('Assets/myTracks',['active'=>4])}">·&nbsp;&nbsp;浏览足迹</a>
+            </dd>
+        </dl>
+        <!--<dl data="false" <if condition="$active eq 3"> class="active"</if> >-->
+            <!--<dt class="clearfix">-->
+                <!--<em class="fl"></em>-->
+                <!--<span class="fl">财务中心</span>-->
+            <!--</dt>-->
+            <!--<dd>-->
+                <!--<a href="{:U('Finance/my_invoice',['active'=>3])}">·&nbsp;&nbsp;我的发票</a>-->
+            <!--</dd>-->
+            <!--<if condition="(member_status eq '1') Or (member_status eq '2')">-->
+                <!--<dd>-->
+                    <!--<a href="{:U('Finance/my_shipment',['active'=>3])}">·&nbsp;&nbsp;我的发货</a>-->
+                <!--</dd>-->
+                <!--<dd>-->
+                    <!--<a href="{:U('Finance/my_payment',['active'=>3])}">·&nbsp;&nbsp;我的付款</a>-->
+                <!--</dd>-->
+                <!--<dd>-->
+                    <!--<a href="{:U('Finance/other_orders',['active'=>3])}">·&nbsp;&nbsp;其他订单</a>-->
+                <!--</dd>-->
+                <!--<dd>-->
+                    <!--<a href="{:U('Finance/closed_order',['active'=>3])}">·&nbsp;&nbsp;已出兑账单</a>-->
+                <!--</dd>-->
+                <!--<dd>-->
+                    <!--<a href="{:U('Finance/outstanding_order',['active'=>3])}">·&nbsp;&nbsp;未出兑账单</a>-->
+                <!--</dd>-->
+            <!--</if>-->
+        <!--</dl>-->
+        <!--<dl data="false" <if condition="$active eq 4"> class="active"</if> >-->
+            <!--<dt class="clearfix">-->
+                <!--<em class="fl"></em>-->
+                <!--<span class="fl">特色业务</span>-->
+            <!--</dt>-->
+            <!--<dd>-->
+                <!--<a href="{:U('SpecialBusiness/enterprise_group',['active'=>4])}">·&nbsp;&nbsp;企业团购</a>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<a href="{:U('SpecialBusiness/purchase_requisition',['active'=>4])}">·&nbsp;&nbsp;采购需求单</a>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<a href="{:U('SpecialBusiness/join_application',['active'=>4])}">·&nbsp;&nbsp;加盟申请</a>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<a href="{:U('SpecialBusiness/printer_rental',['active'=>4])}">·&nbsp;&nbsp;打印机租赁</a>-->
+            <!--</dd>-->
+        <!--</dl>-->
+        <!--<dl data="false" <if condition="$active eq 5"> class="active"</if> >-->
+            <!--<dt class="clearfix">-->
+                <!--<em class="fl"></em>-->
+                <!--<span class="fl">商品中心</span>-->
+            <!--</dt>-->
+            <!--<dd>-->
+                <!--<a href="{:U('GoodsCenter/goods_search',['active'=>5])}">·&nbsp;&nbsp;商品搜索</a>-->
+            <!--</dd>-->
+        <!--</dl>-->
+        <dl data="false" <if condition="$active eq 5"> class="active"</if> >
+             <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">我的推荐码</span>
+            </dt>
+            <dd>
+            <a href="{:U('Distribution/mycode',['active'=>5])}">·&nbsp;&nbsp;我的推荐码</a>
+            </dd>
+        </dl>     
+        <dl data="false" <if condition="$active eq 6"> class="active"</if> >
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">客户服务</span>
+            </dt>
+            <!--<dd>-->
+                <!--<a href="{:U('Service/return_repair',['active'=>6])}">·&nbsp;&nbsp;返修退换货</a>-->
+            <!--</dd>-->
+            <dd>
+                <a href="{:U('Service/after_sale',['active'=>6])}">·&nbsp;&nbsp;售后管理</a>
+            </dd>
+            <dd>
+                <a href="{:U('Service/advisoryReply',['active'=>6])}">·&nbsp;&nbsp;咨询服务</a>
+            </dd>
+            <!--<dd>-->
+                <!--<a href="{:U('Service/opinion',['active'=>6])}">·&nbsp;&nbsp;意见建议</a>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<a href="{:U('Service/repair_choice',['active'=>6])}">·&nbsp;&nbsp;上门维修服务</a>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<a href="{:U('Service/announcement',['active'=>6])}">·&nbsp;&nbsp;网站公告</a>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<a href="{:U('Service/report_center',['active'=>6])}">·&nbsp;&nbsp;投诉中心</a>-->
+            <!--</dd>-->
+        </dl>
+        <dl data="false" <if condition="$active eq 7"> class="active"</if> >
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">用户设置</span>
+            </dt>
+            <dd>
+                <a href="{:U('UserSet/address',['active'=>7])}">·&nbsp;&nbsp;收货地址</a>
+            </dd>
+            <if condition="(member_status eq '1') Or (member_status eq '2')">
+                <dd>
+                    <a href="{:U('UserSet/enterprise',['active'=>7])}">·&nbsp;&nbsp;企业信息</a>
+                </dd>
+            </if>
+            <dd>
+                <a href="{:U('UserSet/security',['active'=>7])}">·&nbsp;&nbsp;安全设置</a>
+            </dd>
+        </dl>
+        <dl data="false" <if condition="$active eq 8"> class="active"</if>>
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">个人资料</span>
+            </dt>
+            <dd>
+                <a href="{:U('UserData/user_data',['active'=>8])}">·&nbsp;&nbsp;个人资料</a>
+            </dd>
+            <!--<dd>-->
+                <!--<a href="{:U('UserData/bind_account',['active'=>8])}">·&nbsp;&nbsp;账号绑定</a>-->
+            <!--</dd>-->
+            <!--<dd>-->
+                <!--<a href="{:U('UserData/special_application',['active'=>8])}">·&nbsp;&nbsp;申请账期支付</a>-->
+            <!--</dd>-->
+        </dl>
+        <dl data="false" <if condition="$active eq 9"> class="active"</if> >
+            <dt class="clearfix">
+                <em class="fl"></em>
+                <span class="fl">我有好货</span>
+            </dt>
+            <dd>
+                <a href="{:U('iHaveGood/mygoodshuo',['active'=>9])}">·&nbsp;&nbsp;我有好货</a>
+            </dd>
+        </dl>
+    </div>
+<script>
+    $(function(){
+        $(".ficationFl dl dd").on('click',function(){
+            $(this).addClass("active");
+        });
+    });
+</script>

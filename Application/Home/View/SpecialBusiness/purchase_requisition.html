@@ -1,0 +1,111 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr purch-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">采购需求单</a></li>
+				</ul>
+			</div>
+			<div class="con-wrap clearfix">
+				<div class="link clearfix">
+					<a href="{:U('SpecialBusiness/requirements')}" target="_blank" class="fr">提采购需求</a>
+				</div>
+				<form action="{:U('SpecialBusiness/purchase_requisition_check')}" method="post" class="check_form">
+				<div class="condition clearfix">
+					<div class="fl searchInput">
+						<span class="status">订单类型</span>
+						<input type="text" name="purchase_type">
+					</div>
+					<div class="fl newTimer clearfix">
+						<span class="fl">创建时间：</span>
+						<input type="text" class="fl" onClick="new Calendar().show(this);" name="time">
+						<em class="fl">至</em>
+						<input type="text" class="fl" onClick="new Calendar().show(this);" name="date">
+					</div>
+					<div class="fl clearfix demand-status">
+						<span class="fl">需求单状态：</span>
+						<div class="drop-main fl">
+							<div class="clearfix btn">
+								<select name="state" id="state" class="select">
+									<option value="0">全部</option>
+									<option value="2">提交</option>
+									<option value="1">保存</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<a href="javascript:;" class="fl query">查询</a>
+				</div>
+                </form>
+				<div class="table-main">
+					<table>
+						<tr>
+							<th width="510">标题</th>
+							<th width="210">创建时间</th>
+							<th width="210">状态</th>
+							<th>操作</th>
+						</tr>
+						<volist name="data.data" id="vo">
+							<tr>
+								<td>{$vo.purchase_title}</td>
+								<td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+								<td class="colorBlue">
+                                	<switch name="vo.state">
+                                		<case value="1">保存</case>
+                                		<case value="2">提交</case>
+                                	</switch>
+								</td>
+								<td><a href="{:U('SpecialBusiness/purchase_requisition_details',array('id'=>$vo['purchase_id']))}">查看</a></td>
+							</tr>
+						</volist>
+					</table>
+				</div>
+				<div class="page">{$data.page}</div>	
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/Calendar.js"></script>	
+<!-- <script src="js/header.js"></script> -->
+<script>
+	var oMenu = $('.purch-content-wrap .con-wrap .condition .demand-status .menu');
+	var oEm = $('.purch-content-wrap .con-wrap .condition .demand-status .btn em');
+	var oA = $('.purch-content-wrap .con-wrap .condition .demand-status .btn a')
+	$('.purch-content-wrap .con-wrap .condition .demand-status .btn').on('click',function(){
+		oMenu.toggleClass('active');
+		if(oMenu.attr('class') == 'menu active'){
+			oA.html('∧')
+		}else{
+			oA.html('∨')
+		}
+	});
+	oMenu.on('click','li',function(){
+		oMenu.removeClass('active');
+		oEm.html($(this).html());
+		if(oMenu.attr('class') == 'menu active'){
+			oA.html('∧')
+		}else{
+			oA.html('∨')
+		}
+	});
+	$('.purch-content-wrap .con-wrap .condition .searchInput input').on('input',function(){
+		if($(this).val() != ''){
+			$(this).addClass('active');
+		}else{
+			$(this).removeClass('active');
+		}
+	});
+	$('.con-wrap .condition').on('click','.query',function(){
+        $('.check_form').submit();
+	})
+</script>
+</block>

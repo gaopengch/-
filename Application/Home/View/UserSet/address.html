@@ -1,0 +1,156 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr userSer-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">收货地址</a></li>
+				</ul>
+			</div>
+			<ul class="content-form-main">
+				<li class="con-title">
+					<span>新增收货地址</span>
+
+				</li>
+				<form action="{:U('UserSet/address_add')}" method="post" onsubmit="return address_add();">
+					<li class="form-main clearfix">
+					    <span class="fl">所在地区<em>*</em></span>
+					    <select name="prov" id="prov" style="width:100px; height:30px;">
+			                <option value="0">请选择省份</option>
+			                <volist name="prov" id="vo">  
+			                <option value="{$vo.id}">{$vo.name}</option>
+			                </volist>
+			            </select>
+			            <select name="city" id="city" style="width:100px; height:30px;">
+			                <option value="0">请选择城市</option>
+			            </select>
+			            <select name="dist" id="dist" style="width:100px; height:30px;">
+			                <option value="0">请选择地区</option>
+			            </select>
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">详细地址<em>*</em></span>
+						<textarea class="fl" name="address" id="address" placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息"></textarea>
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">邮政编码<em>*</em></span>
+						<!--<select id="select_change" style="width:100px; height:30px;">-->
+							<!--<option value="0">无</option>-->
+							<!--<option value="1">填写</option>-->
+						<!--</select>-->
+						<!--<input type="number" name="zipcode" id="zipcode" class="txt" style="display:none;">-->
+						<input type="number" name="zipcode" id="zipcode" class="txt" >
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">收货人姓名<em>*</em></span>
+						<input type="text" name="realname" id="realname" class="txt">
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl">手机号码<em>*</em></span>
+						<input type="number" name="mobile" id="mobile" class="txt">
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl"></span>
+						<label><input type="checkbox" name="status" id="status" value="1" class="check">设置为默认收货地址</label>
+					</li>
+					<li class="form-main clearfix">
+						<span class="fl"></span>
+						<input type="submit" value="保存" class="submit">
+					</li>
+				</form>
+			</ul>			
+			<dl class="content-data-main">
+				<dt class="clearfix">
+					<span class="fl consignee">收货人</span>
+					<span class="fl region">所在地区</span>
+					<span class="fl address">详细地址</span>
+					<span class="fl z-code">邮编</span>
+					<span class="fl mobile-p">手机</span>
+					<span class="fl oper">操作</span>
+				</dt>
+				<volist name="data" id="vo">
+					<dd class="clearfix">
+						<span class="fl consignee">{$vo.realname}</span>
+						<span class="fl region">{$vo.prov} {$vo.city} {$vo.dist} </span>
+						<span class="fl address">{$vo.address}</span>
+						<span class="fl z-code">
+						    <empty name="vo.zipcode">
+						        无
+						    <else/>
+								{$vo.zipcode}
+						    </empty>
+						</span>
+						<span class="fl mobile-p">{$vo.mobile}</span>
+						<span class="fl oper clearfix">
+							<!--<a href="javascript:;" onclick="edit({$vo.id})">修改</a> |-->
+							<a href="javascript:;" onclick="edit2(this)" modurl = "{:U('address_edit',array('id'=>$vo['id']))}">修改</a> |
+							<a href="javascript:;" onclick="del({$vo.id})">删除</a>
+							<eq name="vo.status" value="1">
+								<input type="button" value="默认地址" class="setUp">
+                            <else/>
+								<input type="button" value="设为默认" class="default" data-value="{$vo.id}">
+							</eq>
+						</span>
+					</dd>
+				</volist>
+			</dl>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script type="text/javascript" src="__JS__/userset/address.js"></script>
+<script>
+    var DEFAULT = "{:U('address_ajax')}";
+    var DEL = "{:U('address_del')}";
+</script>
+<script>
+$(function(){
+    $('#prov').change(function(){
+        var code=$('#prov option:selected').val();
+        $.get('{:U('UserSet/city')}',{'code':code},function(data){
+        	if (data.data==1) {
+        		$('#city').html('<option value="">请选择城市</option>');
+                for (var i = 0; i<data['city'].length; i++) {
+                	$('#city').append('<option value="'+data['city'][i].id+'">'+data['city'][i].name+'</option>');
+                };
+        	}else{
+        		$('#city').html('');
+        	}
+              
+        }) ;
+    }) 
+
+    $('#city').change(function(){
+        var code=$('#city option:selected').val();
+        $.get('{:U('UserSet/area')}',{'code':code},function(data){
+        	if (data.data==1) {
+        		$('#dist').html('<option value="">请选择地区</option>');
+                for (var i = 0; i<data['dist'].length; i++) {
+                	$('#dist').append('<option value="'+data['dist'][i].id+'">'+data['dist'][i].name+'</option>');
+                };
+        	}else{
+        		$('#dist').html('');
+        	};
+        })
+    })
+	$('#select_change').change(function(){
+		if($(this).val()==1)
+		{
+			$(this).css('display','none');
+			$('#zipcode').css('display','block');
+		}
+	})
+
+})
+
+</script>
+<!-- <script src="__JS__/header.js"></script>
+ -->
+</block>

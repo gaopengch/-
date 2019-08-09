@@ -1,0 +1,149 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+    <!--<link rel="stylesheet" href="__CSS__/poop.css" />-->
+    <link rel="stylesheet" href="__CSS__/toastr.min.css"/>
+    <div class="poopcer-content-wrap">
+        <div class="q_g_yesterday">
+            <div class="w q_yesterday_content">
+                <div class="q_goods_info">
+                    <if condition="$resultGoodsImgs[0]['id']">
+                        <div class="q_today_g q_g_list clearfix">
+                            <foreach name="resultGoodsImgs" item="goods">
+                                <div class="q_t_goods fl">
+                                    <a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}">
+                                        <div class="q_g_img">
+                                            <img src="{$goods.pic_url}" alt=""/>
+                                            <if condition="!$goods['stock']">
+                                            <img class="no_stock" src="__SERVER__/Public/Home/img/sellout2.jpg" alt=""/>
+                                            </if>
+                                        </div>
+                                        <div class="q_g_inventory">
+                                            库存 ：{$goods.stock}
+                                        </div>
+                                        <div class="q_divider"></div>
+                                        <div class="q_g_name">{$goods.title}</div>
+                                        <div class="q_g_price">
+                                        <if condition="$userId['user_name']">
+                                            <span class="new_price q_price">
+                                                <i>￥</i><span>{$goods.price_member}</span>
+                                            </span>
+                                            <span class="origin_price q_price">
+                                                <i>￥</i><span>{$goods.price_market}</span>
+                                            </span>
+                                        <else/>
+                                            <span class="new_price q_price">
+                                                <i>￥</i><span>{$goods.price_market}</span>
+                                            </span>
+                                            <span class="origin_price q_price">
+                                                <span>会员价更低</span>
+                                            </span>
+                                        </if>
+                                        </div>
+                                        <!--<div class="q_join_cart q_btn" data-id="{$goods['id']}">加入购物车</div>-->
+                                        <if condition="!$goods['is_customs']">
+                                            <div class="q_join_cart q_btn" data-id="{$tomorrowGoods['id']}">加入购物</div>
+                                        <else/>
+                                            <div class="q_to_bug q_btn">立即开抢</div>
+                                        </if>
+                                    </a>
+                                </div>
+                            </foreach>
+
+                        </div>
+                    <else/>
+                        <div class="q_today_g q_g_list clearfix">
+                            <div class="q_no_data">暂无商品</div>
+                        </div>
+                    </if>
+                </div>
+            </div>
+        </div>
+        <!--Banner-->
+        <!--<if condition="$yespic">-->
+            <!--<div class="brasp-banner w" style="height: 200px">-->
+                <!--<ul class="solid">-->
+                    <!--<volist name="yespic" id="pic">-->
+                        <!--<li><a href="{$pic.ad_link}"><img src="{$pic.pic_url}" width="1200" height="200">></a></li>-->
+                    <!--</volist>-->
+                <!--</ul>-->
+                <!--<div class="page"></div>-->
+                <!--<a href="javascript:;" class="btn-left"><</a>-->
+                <!--<a href="javascript:;" class="btn-right">></a>-->
+            <!--</div>-->
+        <!--</if>-->
+        <!--<div class="lates-centent w">-->
+            <!--<div class="selected click-tab-mrap" id="selected1">-->
+                <!--<div class="tab-content-wrap">-->
+                    <!--<ul class="con-mian clearfix active">-->
+                    <!--<volist name="resultGoodsImgs" id="goods">-->
+                        <!--<li class="fl">-->
+                            <!--&lt;!&ndash;<a href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<img src="{$goods.pic_url}" height="230" width="230">&ndash;&gt;-->
+                            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                            <!--<div class="proPic-img" style="position: relative;">-->
+                                <!--<a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}" >-->
+                                    <!--<img src="{$goods['pic_url']}" width="228" height="220"-->
+                                         <!--style="margin-top:10px">-->
+
+                                    <!--<if condition="!$goods['stock']">-->
+                                        <!--<img style=" width:120px;height:120px;position: absolute; left: 25%;top: 25%;" class="lazy sellout" src="__SERVER__/Public/Home/img/sellout2.jpg" alt="">-->
+                                    <!--</if>-->
+                                <!--</a>-->
+                            <!--</div>-->
+                            <!--<a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}" class="title-t">-->
+                                <!--<p>{$goods.title}</p>-->
+                            <!--</a>-->
+                            <!--<span>库存：<i style="text-decoration: none">{$goods.stock}</i></span>-->
+                            <!--<span class="fr" onclick="addCart({$goods.id})">加入购物车</span>-->
+                            <!--<div class="purchase">-->
+                                <!--<b>¥</b>-->
+                                <!--&lt;!&ndash;{$goods.price_member}&ndash;&gt;-->
+                                <!--<if condition="!empty($userId['user_name'])">-->
+                                    <!--{$goods.price_member}-->
+                                    <!--<else/>-->
+                                    <!--{$goods.price_market}-->
+                                <!--</if>-->
+                                <!--<a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}">-->
+                                    <!--<a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}"><span>购买</span></a>-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                    <!--</volist>-->
+                    <!--</ul>-->
+                <!--</div>-->
+                <!--<div class="page fr" id="page">{$page_show}</div>-->
+            <!--</div>-->
+        <!--&lt;!&ndash;特惠尾单&ndash;&gt;-->
+
+        <!--</div>-->
+    </div>
+    <script src="__JS__/expansion.js"></script>
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/navbannerurl.js"></script>
+    <script src="__JS__/xuanxk.js"></script>
+    <script type="text/javascript" src="__JS__/toastr.min.js"></script>
+    <script src="__JS__/clear-shop.js"></script>
+    <script>
+//        var URL = "{:U('Cart/addCartByGid')}";
+//        function addCart(id){
+//            $.get(URL,{id:id},function(res){
+//                if(res.status  == 1){
+//                    toastr.success('添加成功');
+//                }else{
+//                    toastr.success('添加失败');
+//                }
+//            },'json');
+//        }
+        var NewAddCart = "{:U('Cart/new_cart_add')}";
+        $('.q_t_goods').on('click','.q_join_cart',function(){
+            var id = $(this).data('id');
+            var json = {
+                goods_id : id ,
+                goods_num : 1
+            }
+            AddCart(json);
+            return false;
+        })
+    </script>
+
+</block>

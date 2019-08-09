@@ -1,0 +1,132 @@
+<extend name="Order/personalEdit"/>
+<style>
+    .balance-detailed dl dd .timer, .balance-detailed dl dt .timer {
+        width: 160px;
+    }
+    .balance-detailed dl dt .remarks {
+        width: 110px;
+    }
+    .person-section .balan-title span{
+        width: 200px;
+    }
+
+</style>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+    <div class="person-section clearfix">
+        <include file="Public/assets_header"/>
+        <!--内容-->
+        <div class="mordrMain fr">
+            <div class="title clearfix">
+                <ul class="clearfix fl">
+                    <li class="fl hover active"><a href="javascript:;">我的返利</a></li>
+                    
+                </ul>
+            </div>
+            <!--搜索范围查找-->
+
+            <!--可用余额-->
+            <div class="balan-title clearfix">
+                <div style="width: 670px; float: left;">
+                    <div style="float: left;">
+                        <span class="fl">总返利金额：<em>￥{$data['total']}</em></span>
+                        <span class="fl">可提现金额：<em class="amount">￥{$data['balance']}</em></span>
+                        <span class="fl">正在提现金额：<em>￥{$data['now']}</em></span>
+                    </div>
+                    <div style="float: left;" id="show">
+                        <span class="fl">上月返利金：<em>￥{$data['lastmonth']}</em></span>
+                        <span class="fl">当月返利金：<em >￥{$data['month']}</em></span>
+                        <span class="fl">提现激励百分比：<em>{$data['bestir_pre']}%</em></span>
+                    </div>
+                  
+                    <div  style="float: left;display:{$data['member_status']};">
+                        <span class="fl">会员返利：<em>￥{$data['vip_rebate']}</em></span>
+                        <span class="fl" display="none">自购物返利:<em >￥{$data['self_rebate']}</em></span>
+                        <span class="fl">经销商返利：<em>￥{$data['forward_rebate']}</em></span>
+                    </div>
+                   
+                </div>
+                <div style="padding: 10px">
+                    <a data-url="{:U('withdrawal')}"  onclick="distribution_ajax.withdrawal(this)" class="fl recharge">提现</a>
+                    <a data-url="{:U('withdrawalList')}"  onclick="distribution_ajax.withdrawal(this)" class="fl recharge" style="margin-left: 10px">提现记录</a>
+                    <a data-url="{:U('withdrawalerrorlist')}"  onclick="distribution_ajax.withdrawal(this)" class="fl recharge" style="margin-left: 10px;">返利异常</a>
+                </div>
+
+
+
+
+            </div>
+            <!--收支明细-->
+            <div class="search clearfix balan-title ">
+                <form id="search">
+                    <div class="fl ">
+                        <!--<label class="control-label" for="input-date-added">下单日期</label>-->
+                        <div class="input-group distributionSearch">
+                            <input style="width: 100%; height:100%; text-indent: 15px;"  type="text" name="startTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                                   value="{$timegap}" placeholder="开始时间" id="startTime"
+                                   class="input-sm">
+                        </div>
+                    </div>
+                    <div class="fl ">
+                        <!--<label class="control-label" for="input-date-added">下单日期</label>-->
+                        <div class="input-group distributionSearch" >
+                            <input style="width: 100%; height:100%; text-indent: 15px;"  type="text" name="endTime"
+                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                                   value="{$timegap}" placeholder="结束时间" id="endTime"
+                                   class="input-sm">
+                        </div>
+                    </div>
+                    <div class="distributionSearch" >
+                        <input type="text" name="nickName" id="nickName" class="input"
+                               placeholder="用户名">
+                    </div>
+                    <div class="distributionSearch" >
+                        <input type="text" name="mobile" id="mobile" class="input"
+                               placeholder="手机号">
+                    </div>
+                    <div class="distributionSearch" >
+                        <select name="type" class="input" id="type">
+                            <option value='0'>全部返利</option>
+                            <option value="1">会员返利</option>
+                            <option value="2">自购物返利</option>
+                            <option value="3">合格经销商返利</option>
+                        </select>
+                    </div>
+                    <a onclick="distribution_ajax.search(1)" style="margin-left: 911px; cursor:pointer;margin-top:-28px;" class="fl recharge">查询</a>
+                </form>
+            </div>
+            <div   class="z-balance-detailed">
+                <dl>
+                    <dt class="clearfix">
+                        <span class="fl z-timer">ID</span>
+                        <span class="fl z-timer">订单ID</span>
+                        <span class="fl z-deposit">时间</span>
+                        <span class="fl z-remarks">订单金额</span>
+                        <span class="fl z-remarks">返利金额</span>
+                        <span class="fl z-remarks">会员昵称</span>
+                        <span class="fl z-remarks">会员手机</span>
+                    </dt>
+                </dl>
+
+            </div>
+
+        </div>
+            <!--右侧一键到顶 and 客服-->
+            <include file="Order/personalHomeTop"/>
+        </div>
+        <!--尾部-->
+        <script src="__JS__/header.js"></script>
+        <script src="__JS__/Calendar.js"></script>
+        <script src="__JS__/assets/assets.js"></script>
+        <script src="__PUBLIC__/Common/My97Date/WdatePicker.js"></script>
+        <script src="__JS__/distribution_ajax.js?a=3"></script>
+        <script>
+            var url = "{:U('index_ajax')}";
+        </script>
+        <script src="__JS__/jquery-1.7.2.min.js"></script>
+
+<script src="__JS__/header.js"></script>
+</block>

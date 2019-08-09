@@ -1,0 +1,177 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block> 
+
+<block name='content'> 
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr purch-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">打印机租赁</a></li>
+				</ul>
+			</div>
+			<div class="con-wrap clearfix">
+				<form action="{:U('SpecialBusiness/printer_query')}" method="post" class="form">
+					<div class="condition clearfix">
+						<div class="fl searchInput">
+							<span class="status">租赁打印机编号</span>
+							<input type="text" name="goods_id">
+						</div>
+						<div class="fl newTimer clearfix">
+							<span class="fl">租赁时间：</span>
+							<input type="date" class="fl" name="start_time" placeholder="年-月-日">
+							<em class="fl">至</em>
+							<input type="date" class="fl" name="due_time" placeholder="年-月-日">
+						</div>
+						<div class="fl clearfix demand-status">
+							<span class="fl">租赁状态：</span>
+							<div class="drop-main fl">
+							    <select name="status" class="select">
+							        <option>请选择</option>
+							    	<option value="0">租赁期内</option>
+							    	<option value="1">租赁过期</option>
+							    	<option value="2">申请退回押金已提交</option>
+							    	<option value="3">申请退回押金待处理</option>
+							    	<option value="4">申请退回押金审核中</option>
+							    	<option value="5">申请退回押金审核失败</option>	
+							    	<option value="6">申请退回押金退款中</option>
+							    	<option value="7">申请退回押金已退款</option>						    	
+							    </select>
+							</div>
+						</div>						
+						<a href="javascript:;" class="fl query">查询</a>
+					</div>
+                </form>
+				<div class="table-main">
+					<table style="text-align: center;">
+						<tr>
+							<th width="320">租赁机器型号</th>
+							<th width="200">租赁时间</th>
+							<th width="96">状态</th>
+							<th width="137">补充耗材记录</th>
+							<th>操作</th>
+						</tr>
+						<volist name="data" id="vo">
+							<tr>
+								<td class="clearfix">
+									<img src="__SERVER__/{$vo.images}" class="fl screenshot">
+									<p class="fl products_description">{$vo.title}</p>
+								</td>
+								<td>
+									<span class="color-black">{$vo.start_time|date="Y-m-d",###}&nbsp;至&nbsp;</span>
+									<span class="color-red">{$vo.due_time|date="Y-m-d",###}</span>
+								</td>
+								<td>
+									<if condition="$vo.status eq '0'">
+										租赁期内
+									<else/>
+										租赁过期
+									</if>
+								</td>
+								<td><a href="{:U('SpecialBusiness/Record',array('id'=>$vo['id']))}" class="color-blue">查看记录</a></td>
+								<if condition="$vo.status eq '0'">
+									<td class="clearfix">
+										<a href="javascript:;" class="fl btn color-black margin-left">故障报修</a>
+										<a href="{:U('SpecialBusiness/supplies',array('id'=>$vo['id']))}" class="fl btn color-white margin-left">补充耗材</a>
+										<a href="{:U('SpecialBusiness/contractDetails',array('id'=>$vo['id']))}" class="fl btn color-black margin-left">合同详情</a>
+										<notempty name="vo.pay_price">
+											<a href="javascript:;" class="fl margin-left color-orange">
+												<span class="state">
+	                                                <switch name="vo.pay_status">
+	                                                	<case value="0">未支付</case>
+	                                                	<case value="1">已支付</case>
+	                                                	<case value="2">对公支付</case>
+	                                                </switch>
+												</span>
+												本月抄表费用{$vo.pay_price}元
+											</a>
+										</notempty>
+									</td>
+								<elseif condition="$vo.status eq '1'"/>
+									<td class="clearfix">
+										<a href="javascript:;" class="fl btn color-black margin-left Apply" data-value="{$vo['id']}">申请退回押金</a>
+										<a href="javascript:;" class="fl btn bg-orange margin-left">继续租赁</a>
+										<a href="{:U('SpecialBusiness/contractDetails',array('id'=>$vo['id']))}" class="fl btn color-black margin-left">合同详情</a>
+										<span class="fl btn-none"></span>
+									</td>								
+								<elseif condition="$vo.status eq '7'"/>
+									<td class="clearfix">										
+										<a href="javascript:;" class="fl btn bg-orange margin-left">继续租赁</a>
+										<a href="{:U('SpecialBusiness/contractDetails',array('id'=>$vo['id']))}" class="fl btn color-black margin-left">合同详情</a>
+										<span class="fl btn-none">已退定金</span>
+									</td>
+								<else/>
+								    <td class="clearfix">
+										<a href="{:U('SpecialBusiness/contractDetails',array('id'=>$vo['id']))}" class="fl btn color-black margin-left">合同详情</a>
+										<a href="{:U('SpecialBusiness/returnDetails',array('id'=>$vo['id']))}" class="fl margin-left color-orange">
+										    <switch name="vo.status">
+										    	<case value="2">申请退回押金已提交</case>
+										    	<case value="3">申请退回押金待处理</case>
+										    	<case value="4">申请退回押金审核中</case>
+										    	<case value="5">申请退回押金审核失败</case>
+										    	<case value="6">申请退回押金退款中</case>
+										    </switch>	
+										</a>
+									</td>
+								</if>
+							</tr>
+						</volist>
+						<!-- <if condition="$vo.status eq '2'">
+									<td class="clearfix">
+										<a href="{:U('SpecialBusiness/contractDetails',array('id'=>$vo['id']))}" class="fl btn color-black margin-left">合同详情</a>
+										<a href="javascript:;" class="fl margin-left color-orange">申请押金退回已提交</a>
+									</td>
+								</if>
+								<if condition="$vo.status eq '3'">
+									<td class="clearfix">
+										<a href="{:U('SpecialBusiness/contractDetails',array('id'=>$vo['id']))}" class="fl btn color-black margin-left">合同详情</a>
+										<a href="javascript:;" class="fl margin-left color-orange">押金退回审核失败</a>
+									</td>
+								</if> -->
+					</table>
+				</div>
+				<div class="page">{$page}</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/Special/printer.js"></script>	
+<!-- <script src="js/header.js"></script> -->
+<script>
+	var oMenu = $('.purch-content-wrap .con-wrap .condition .demand-status .menu');
+	var oEm = $('.purch-content-wrap .con-wrap .condition .demand-status .btn em');
+	var oA = $('.purch-content-wrap .con-wrap .condition .demand-status .btn a')
+	$('.purch-content-wrap .con-wrap .condition .demand-status .btn').on('click',function(){
+		oMenu.toggleClass('active');
+		if(oMenu.attr('class') == 'menu active'){
+			oA.html('∧')
+		}else{
+			oA.html('∨')
+		}
+	});
+	oMenu.on('click','li',function(){
+		oMenu.removeClass('active');
+		oEm.html($(this).html());
+		if(oMenu.attr('class') == 'menu active'){
+			oA.html('∧')
+		}else{
+			oA.html('∨')
+		}
+	});
+	$('.purch-content-wrap .con-wrap .condition .searchInput input').on('input',function(){
+		if($(this).val() != ''){
+			$(this).addClass('active');
+		}else{
+			$(this).removeClass('active');
+		}
+	});
+	$('.person-section .purch-content-wrap .con-wrap .condition').on('click','.query',function(){
+		$('.form').submit(); 
+    })
+</script>
+</block>

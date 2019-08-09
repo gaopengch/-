@@ -1,0 +1,114 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+ 
+<block name='content'>
+	<div class="person-section clearfix"> 
+		<!--左分类-->
+		<include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr reqoer-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">商品搜索</a></li>
+				</ul>
+			</div>
+			<div style="width:100%;height:30px;margin-top: 20px;margin-bottom: 20px;">
+				<form action="{:U('GoodsCenter/search')}" method="post" onsubmit="return check()">
+					<div style="border:1px solid #999;width:230px;height:28px;position: relative;float: left;">
+						<input type="text" name="code" id="code" style="width:160px;height:28px;border: none;outline: none;text-indent: 15px;"placeholder="商品型号">
+					</div>
+					<input type="submit" class="" value="查询" style="height:30px;width:70px;">
+					<input type="button" class="excel" value="导出" style="margin-left: 10px;height:30px;width:70px;">
+				</form>				
+			</div> 
+			<input type="hidden" id="p-value" value="{$id}"/>
+			<div class="fl content-main">
+				<div class="already">
+					<dl class="content">
+						<dt class="clearfix">
+							<span class="fl look">品牌</span>
+							<span class="fl look">商品编码</span>
+							<span class="fl look">商品型号</span>
+							<span class="fl name">商品名称</span>
+							<span class="fl look">标准价格</span>
+							<span class="fl look">促销价</span>
+						</dt>
+						<volist name="data" id="vo">					
+						    <dd class="clearfix">
+								<span class="fl look">
+									<empty name="vo.brand">
+									&nbsp;
+									<else/>
+									{$vo.brand}
+									</empty>
+								</span>
+								<span class="fl look">{$vo.id}</span>
+								<span class="fl look">
+								    <empty name="vo.code">
+									&nbsp;
+									<else/>
+									{$vo.code}
+									</empty></span>
+								<a href="javascript:;" title="{$vo.title}"><span class="fl name">{$vo.title|substr=0,60}</span></a>
+								<span class="fl look">{$vo.price_market}</span>
+								<span class="fl look">{$vo.price_member}</span>
+							</dd>
+						</volist>
+					</dl>
+				</div>
+			</div>
+			<div class="page">
+				{$page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script>
+	function check(){
+		var code = $('#code').val();
+		if (code == '') {
+			layer.tips('亲!商品型号不能为空!','#code');
+			return false;
+		};
+		return true;
+	}
+	// $('.excel').on('click',function(){
+	// 	var id = $('#p-value').val();
+	// 	var url = '{:U("GoodsCenter/expGoods")}';
+	// 	$.post("/index.php/Home/GoodsCenter/expGoods", { "id": id});
+	// })
+	$(function() {
+
+          //全部导出excel
+          $('.excel').on('click', function () {
+              //商品分类
+              var id = $('#p-value').val();             
+              var data = {id: id};
+              var url = '{:U("GoodsCenter/expGoods")}';
+              var tj_value = JSON.stringify(data);
+              submitForm(url,tj_value);
+          });
+          /**
+           * js模拟表单get提交
+           * @param action url地址
+           * @param params 要传递的值
+           */
+          function submitForm(action, params) {
+              var form = $("<form></form>");
+              form.attr('action', action);
+              form.attr('method', 'get');
+              form.attr('target', '_self');
+              var input1 = $("<input type='hidden' name='tj_value' value='' />");
+              input1.attr('value', params);
+              form.append(input1);
+              form.appendTo("body");
+              form.css('display', 'none');
+              form.submit();
+          }
+      });
+</script>	
+<!-- <script src="js/header.js"></script> -->
+</block>

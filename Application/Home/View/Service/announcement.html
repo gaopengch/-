@@ -1,0 +1,41 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr webauc-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">网站公告</a></li>
+				</ul>
+			</div>
+			<div class="content-main">
+				<ul class="con">
+				    <volist name="data.res" id="vo">
+				        <a href="{:U('Service/announcement_details',array('id'=>$vo['id']))}">
+							<li class="clearfix">
+								<span class="fl">· {$vo.title}</span>
+								<span class="fr">{$vo.create_time|date="Y-m-d",###}</span>
+							</li>
+						</a>
+					</volist>
+				</ul>
+				<div class="border">
+					
+				</div>
+			</div>
+			<div class="page">
+				{$data.page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

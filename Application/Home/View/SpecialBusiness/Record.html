@@ -1,0 +1,62 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr otheros-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">打印机租凭-补充耗材记录</a></li>
+				</ul>
+			</div>
+			<div class="con-wrap clearfix">
+				<ul class="con-tailed clearfix"></ul>
+				<table class="content-main">
+					<tr class="Header">
+						<th width="165">补充耗材时间</th>
+						<th width="490">补充详情</th>
+						<th width="180">数量</th>
+						<th width="170">送达状况</th>
+					</tr>
+					<empty name="data.res">
+					<tr> 
+					    <td></td>
+					    <td>暂时没有补充记录!</td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<else/>
+					<volist name="data.res" id="vo">
+						<tr>
+							<td>{$vo.add_time|date="Y-m-d",###}</td>
+							<td>{$vo.consumables}</td>
+							<td>{$vo.num}</td>
+							<td>
+								<switch name="vo.status">
+                                	<case value="0">申请中</case>
+                                	<case value="1">发货中</case>
+                                	<case value="2">已送达</case>
+								</switch>	
+							</td>
+						</tr>
+                    </volist>
+                    </empty>
+				</table>
+				<div class="page">{$data.page}</div>
+				<div class="return-btn">
+					<a href="javascript:history.go(-1);">返回</a>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

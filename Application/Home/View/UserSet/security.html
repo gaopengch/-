@@ -1,0 +1,116 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr securityS-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">安全设置</a></li>
+				</ul>
+			</div>
+			<div class="content-wrap">
+				<div class="content-info">
+					<h2>您的基础信息</h2>
+					<ul>
+						<li>手机号码：{$data.mobile}</li>
+						<li>上次登录：{$data.last_logon_time|date="Y年m月d日 H:i:s",###} （<span>不是您登录的？请立即</span><a href="{:U('UserSet/password_edit')}">更改密码</a>）</li>
+					</ul>
+				</div>
+				<div class="content-safe">
+					<h2>您的安全服务</h2>
+					<dl>
+					    <empty name="res">
+						<dt class="clearfix">
+							<span class="fl">安全等级：</span>
+							<div class="state fl">
+								<div class="state-low"></div>
+								<div class="state-in active"></div>
+								<div class="state-high"></div>
+							</div>
+							<span class="fl">中</span>
+							<em class="fl">您的帐号目前还存在一定的安全隐患</em>
+						</dt>
+						<else/>
+						<dt class="clearfix">
+							<span class="fl">安全等级：</span>
+							<div class="state fl">
+								<div class="state-low"></div>
+								<div class="state-in"></div>
+								<div class="state-high active"></div>
+							</div>
+							<span class="fl">高</span>
+							<em class="fl">您的帐号目前没有安全隐患</em>
+						</dt>
+						</empty>
+						<dd class="clearfix password">
+							<div class="clearfix fl left-main">
+								<em class="fl">密码修改</em>
+								<span class="fl">
+									密码请设置大于六位，同时数字、字母、符号等组合方式提高安全级别
+								</span>
+							</div>
+							<div class="fr right-main">
+								<a href="{:U('UserSet/password_edit')}">修改</a>
+							</div>
+						</dd>
+						<dd class="clearfix <if condition="$res eq null">security<else/>password</if>">
+							<div class="clearfix fl left-main">
+								<em class="fl">密保问题</em>
+								<span class="fl">
+									是您找回登录密码的方式之一。建议您设置一个容易记住，且最不容易被他人获取的问题及答案，更有效保障设置您的密码安全。
+								</span>
+							</div>
+							<div class="fr right-main">
+								<a href="{:U('UserSet/security_question')}">设置</a>
+							</div>
+						</dd>
+						<dd class="clearfix password <if condition="!$tel['mobile']">security<else/>password</if>">
+							<div class="clearfix fl left-main">
+								<em class="fl">手机绑定</em>
+								<span class="fl">
+									设置绑定手机账号
+								</span>
+							</div>
+							<div class="fr right-main">
+								<a href="{:U('UserSet/bound_phone')}">修改</a>
+							</div>
+						</dd>
+                        <dd class="clearfix password <if condition="!$tel['is_true']" >security<else/>password</if>">
+                        <div class="clearfix fl left-main">
+                            <em class="fl">实名认证</em>
+								<span class="fl">
+									设置您的实名认证信息
+								</span>
+                        </div>
+                        <div class="fr right-main">
+                            <a href="{:U('TrueName/true_name')}">修改</a>
+                        </div>
+                        </dd>
+                        <dd class="clearfix password <if condition="$tel['open_id'] eq null">security<else/>password</if>">
+                            <div class="clearfix fl left-main">
+                                <em class="fl">解绑微信</em>
+								<span class="fl">
+									您在微信公众号访问时会自动绑定您使用的微信，在此可以解除绑定
+								</span>
+                            </div>
+                            <div class="fr right-main">
+                                <a href="{:U('UserSet/relieve_wx')}">修改</a>
+                            </div>
+                        </dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+
+<!-- <script src="js/header.js"></script>
+ -->
+ </block>

@@ -1,0 +1,40 @@
+<style>
+    .idCard{
+        padding-top: 20px;
+        padding-bottom: 23px;
+        padding-left: 20px;
+        line-height: 1.625rem;
+    }
+    .idCardment span{
+        margin-left: 32px;
+        color: #666;
+        font-size: 12px;
+    }
+    .idCardInfo span{
+        margin-left: 32px;
+        color: #333;
+        font-size: 15px;
+    }
+    .idCardInfo input{
+        width: 200px;
+        height: 25px;
+        border: 1px solid #ddd;
+        text-indent: 6px;
+    }
+</style>
+<div class="idCard" id="">
+
+    <div class="idCardInfo">
+
+        <span>身份证名称：<input type="text" name="id_card" value="{$idCard['true_name']}"></span>
+        <span>身份证号：<input name="card_name" value="{$idCard['card_id']}"></span>
+
+    </div>
+    <div class="idCardment">
+        <span>提示：跨境购需支付人真实身份信息,请确保您的信息准确性（默认为您的实名认证信息）</span>
+        <!--<span>修改</span>-->
+    </div>
+
+
+
+</div>

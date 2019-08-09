@@ -1,0 +1,519 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+    <link rel="stylesheet" href="__CSS__/page.css">
+    <link rel="stylesheet" href="__CSS__/toastr.min.css"/>
+    <!--<div class="paper-current-main w">-->
+        <!--<div class="shiduan">明日预告：</div>-->
+        <!--<volist name="soldname" id="big">-->
+            <!--<a   href="{:U('Clearance/tomorrow',['cid'=>3,'sid'=>$big['id']])}">-->
+                <!--<span class="tomorrow" <if condition="$ssid == $big['id']">style="color:red"</if> >{$big.name}</span>-->
+                <!--&lt;!&ndash;<p class="ss{$big['id']}" data-value="{$soldname}" >即将开场</p>&ndash;&gt;-->
+            <!--</a>-->
+        <!--</volist>-->
+    <!--</div>-->
+    <!--内容-->
+    <div class="q_box q_g_tomorrow">
+        <div class="w q_tomorrow_content">
+            <div class="q_tomorrow_tit">
+                <foreach name="tomorrow" item="date">
+                    <span class="q_g_date">{$date}</span>
+                </foreach>
+                <span class="q_g_tip">秒抢好货提前知</span>
+            </div>
+            <div class="q_goods_info">
+                <ul class="q_tomorrow_time qg_time_frame clearfix">
+                    <foreach name="soldnames" item="soldname">
+                        <if condition="$soldname['id'] EQ $tomorrowData['flag']">
+                            <li class="fl color">
+                                <div class="tomorrow_item_time" data-cid="3" data-sid="{$soldname.id}" data-starttime="{$soldname.starttime}">
+                                    {$soldname.name}
+                                </div>
+                            </li>
+                        <else/>
+                            <li class="fl">
+                                <div class="tomorrow_item_time" data-cid="3" data-sid="{$soldname.id}" data-starttime="{$soldname.starttime}">
+                                    {$soldname.name}
+                                </div>
+                            </li>
+                        </if>
+                    </foreach>
+                </ul>
+                <div class="q_today_g q_g_list clearfix">
+                    <if condition="$tomorrowData['tomorrow_clear']['goods']">
+                    <foreach name="tomorrowData['tomorrow_clear']['goods']" item="tomorrowGoods">
+                    <div class="q_t_goods fl">
+                        <a class="q_item_lk" target="_blank" href="{:U('Goods/goodsDetails',['id'=>$tomorrowGoods['id']])}">
+                        <div class="q_g_img">
+                            <img src="{$tomorrowGoods.pic_url}" alt=""/>
+                            <if condition="!$tomorrowGoods['stock']">
+                                <img class="no_stock" src="__SERVER__/Public/Home/img/sellout2.jpg" alt=""/>
+                            </if>
+                        </div>
+                        <div class="q_g_inventory">
+                            库存 ：{$tomorrowGoods.stock}
+                        </div>
+                        <div class="q_divider"></div>
+                        <div class="q_g_name">{$tomorrowGoods.title}</div>
+                        <div class="q_g_price">
+                            <if condition="$userId['user_name']">
+                                <span class="new_price q_price">
+                                    <i>￥</i><span>{$tomorrowGoods.price_member}</span>
+                                </span>
+                                <span class="origin_price q_price">
+                                    <i>￥</i><span>{$tomorrowGoods.price_market}</span>
+                                </span>
+                            <else/>
+                                <span class="new_price q_price">
+                                    <i>￥</i><span>{$tomorrowGoods.price_market}</span>
+                                </span>
+                                <span class="origin_price q_price">
+                                    <span>会员价更低</span>
+                                </span>
+                            </if>
+                        </div>
+                            <if condition="!$tomorrowGoods['is_customs']">
+                                <div class="q_join_cart q_btn" data-id="{$tomorrowGoods['id']}">加入购物</div>
+                            <else/>
+                                <div class="q_to_bug q_btn">立即开抢</div>
+                            </if>
+                        </a>
+
+                    </div>
+                    </foreach>
+                        <else/>
+                        <div class="q_no_data">本时段暂无商品</div>
+                    </if>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="productDeta-main w clearfix">-->
+
+        <!--<div class="productDetaLeft fl">-->
+            <!--<if condition="!$show">-->
+                <!--<div class="categoryList">-->
+                    <!--<foreach name="results" item="second_cat">-->
+                        <!--<eq name="second_cat.fid" value="$top_cate['id']">-->
+                            <!--<dl>-->
+                                <!--<dt data="false"><i></i>{$second_cat.class_name}</dt>-->
+                                <!--<foreach name="results" item="third_cat">-->
+                                    <!--<eq name="third_cat.fid" value="$second_cat.id">-->
+                                        <!--<dd class="third" data-third-id="{$third_cat.id}"><a href="{:U('Product/ProductList',['cid'=>3,'sid'=>$third_cat['id']])}">·&nbsp;&nbsp;{$third_cat.class_name}</a></dd>-->
+                                    <!--</eq>-->
+                                <!--</foreach>-->
+                            <!--</dl>-->
+                        <!--</eq>-->
+                    <!--</foreach>-->
+
+                <!--</div>-->
+            <!--</if>-->
+            <!--<div class="categoryOne">-->
+                <!--<h2><i></i>本店搜索</h2>-->
+                <!--<form action="{:U('Product/ProductList')}" method="get">-->
+                    <!--<div>-->
+                        <!--<p class="clearfix one">-->
+                            <!--<span class="fl">关键字&nbsp;&nbsp;</span>-->
+                            <!--<input type="text" class="fl" name="keyword" value="">-->
+                        <!--</p>-->
+                        <!--<p class="clearfix two">-->
+                            <!--<span class="fl">价格&nbsp;&nbsp;</span>-->
+                            <!--<i class="fl">￥<input type="text" name="begin_price" value=""></i>-->
+                            <!--<i class="fl">￥<input type="text" name="end_price" value=""></i>-->
+                            <!--<input type="hidden" name="show" value="show"/>-->
+                        <!--</p>-->
+                        <!--<p class="three"><input type="submit" value="搜&nbsp;索" class="btn product-search"></p>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;<dl class="proTop10">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;</dl>&ndash;&gt;-->
+        <!--</div>-->
+        <!--&lt;!&ndash;内容左&ndash;&gt;-->
+        <!--<div class="productDetaRight fr">-->
+            <!--<div class="sortCondition clearfix">-->
+                <!--<div class="fl" id="sortCondition">-->
+                    <!--<span>排序：</span>-->
+                    <!--<a href="javascript:;" class="active">销量</a>-->
+                    <!--<a href="javascript:;">价格</a>-->
+                    <!--<a href="javascript:;">评论数</a>-->
+                    <!--&lt;!&ndash;<a href="javascript:;">上架时间</a>&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;商品展示&ndash;&gt;-->
+
+            <!--<ul class="productList1 clearfix productlist-error-xs">-->
+                <!--<if condition="!$resultGoodsImgs">-->
+                    <!--<div class="product-list-not-error">-->
+                        <!--<h1>亲，你访问的数据不存在</h1>-->
+                    <!--</div>-->
+                    <!--<else/>-->
+                    <!--<volist name="resultGoodsImgs" id="reGoodsImg">-->
+                        <!--<li class="fl">-->
+                            <!--<div class="proPic-img" style="position: relative;">-->
+                                <!--<a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$reGoodsImg['id']])}" >-->
+                                    <!--<img src="{$reGoodsImg['pic_url']}" width="190" height="190"-->
+                                         <!--style="margin-top:10px">-->
+
+                                    <!--<if condition="!$reGoodsImg['stock']">-->
+                                        <!--<img style=" width:120px;height:120px;position: absolute; left: 25%;top: 25%;" class="lazy sellout" src="__SERVER__/Public/Home/img/sellout2.jpg" alt="">-->
+                                    <!--</if>-->
+                                <!--</a>-->
+                            <!--</div>-->
+                            <!--<div class="pingJia clearfix">-->
+                                <!--<i class="fl"></i>-->
+                                <!--<i class="fl"></i>-->
+                                <!--<i class="fl"></i>-->
+                                <!--<i class="fl"></i>-->
+                                <!--<i class="fl"></i>-->
+                                <!--<div class="fr">-->
+                                    <!--&lt;!&ndash;商品销量 <b>{$reGoodsImg['sales_sum']}</b>&ndash;&gt;-->
+                                    <!--商品库存 <b>{$reGoodsImg['stock']}</b>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="itemDescBack">-->
+                                <!--<p class="proDesc"><a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$reGoodsImg['id']])}">{$reGoodsImg['title']|msubstr=0,34}</a></p>-->
+                                <!--<if condition="!empty($userId['user_name'])">-->
+                                    <!--<span class="proPrice">￥{$reGoodsImg['price_member']}-->
+                                    <!--<strike>￥{$reGoodsImg['price_market']}</strike></span>-->
+                                    <!--<else/>-->
+                                    <!--<span class="proPrice">￥{$reGoodsImg['price_market']}</span>-->
+                                <!--</if>-->
+                                <!--<p class="addCart1">-->
+                                    <!--&lt;!&ndash;<a href="javascript:;">收藏</a>&ndash;&gt;-->
+                                    <!--<a href="{:U('collection/collection')}" data-id="{$_GET['id']}" class=" collection " onclick="return false;" id="collection_btn">-->
+                                        <!--收藏商品-->
+                                    <!--</a>-->
+                                    <!--<a class="soldstatus" target="_blank" href="{:U('Goods/goodsDetails',['id'=>$reGoodsImg['id']])}">即将开始</a>-->
+                                <!--</p>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                    <!--</volist>-->
+                <!--</if>-->
+
+            <!--</ul>-->
+
+            <!--&lt;!&ndash;换页&ndash;&gt;-->
+            <!--&lt;!&ndash;  <div class="paper-page-parent clearix">&ndash;&gt;-->
+
+            <!--<div class="page" id="page">{$page_show}</div>-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
+        <!--</div>-->
+    <!--</div>-->
+    </div>
+    <input type="hidden" name="current_cat" id="current_cat" value="{$current_cat.id}"/>
+    <input type="hidden" name="third_cat" id="current_third_cat" value="{$current_third_cat.id}"/>
+    <input type="hidden" name="serch_kerword" id="serarch-title" value="<?php echo $_GET['keyword'] ?>"/>
+    <input type="hidden" name="serch_begin_price" id="ser-begin-price" value="<?php echo $_GET['begin_price'];?>"/>
+    <input type="hidden" name="serch_end_price" id="ser-end-price" value="<?php echo $_GET['end_price'];?>"/>
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/expansion.js"></script>
+    <script src="__JS__/offcePaper.js"></script>
+    <script src="__JS__/clear_tomorrow.js"></script>
+    <script src="__JS__/clear-shop.js"></script>
+    <script type="text/javascript" src="__JS__/toastr.min.js"></script>
+    <script>
+        var sid = "{$ssid}";
+        var GET_ClearGood = "{:U('Index/getSgoods')}";
+        var goodsDetailsUrl = "{:U('Goods/goodsDetails')}";
+        var aUrl = goodsDetailsUrl.replace('.html','');
+        var FirstStartTime = "{$todayData['starttime']}";
+        var FirstNowTime = "{$todayData['time']}";
+        var IS_LOGIN = "{$userId['user_name']}"
+        var NewAddCart = "{:U('Cart/new_cart_add')}";
+    </script>
+    <script>
+        $('.q_today_g').on('click','.q_join_cart',function(){
+            var id = $(this).data('id');
+            var json = {
+                goods_id : id ,
+                goods_num : 1
+            }
+            AddCart(json);
+            return false;
+        })
+//        var stime;
+//        var goods;
+//        window.onload=function(){
+//            stime = $(".paper-current-main a p");
+////             goods = $(".soldstatus");
+//            console.log(stime);
+//        };
+//        var int = self.setInterval("clock()",1000);
+//
+//        function clock(){
+//            var myDate = new Date();
+//            var h = myDate.getHours(); //获取当前小时数(0-23)
+//            var i = myDate.getMinutes(); //获取当前分钟数(0-59)
+//            var s = myDate.getSeconds(); //获取当前秒数(0-59)
+//            var now = h+'-'+i+'-'+s;
+//
+//            for(var k= 0; k<stime.length; k++){
+//                var time = $(stime[k]).attr('data-value');
+//                if(time<=now){
+//                    $(stime[k]).html('已开抢');
+////                    $(".soldstatus").html('马上抢');
+//                }
+//            }
+//        }
+
+
+        $(function(){
+            $("#exchange").on('click',function(){
+                var url = '{:U("Product/guess")}';
+                $.ajax({
+                    type:"get",
+                    url:url,
+                    error:function(){
+                        alert("服务器忙，请联系管理员！")
+                    },
+                    success:function(data){
+                        $("#guessYouLike2").html(data);
+                    }
+                })
+
+            });
+
+        });
+        $(function(){
+            var sid = "<?php echo $_GET['id'];?>";
+            //选中二级菜单
+            var current_cat = $("#current_cat").val();
+
+            if(current_cat){
+
+                $(".all_cate").removeClass("active");
+                $(".data_curent").each(function(i,v){
+                    if($(v).attr("data-current-id")==current_cat){
+                        $(this).addClass("active");
+                        //$(v).children(":first").addClass("active");
+                    }
+                });
+            }
+            //选中第三级菜单的对应的选项
+            var third_cat = $("#current_third_cat").val();
+            if(third_cat){
+                $(".third").each(function(i,v){
+                    if(third_cat == $(v).attr("data-third-id")){
+                        $(v).children(":first").css("color","red");
+                        $(v).prev().attr("data","true");
+                        $(v).parent().addClass("active");
+                    }
+
+                    $(".all_cate").removeClass("active");
+                    $(".data_curent").each(function(i,v){
+                        if($(v).attr("data-current-id")==third_cat){
+                            $(this).addClass("active");
+                            //$(v).children(":first").addClass("active");
+                        }
+                    });
+
+                });
+            }
+            /**
+             * 点击事件  选择类型
+             */
+            var change_type = $(".class-type dd");
+            change_type.on('click','a',function() {
+                change_type.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                var price = $(".class-price .active").text();
+                clickAjax(price);
+                return false;
+            });
+
+            /**
+             *   点击事件  选择品牌
+             *
+             */
+
+            var change_brand = $(".class-brand dd");
+            change_brand.on('click','a',function(){
+                change_brand.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                var price = $(".class-price .active").text();
+                clickAjax(price);
+                return false;
+            });
+
+
+            /**
+             * 点击事件 选择价格
+             */
+            var change_price = $(".class-price .f2");
+            change_price.on('click','a',function(){
+                change_price.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                var price = $(".class-price .active").text();
+                //清楚文本框的值，增强用户视觉效果
+                $("#price_before").val('');
+                $("#price_after").val('');
+                clickAjax(price);
+                return false;
+            });
+
+            /**
+             * 点击事件 选择规格
+             */
+            var change_num = $(".class-num dd");
+            change_num.on('click','a',function(){
+                change_num.children('a').removeClass('active').eq($(this).index()).addClass('active');
+                var price = $(".class-price .active").text();
+                clickAjax(price);
+                return false;
+            });
+
+
+
+            /**
+             * 点击事件 选择价格搜索
+             */
+            $("#id-btn").on('click',function(){
+                var begin_price = $("#price_before").val();
+                var end_price = $("#price_after").val();
+                //当文本框的为空时，点击按钮
+                if(!(begin_price || end_price)) {
+                    $(".class-price .f2").children('a').removeClass("active");
+                    $("#id-all-price").addClass('active');
+                    var price = $(".class-price .active").text();
+                }else{
+                    $(".class-price .f2").children('a').removeClass("active");
+                    var price = begin_price+'-'+end_price;
+                }
+
+                clickAjax(price);
+            });
+
+            /**
+             *点击事件  选择销量、价格、评论、上架时间
+             * @param price
+             */
+            var sortCond =  $("#sortCondition");
+            var isUShow = $("#isUShow").html();
+            sortCond.on('click', 'a', function () {
+                if(!isUShow){
+                    alert('登录会员价更优惠');
+                    return;
+                }
+                var sid =  "<?php echo $_GET['sid'];?>";
+                sortCond.find('a').removeClass('active').eq($(this).index()-1).addClass('active');
+                var sortChoose = $("#sortCondition .active").text()                  ;
+                clickAjax('',sortChoose,sid);
+            });
+            //点击封装ajax 函数
+            function  clickAjax(price,sortChoose,sid1){
+                //如果搜索
+                var kerword = $("#serarch-title").val();
+                var begin_price1 = $("#ser-begin-price").val();
+                var end_price1 =  $("#ser-end-price").val();
+
+                var sid = $(".class-type .active").attr("data-id");
+                if(!sid){
+                    sid = sid1;
+                }
+                var brand = $(".class-brand .active").attr("id-value");
+                var num = $(".class-num .active").text();
+                var price = price;
+                if(price=="全部"){price = "all";}
+                if(num=="全部"){num =  "all";}
+                if(sortChoose){
+                    var sortCond = sortChoose;
+                }
+                var url = "{:U('Home/Clearance/tomorrow/cid/3/sid/"+sid+"')}";
+                var data = {sid:sid,brand:brand,price:price,goods_spec:num,sortCond:sortCond,keyword:kerword,begin_price:begin_price1,end_price:end_price1};
+                $.getJSON(url,data,function(json){
+                    if(json.data.length){
+                        var data = json.data;//更新数据
+                        var page_str = "";
+                        for(i =0;i<data.length;i++){
+                            page_str+= '<li class="fl">'+
+                            '<div class="proPic-img">'+
+                            '<a target="_blank" href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+
+                            '<img src="'+data[i].pic_url+'" width="190" height="190" style="margin-top:10px">'+
+                            '</a>'+
+                            '</div>'+
+                            '<div class="pingJia clearfix">'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<i class="fl"></i>'+
+                            '<div class="fr">'+
+                            '商品库存 <b>'+data[i].stock+'</b>'+
+                            '</div>'+
+                            '</div>'+
+                            '<div class="itemDescBack">'+
+                            '<p class="proDesc"><a target="_blank" href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+data[i].title+'</a></p>'+
+                            '<span class="proPrice">'+"￥"+data[i].price_market+'</span>'+
+                            '<p class="addCart1">'+
+                            '<a target="_blank" href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">即将开始</a>'+
+                            '<a href="javascript:;">收藏</a>'+
+                            '</p>'+
+                            '</div>'+
+                            '</li>';
+                        }
+
+
+                        $(".productList1").html(page_str);//更新内容
+
+                        if(!json.page){
+                            $("#page").html("");
+                        }else{
+                            $("#page").html(json.page);
+                        }
+                    }else{
+                        $(".productlist-error-xs").html('<div class="product-list-not-error"><h1>亲，你访问的数据不存在</h1> </div>');
+                    }
+                });
+            }
+            //点击分页  页数 无刷新
+            $("#page a").live("click",function(){
+                var sid = $(".class-type .active").attr("data-id");
+                var brand = $(".class-brand .active").attr("id-value");
+                var num = $(".class-num .active").text();
+                var price = $(".class-price .active").text();
+                if(price=="全部"){price = "all";}
+                if(num=="全部"){num =  "all";}
+                var url=$(this).attr("href");
+                var data = {sid:sid,brand:brand,price:price,num};
+                $.getJSON(url,data,function(json){
+                    $("html,body").animate({scrollTop:200},500);
+                    var data = json.data;//更新数据
+                    var page_str = "";
+                    for(i =0;i<data.length;i++){
+                        page_str+= '<li class="fl">'+
+                        '<div class="proPic-img">'+
+                        '<a target="_blank" href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+
+                        '<img src="'+data[i].pic_url+'" width="190" height="190" style="margin-top:10px">'+
+                        '</a>'+
+                        '</div>'+
+                        '<div class="pingJia clearfix">'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<i class="fl"></i>'+
+                        '<div class="fr">'+
+                        '商品库存 <b>'+data[i].stock+'</b>'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="itemDescBack">'+
+                        '<p class="proDesc"><a target="_blank" href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">'+data[i].title+'</a></p>'+
+                        '<span class="proPrice">'+"￥"+data[i].price_market+'</span>'+
+                        '<p class="addCart1">'+
+                        '<a target="_blank" href="{:U('Goods/goodsDetails','','')}/id/'+ data[i].id +'.html">即将开始</a>'+
+                        '<a href="javascript:;">收藏</a>'+
+                        '</p>'+
+                        '</div>'+
+                        '</li>';
+                    }
+
+                    $(".productList1").html(page_str);//更新内容
+                    $("#page").html(json.page);
+                });
+                return false;
+            });
+        });
+    </script>
+</block>

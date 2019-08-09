@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>团购详情页</title>
+</head>
+<body>
+    <h1>团购详情页</h1>
+        <!--<input type="text" name="title"  value="{$group['title']}"/>-->
+        <!--<input type="text" name="start_time"  value="{$group['start_time']}"/>-->
+        <!--<input type="text" name="end_time"  value="{$group['end_time']}"/>-->
+        <!--<input type="text" name="goods_id"  value="{$group['goods_id']}"/>-->
+        <!--<input type="text" name="price"  value="{$group['price']}"/>-->
+        <!--<input type="text" name="goods_num"  value="{$group['goods_num']}"/>-->
+        <!--<input type="text" name="description"  value="{$group['description']}"/>-->
+    
+                <div class="q_goods_img">
+                    <foreach name="goodsImg" item="vo">
+                    <img src="{$vo['pic_url']}" alt=""/>
+                    </foreach>
+                </div>
+                <div class="q_goods_info clearfix">
+                    <p class="goods_info_name">{$groupGoods['title']}</p>
+                    <div class="goods_info_price fl">
+                        <i>￥</i><span>{$groupGoods['price']}</span>
+                    </div>
+                </div>
+
+    <foreach name="groupOrderData" item="groupOrder">
+       <div>
+            <form action="{:U('Settlement/buyNow')}" method="post">
+                <span>还差{$groupOrder['lack_person']}人</span>
+                <span>活动还剩时间 <php>echo date("H:i:s",(int)$groupGoods['end_time'] - (int)time());</php></span>
+                <input type="hidden" name="r" value="{$groupOrder['id']}">
+                <input type="hidden" name="id" value="{$groupOrder['group_id']}">
+                <!-- 衔接数据 -->
+                <input type="hidden" value="{$_SESSION['formId']}" name="formId">
+                <input type="hidden" value="{$groupGoods['goods_id']}" name="goods_id">
+                <input type="hidden" value="1" name="goods_num">
+                <input type="hidden" value="{$groupGoods['price']}" name="price_new">
+                <!-- 衔接数据 -->
+                <input type="submit" name="dosubmet" value="我要参团">
+            </form>
+       </div>
+    </foreach>
+
+
+        <!--参团时为订单表中已经开团的该团购的团的轮播-->
+
+
+    <div>
+        {$groupGoods['detail']}
+    </div>
+  
+</body>
+</html>

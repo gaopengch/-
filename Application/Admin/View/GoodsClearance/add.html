@@ -1,0 +1,67 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+	<link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+	<div class="nav">
+		<div class="nav_title">
+			<h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">添加活动</span></h4>
+		</div>
+	</div>
+	<br/><br/>
+</block>
+<block name="content">
+	<form action="{:U()}" method="post">
+		<table class="table table-bordered">
+			<tr>
+				<td><span style="color: red">*</span>添加活动名称:</td>
+				<td>
+					<input type="text" name="title"  value="{$row.title}" class="form-control" style="width:550px;"/>
+				</td>
+			</tr>
+            <tr>
+                <td>分类图片</td>
+                <td>
+
+                    <input onclick="Tool.uploadify('{:C('upload_url')}/uploadNum/1/path/clearance/input/image/config/class_image_conf');" type="button" value="上传图片"/>
+
+                    <input type="text" value="{$row.pic_url}" name="pic_url" id="image" class="form-control large img_url" readonly="readonly"  style="width:500px;display:initial;"/>
+
+                </td>
+            </tr>
+            <tr>
+                <td><span style="color: red">*</span>添加活动路径:</td>
+                <td>
+                    <input type="text" name="url"  value="{$row.url}" class="form-control" style="width:550px;"/>
+                </td>
+            </tr>
+			<tr>
+				<td><span style="color: red">*</span>排序</td>
+				<td>
+					<input type="text"  name="sort" class="form-control" value="{$row.sort|default=50}" style="width:550px;"/>
+				</td>
+			</tr>
+			<tr>
+				<td><span style="color: red">*</span>是否显示</td>
+				<td>
+					<label class="radio-inline">
+						<input type="radio" name="status" class="status" id="inlineRadio1" value="1"> 是
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" class="status" id="inlineRadio2" value="0"> 否
+					</label>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="id" value="{$row.id}">
+		<input class="btn btn-primary btn-lg" type="submit" value="提交">
+	</form>
+	<js href='__COMMON__/js/jquery-1.11.3.min.js'/>
+    <script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+	<script type='text/javascript'>
+		$(function(){
+			//回显供应商状态
+			$('.status').val([{$row.status|default=1}]);
+			//回显导航类型
+			$('.type').val([{$row.type|default=0}]);
+		});
+	</script>
+</block>

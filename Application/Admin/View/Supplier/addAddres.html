@@ -1,0 +1,88 @@
+<extend name="Public:publicHTML"/>
+
+<block name="content">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/font-awesome.min.css"/>
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 退货地址详情</h3>
+                </div>
+                <div class="panel-body">
+                    <!--<ul class="nav nav-tabs">-->
+                        <!--<li class="active"><a href="#tab_tongyong" data-toggle="tab">商品类型</a></li>-->
+                    <!--</ul>-->
+                    <!--表单数据-->
+                    <if condition="$row.id neq ''">
+                        <form method="post" action="{:U(editAddres)}" >
+                    <else/>
+                        <form method="post" action="{:U(addAddres)}" >
+                    </if>
+
+                        <!--通用信息-->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_tongyong">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td>退货仓名称:</td>
+                                        <td>
+                                            <input type="text" value="{$row.name}" name="name" class="form-control" style="width:200px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>退货联系人名称:</td>
+                                        <td>
+                                            <input type="text" value="{$row.re_linkman}" name="re_linkman" class="form-control" style="width:200px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>退货联系电话:</td>
+                                        <td>
+                                            <input type="text" value="{$row.re_mobile}" name="re_mobile" class="form-control" style="width:200px;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>状态:</td>
+                                        <td>
+                                            <select name="status">
+                                                <option value="1"  <if condition="$row.status == 1">
+                                                selected</if> > 启用</option>
+                                                <option value="0"  <if condition="$row.status == 0">
+                                                selected</if> > 禁用</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>退货地址:</td>
+                                        <td>
+                                            <input type="text" value="{$row.re_address}" name="re_address" class="form-control" style="width:430px;"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <if condition="$row.id">
+                                <input type="hidden" name="id" value="{$row.id}">
+                            </if>
+                            <input type="hidden" name="supplier_id" value="{$row.supplier_id}">
+
+                            <input style="width: 150px" class="button btn-primary btn-lg" type="submit" value="提交">
+                        </div>
+                    </form><!--表单数据-->
+                </div>
+            </div>
+        </div>    <!-- /.content -->
+    </section>
+    <script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+    <script type="text/javascript" src="__COMMON__/js/jquery-form.js"></script>
+    <script type="text/javascript" src="__JS__/brand/brand.js"></script>
+</block>
+

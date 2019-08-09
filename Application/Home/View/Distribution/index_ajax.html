@@ -1,0 +1,27 @@
+<dl>
+    <dt class="clearfix">
+        <span class="fl timer">ID</span>
+        <span class="fl deposit">时间</span>
+        <span class="fl expenditure">订单金额</span>
+        <span class="fl remarks">返利金额</span>
+        <span class="fl remarks">会员昵称</span>
+        <span class="fl remarks">会员手机</span>
+    </dt>
+        <!--<dd align="center" style="color:red;margin-top:10px;">暂时没有记录!</dd>-->
+            <dd class="clearfix">
+                <span class="fl timer">%id%</span>
+                <span class="fl deposit">%time%</span>
+                <span class="fl expenditure">￥%total_price%</span>
+                <span class="fl expenditure">￥%rebate_money%</span>
+                <span class="fl expenditure">%nick_name%</span>
+                <span class="fl expenditure">%mobile%</span>
+                <span class="fl remarks"></span>
+            </dd>
+</dl>
+<div class="page">%page%</div>
+<script>
+    $(".pagination a ").click(function(){
+        var page = $(this).data('p');
+        distribution_ajax.search(page);
+    });
+</script>

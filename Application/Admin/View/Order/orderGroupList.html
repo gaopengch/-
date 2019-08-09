@@ -1,0 +1,109 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="__CSS__/order.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 团购订单列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form  id="fromData" class="navbar-form form-inline" method="post" url="{:U('getOrderGroupList')}">
+
+
+                        <div class="form-group">
+                            <label class="control-label" for="input-order-id">商品名称</label>
+                            <div class="input-group">
+                                <input type="text" name="goods" placeholder="商品名称"
+                                       id="input-goods-id" class="input-sm" >
+                            </div>
+                        </div>
+
+						
+						<div class="form-group">
+							<label class="control-label" for="input-date-added">开始日期</label>
+							<div class="input-group">
+								<input type="text" name="timegap"
+									onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+									value="{$timegap}" placeholder="下单日期" id="create_time"
+									class="input-sm">
+							</div>
+						</div>
+                        <div class="form-group">
+                            <label class="control-label" for="input-date-added">结束日期</label>
+                            <div class="input-group">
+                                <input type="text" name="timeEnd"
+                                       onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                                       value="" placeholder="下单日期" id="timeEnd"
+                                       class="input-sm">
+                            </div>
+                        </div>
+						<div class="form-group">
+							<select name="group_status" class="input-sm" id="status">
+								<option value="">订单状态</option>
+								<if condition="!empty($condition)">
+									<foreach name="condition" key="k" item="v">
+										<option value="{$k}">{$v}</option>
+									</foreach>
+								</if>
+							</select>
+						</div>
+						<div class="form-group">
+							<select name="is_host" class="input-sm" id="is_host">
+								<option value="">所有订单</option>
+								<option value="1">团长订单</option>
+							</select>
+							<input type="hidden" name="code" value="1">
+						</div>
+						<div class="form-group">
+							<a href="javascript:void(0)"
+								id="doSubmit" class="btn btn-primary"><i
+								class="fa fa-search"></i> 筛选</a>
+						</div>
+						<div class="form-group">
+							<a href="javascript:void(0)" onclick="location.reload()"
+							    class="btn btn-primary">重置</a>
+						</div>
+						<!-- <button type="submit" class="btn btn-default pull-right">
+							<i class="fa fa-file-excel-o"></i>&nbsp;导出excel
+						</button> -->
+					</form>
+				</div>
+				<div id="idContent"></div>
+
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__COMMON__/My97Date/WdatePicker.js"></script> 
+<script src="__COMMON__/js/jquery-form.js"></script>
+<script src="__COMMON__/js/alert.js"></script>
+<!--<script src="__JS__/order.js"></script>-->
+<script>
+    $(document).ready(function(){
+        getlist("{:U('Order/getOrderGroupList')}");
+    });
+    $("#doSubmit").on("click",function(){
+        getlist("{:U('Order/getOrderGroupList')}");
+    });
+
+    function getlist(path) {
+        $.ajax({
+            url: path,
+            type: "post",
+            dataType: "html",
+            data: $("#fromData").serialize(),
+            success: function (data) {
+                $("#idContent").html(data);
+            }
+        });
+    }
+</script>
+</block>

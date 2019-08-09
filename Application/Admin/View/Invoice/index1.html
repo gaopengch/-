@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title><extend name="Public/publicHTML" />
+
+        <block name="content">
+            <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+            <script src="__COMMON__/js/jquery-1.11.3.min.js"></script>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="fa fa-list"></i> 订单列表【页面缓存6秒钟】请等待会~~
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="navbar navbar-default">
+                                <form  id="conditionForm"
+                                       class="navbar-form form-inline" method="post" url="{:U('ajaxGetData1')}">
+                                    <div class="form-group">
+                                        <label class="control-label" for="input-order-id">收货人</label>
+                                        <div class="input-group">
+                                            <input type="text" name="realname" placeholder="收货人"
+                                                   id="input-member-id" class="input-sm wx_100">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="input-order-id">商品名称</label>
+                                        <div class="input-group">
+                                            <input type="text" name="goods" placeholder="商品名称"
+                                                   id="input-goods-id" class="input-sm wx_100">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="input-order-id">订单编号</label>
+                                        <div class="input-group">
+                                            <input type="text" name="order_sn_id" placeholder="订单编号"
+                                                   id="input-order-id" class="input-sm" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="input-order-id">地址</label>
+                                        <div class="input-group">
+                                            <input type="text" name="address" placeholder="地址"
+                                                   id="input-address-id" class="input-sm" >
+                                        </div>
+                                    </div>
+                                    <!--<div class="form-group">-->
+                                        <!--<select name="order_status" class="input-sm" >-->
+                                            <!--<option value="">订单状态</option>-->
+                                            <!--<if condition="!empty($condition)">-->
+                                                <!--<foreach name="condition" key="k" item="v">-->
+                                                    <!--<option value="{$k}">{$v}</option>-->
+                                                <!--</foreach>-->
+                                            <!--</if>-->
+                                        <!--</select> <input type="hidden" name="order_by" value="id"> <input-->
+                                            <!--type="hidden" name="sort" value="desc"> <input-->
+                                            <!--type="hidden" name="user_id" value="{$_GET['user_id']}">-->
+                                    <!--</div>-->
+                                    发货日期
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" name="delivery_time_start"
+                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                                   value="{$timegap}" placeholder="" id="delivery_time_start"
+                                                   class="input-sm">
+                                        </div>
+                                        -
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <input type="text" name="delivery_time_end"
+                                                   onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"
+                                                   value="{$timegap}" placeholder="" id="delivery_time_end"
+                                                   class="input-sm">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <a href="javascript:void(0)"
+                                           onclick="Order.ajaxForMyOrder('conditionForm',1)"
+                                           id="button-filter search-order" class="btn btn-primary"><i
+                                                class="fa fa-search"></i> 筛选</a>
+                                    </div>
+
+                                    <!-- <button type="submit" class="btn btn-default pull-right">
+                                        <i class="fa fa-file-excel-o"></i>&nbsp;导出excel
+                                    </button> -->
+                                </form>
+                                <form action="{:U('Invoice/impOrders')}" enctype="multipart/form-data" method="post" class="form-inline" role="form" id="form1">
+                                    <div class="form-group" id='aaa' >
+                                        <input type="file" name="import-orders" />
+                                    </div>
+                                    <div class="form-group">
+                                        <!--<input type="submit" value="导入Excel" class="col-sm-offset-2 btn btn-default" />-->
+                                        <input type="button" value="导入Excel" class="col-sm-offset-2 btn btn-default"     onclick="exp_In();" />
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div id="ajaxGetReturn"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </section>
+            <script src="__COMMON__/My97Date/WdatePicker.js"></script>
+            <script src="__COMMON__/js/jquery-form.js"></script>
+            <script src="__COMMON__/js/alert.js"></script>
+            <script src="__JS__/order.js"></script>
+            <script>
+                var EXPIN = "{:U('Invoice/impOrders')}";
+                function exp_In(){
+                    var form = new FormData(document.getElementById("form1"));
+                    console.log(form)
+                    $.ajax({
+                        url:EXPIN,
+                        type:"post",
+                        data:form,
+                        processData:false,
+                        contentType:false,
+                        success:function(data){
+                            console.log(data)
+                            if(data.status == 1){
+                                alert('导入成功');
+                            }else if(data.status == 2){
+                                alert('存在已申请退货订单');
+                                window.open( "http://www.2tianqc.com/Uploads/invoice/"+data.data+'.txt');
+                            }else{
+                                alert('导入失败');
+                            }
+
+                        },
+                        error:function(e){
+                            console.log(e)
+                        }
+                    });
+                }
+
+
+            </script>
+        </block></title>
+    <style>
+
+        #aaa {
+            border: solid 1px red
+        }
+    </style>
+
+</head>
+<body>
+
+</body>
+
+</html>

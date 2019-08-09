@@ -1,0 +1,39 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr advisor-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl active hover"><a href="javascript:;">咨询回复</a></li>
+				</ul>
+			</div>
+			<dl class="content-main">
+				<dt class="clearfix">
+					<span class="fl problem">咨询问题</span>
+					<span class="fr answer">咨询回复</span>
+				</dt>
+				<volist name="data.res" id="vo">
+					<dd class="clearfix">
+						<span class="fl problem">问：{$vo.problem}</span>
+						<span class="fr answer">答：{$vo.answer}</span>
+					</dd>
+				</volist>
+			</dl>
+			<div class="page">
+				{$data.page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

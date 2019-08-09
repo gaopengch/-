@@ -1,0 +1,43 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr reqoer-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">投诉中心</a></li>
+				</ul>
+			</div>
+			<div class="content-main">
+				<div class="already">
+					<h2 class="con-title">我做出的投诉</h2>
+					<dl class="content">
+						<dt class="clearfix">
+							<span class="fl reason">投诉原因</span>
+							<span class="fl con">投诉内容</span>
+							<span class="fl timer">发起时间</span>
+						</dt>
+						<volist name="data" id="vo">
+							<dd class="clearfix">
+								<span class="fl reason">{$vo.reason}</span>
+								<span class="fl con">{$vo.content|substr=0,120}</span>
+								<span class="fl timer">{$vo.time|date="Y-m-d",###}</span>
+							</dd>
+						</volist>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

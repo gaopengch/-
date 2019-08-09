@@ -1,0 +1,265 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name='content'>
+	<div class="regod-section clearfix">		
+		<!--位置-->
+		<div class="thisPosition w">
+			<span>您的位置：</span><b>首页</b> > <b>我的商城</b> > <b>我的订单</b> > <b>申请售后</b>
+		</div>
+		<!--订单信息-->
+		<div class="tradingStatus w clearfix">
+			<div class="minFl fl">
+				<h2>订单信息</h2>
+				<ul>
+					<li>收货地址：{$address.realname},{$address.mobile},{$address.prov} {$address.city} {$address.dist} {$address.address} ,{$address.zipcode}</li>
+					<!--<li>买家留言：<a href="" title="{$message.content}" style="color:black;">{$message.content}</a></li>-->
+					<li>买家留言：<a  title="{$message.content}" style="color:black;">{$order.remarks}</a></li>
+					<eq name="$order.translate" value="1">
+						<li>发票抬头：{$user.user_name}</li>
+					</eq>
+					<li>订单编号：{$order.order_sn_id}</li>
+					
+					<li>成交时间：{$order.create_time|date="Y-m-d H:i:s",###}</li>
+					<notempty name="order.pay_time">
+					<li>付款时间：{$order.pay_time|date="Y-m-d H:i:s",###}</li>
+					</notempty>
+					<notempty name="order.delivery_time">
+					<li>发货时间：{$order.delivery_time|date="Y-m-d H:i:s",###}</li>
+					</notempty>
+					<notempty name="order.over_time">
+					<li>完结时间：{$order.over_time|date="Y-m-d H:i:s",###}</li>
+					</notempty>
+					<li>商家真实姓名：恬果食品有限公司</li>
+					<li>城市：上海市</li>
+					<li>联系电话：13853980944</li>
+				</ul>
+			</div>
+			<div class="minFr fr">
+				<h2>订单状态:
+                    <if condition="$order.order_status eq '-1'">
+                    取消订单!
+                    <elseif condition="$order.order_status eq '0'"/>
+                        <if condition="$order.order_type eq '0'">
+                            未支付!
+                        </if>
+                        <if condition="$order.order_type eq '1'">
+                            货到付款!
+                        </if>
+                    <elseif condition="$order.order_status eq '1'"/>
+                    已支付!
+                    <elseif condition="$order.order_status eq '2'"/>
+                    发货中!
+                    <elseif condition="$order.order_status eq '3'"/>
+                    已发货!
+                    <elseif condition="$order.order_status eq '4'"/>
+                    已收货!
+                    <elseif condition="$order.order_status eq '5'"/>
+                    退货审核中!
+                    <elseif condition="$order.order_status eq '6'"/>
+                    审核失败!
+                    <elseif condition="$order.order_status eq '7'"/>
+                    审核成功!
+                    <elseif condition="$order.order_status eq '8'"/>
+                    退款中!
+                    <elseif condition="$order.order_status eq '9'"/>
+                    退款成功!
+                    <else/>
+                    交易完成!
+                    </if>
+				</h2>
+				<if condition="$order.order_status gt '1'">
+					<p>物流：{$order.express_title}&nbsp;&nbsp;&nbsp;运单号:{$order.express_id}</p>
+                    <if condition="$order.delivery_time eq '0'">
+					    <p>
+                        <else/>
+                        <p>{$order.delivery_time|date="Y-m-d H:i:s",###} &nbsp;&nbsp;&nbsp;
+                    </if>
+					<if condition="$order.order_status eq '4'">
+	                 (已签收)签收人：{$address.realname}
+	                 </if>
+					 </p>
+				 </if>
+				<h3>您可以</h3>
+				<if condition="($order.order_status eq '4') OR ($order.order_status eq '9')">
+					<div class="max">
+						<a href="{:U('Order/comment_select_goods',array('id'=>$order['id']))}"><input type="button" value="评价"></a>
+
+					</div>
+				<elseif condition="($order.order_status eq '0') AND ($order.order_type eq '0')"/>
+					<!--meng-->
+					<if condition="$order.group_id neq 0">
+						<div class="max">
+							<span>---</span>
+						</div>
+						<else/>
+					<div class="max">
+						<a href="{:U('PayOrder/payOrder',array('order_id'=>$order['id']))}"><input type="button" value="立即支付"></a>
+					</div>
+					</if>
+					<!--meng-->
+				<else/>
+					<div class="max">
+						<a href="javascript:;" class="invoice" <if condition="$userId['user_name']==null">href='{:U('public/login')}'<else/>href='javascript:;' onclick='easemobim.bind({
+				        //请使用自己的租户ID
+				         tenantId: "39449",
+				         //是否隐藏小的悬浮按钮
+				         hide: true
+				        })'</if>>索要发票</a>
+					</div>
+				</if>
+				<script>
+					window.easemobim = window.easemobim || {};
+					var trueName = '{$userId.user_name}';
+					easemobim.config = {
+						//访客信息，以下参数支持变量
+						visitor: {
+							trueName:trueName,
+							qq: '',
+							phone:trueName,
+							companyName: '',
+							userNickname:trueName,
+							description: '',
+							email: ''
+						},
+					};
+				</script>
+				<script src='//kefu.easemob.com/webim/easemob.js'></script>
+			</div>
+		</div>
+		<!--商品状态-->
+		<div class="commodityStatus w">
+			<ol class="dataTitle clearfix">
+				<li class="fl one">商品</li>
+				<li class="fl two">单价</li>
+				<li class="fl three">数量</li>
+				<li class="fl four">优惠</li>
+				<li class="fl five">状态</li>
+			</ol>
+			<ul class="dataCentent clearfix">
+				<li class="fl one" style="width:250px;">订单号：{$order.order_sn_id}</li>
+				<li class="fl two">快递公司：{$order.express_title}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运单号:
+					<if condition="$order.express_id eq '0'">暂未发货<else/>{$order.express_id}</if>
+				</li>
+				<li class="fl three">发货时间：<notempty name="order.delivery_time">{$order.delivery_time|date="Y-m-d H:i:s",###}</notempty></li>
+				<li class="fl four">&nbsp;</li>
+				<li class="fl">
+					<if condition="$order.order_status eq '4'">
+		                (已签收)签收人：{$address.realname}    
+		            </if>
+	            </li>
+			</ul>
+			<volist name="data" id="vo"> 
+				<ul class="centent clearfix">
+					<li class="fl clearfix one">
+						<div class="imgPart fl">
+							<img src="{$vo.images}">
+						</div>
+						<a target="_blank" href="{:U('Goods/goodsDetails',array('id'=>$vo['goods_id']))}" title="{$vo.title}">
+						<div class="con fl">
+							<p>{$vo.title}</p>
+							<span>商品编号：{$vo.goods_id}</span><br/>
+						</div>
+						</a>
+					</li>
+					<li class="fl two">
+						￥{$vo.goods_price}
+					</li>
+					<li class="fl three">{$vo.goods_num}</li>
+					<li class="fl four"></li>
+					<li class="fl five">
+                        <if condition="$vo.status eq '-1'">
+                            取消订单!
+                            <elseif condition="$vo.status eq '0'"/>
+                            <if condition="$order.order_type eq '0'">
+                                未支付!
+                            </if>
+                            <if condition="$order.order_type eq '1'">
+                                货到付款!
+                            </if>
+                            <elseif condition="$vo.status eq '1'"/>
+                            已支付!
+                            <elseif condition="$vo.status eq '2'"/>
+                            发货中!
+                            <elseif condition="$vo.status eq '3'"/>
+                            已发货!
+                            <elseif condition="$vo.status eq '4'"/>
+                            已收货!
+                            <elseif condition="$vo.status eq '5'"/>
+                            退货审核中!
+                            <elseif condition="$vo.status eq '6'"/>
+                            审核失败!
+                            <elseif condition="$vo.status eq '7'"/>
+                            审核成功!
+                            <elseif condition="$vo.status eq '8'"/>
+                            退款中!
+                            <elseif condition="$vo.status eq '9'"/>
+                            退款成功!
+                            <else/>
+                            交易完成!
+                        </if>
+                    </li>
+                    <!--<li class="fl five">-->
+                        <!--<if condition="$order.order_status eq '-1'">-->
+                            <!--取消订单!-->
+                            <!--<elseif condition="$order.order_status eq '0'"/>-->
+                            <!--<if condition="$order.order_type eq '0'">-->
+                                <!--未支付!-->
+                            <!--</if>-->
+                            <!--<if condition="$order.order_type eq '1'">-->
+                                <!--货到付款!-->
+                            <!--</if>-->
+                            <!--<elseif condition="$order.order_status eq '1'"/>-->
+                            <!--已支付!-->
+                            <!--<elseif condition="$order.order_status eq '2'"/>-->
+                            <!--发货中!-->
+                            <!--<elseif condition="$order.order_status eq '3'"/>-->
+                            <!--已发货!-->
+                            <!--<elseif condition="$order.order_status eq '4'"/>-->
+                            <!--已收货!-->
+                            <!--<elseif condition="$order.order_status eq '5'"/>-->
+                            <!--退货审核中!-->
+                            <!--<elseif condition="$order.order_status eq '6'"/>-->
+                            <!--审核失败!-->
+                            <!--<elseif condition="$order.order_status eq '7'"/>-->
+                            <!--审核成功!-->
+                            <!--<elseif condition="$order.order_status eq '8'"/>-->
+                            <!--退款中!-->
+                            <!--<elseif condition="$order.order_status eq '9'"/>-->
+                            <!--退款成功!-->
+                            <!--<else/>-->
+                            <!--交易完成!-->
+                        <!--</if>-->
+                    <!--</li>-->
+
+
+				</ul>
+            </volist>
+		</div>
+		<!--金额-->
+		<div class="ordesTotal w">
+			<p class="total"><span>商品总价：</span>    <em>￥{$goods_price_num}</em></p>
+			<p class="freight"><span>运费(快递)：</span>    <em>￥{$order.shipping_monery}</em></p>
+			<p class="order"><span>订单总价：</span>   <em>￥{$order.price_sum}</em></p>
+			<p class="actual"><span>实付款：</span>  <em>￥{$order.price_sum}</em></p>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<script>
+	//导航隐藏层弹出
+	$('.public-header1 .center-parent .nav li').on('mouseenter',function(){
+		$('.public-header1 .center-parent .nav li').eq($(this).index()).addClass('active');
+	}).on('mouseleave',function(){
+		$('.public-header1 .center-parent .nav li').removeClass('active');
+	});
+    
+	$('.memo').on('click',function(){
+		layer.msg('亲!暂时还没开通这项功能!',{icon: 2,time: 2000},function(){
+        	window.location.reload();
+        });
+    })
+    
+</script>
+</block>

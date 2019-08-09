@@ -1,0 +1,71 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr personaM-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">加盟申请</a></li>
+				</ul>
+			</div>
+			<form action="{:U('SpecialBusiness/join_application')}" method="post" onsubmit="return check()">
+				<dl class="content-main">
+					<dd class="clearfix">
+						<span class="fl">申请人 ：</span>
+						<input type="text" name="applicant" id="applicant" class="txt fl">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">联系方式 ：</span>
+						<input type="text" name="tel" id="tel" class="txt fl">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">年龄：</span>
+						<input type="number" name="age" id="age" class="txt fl">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">联系邮箱：</span>
+						<input type="text" name="email" id="email" class="txt fl">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">省/市/县：</span>
+						<select name="province" id="province"></select><select name="city" id="city"></select><select name="area" id="area"></select>
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">详细地址：</span>
+						<input type="text" name="address" id="address" class="txt fl">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">传真：</span>
+						<input type="text" name="fax" id="fax" class="txt fl">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">QQ：</span>
+						<input type="number" name="qq" id="qq" class="txt fl">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">备注说明：</span>
+						<textarea class="fl" cols="56" rows="5" name="remark" id="remark"></textarea>
+					</dd>
+					<dd class="clearfix">
+						<span class="fl"></span>
+						<input type="submit" value="提交申请" class="sub">
+					</dd>
+				</dl>
+			</form>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script language="javascript" src="__COMMON__/js/PCASClass.js"></script>	
+<script language="javascript">
+	new PCAS("province","city","area","{$data.province}","{$data.city}","{$data.area}");
+</script>
+<script src="__JS__/Special/special.js"></script>	
+<!-- <script src="js/header.js"></script> -->
+</block>

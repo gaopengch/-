@@ -1,0 +1,417 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+
+<link rel="stylesheet" href="__CSS__/toastr.min.css"/>
+<link rel="stylesheet" href="__COMMON__/css/page.css"/>
+<!--当前位置-->
+	<!--当前位置-->
+	<!--<div class="paper-current-main w">-->
+		<!--内容-->
+	<div class="productDeta-main w clearfix">
+		<!--查看商品-->
+		<div class="procDetailInner clearfix">
+			<div class="procDeta-fl fl">
+				<div class="preview clearfix">
+			        <div id="vertical" class="bigImg">
+			            <img width="400" height="400" alt="" id="midimg" data-original='' src='<if condition="isset($first[$goodsImagesModel::$picUrl_d])">{$first[$goodsImagesModel::$picUrl_d]}</if>' />
+			            <div style="display:none;" id="winSelector"></div>
+			        </div>
+		        	<if condition="!empty($goodsImages)"> 
+				        <div class="smallImg">
+				          
+				            	<!--<div class="scrollbutton smallImgUp disabled"></div>-->
+					            <div id="imageMenu">
+					                <ul class="clearfix">
+				                		<foreach name="goodsImages" key="key" item="value">
+						                    <li <if condition="$key === 0"> id="onlickImg" </if> ><img src="{$value[$goodsImagesModel::$picUrl_d]}" width="68" height="68"></li>
+						                </foreach>
+					                </ul>
+					            </div>
+					            <!--<div class="scrollbutton smallImgDown"></div>-->
+				        </div>
+				     </if>
+			        <div id="bigView" style="display:none;"><img width="889" height="889" src=""></div>
+			    </div>
+			    <div class="clearfix product-inf">
+			  
+			    	<!--<span class="fl">产品编码：{$specParseArray[$_GET[$model::$id_d]][$specModel::$sku_d]}</span>-->
+                    <div class="bshare-custom fl" style="margin-top: 2px;">
+                        <a href="javascript:;" class="fl share clearfix" style="padding-left: 0px;">
+                            <a title="更多平台" class="bshare-more bshare-more-icon more-style-sharethis fl"></a>
+                            <span class="fl">分享
+                                <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+                            </span>
+                        </a>
+                    </div>
+			    	<a href="{:U('collection/collection')}" data-id="{$_GET['id']}" class="fl collection clearfix" onclick="return false;" id="collection_btn">
+			    		<i class="fl"></i>
+			    		<span class="fl">收藏商品</span>
+			    	</a>
+
+			    </div>
+			</div>
+			<div class="procDeta-fr fl">
+				<h5 class="pr-title">{$result[$model::$title_d]}</h5>
+                <p class="pr-j_s">{$result[$model::$description_d]}</p>
+                <!--抢购商品-->
+                <div class="qg_begin" >
+
+                <if condition="!$result['is_market']">
+
+                    <div class="qc_cd clearfix">
+                        <div class="qc_time fl">
+                            <i class="q_cd_ico fl"></i>
+                            <div class="qc_cd_tit fl">
+                                <span class="fl span1">即将开始秒杀</span>
+                                <span class="fl qc_cd_distance span2">距离开抢还有</span>
+                                <div class="qg_cd_countdown fl">
+                                    <span class="fl qg_cd_num hour">00</span><span class="fl">:</span>
+                                    <span class="fl qg_cd_num minute">00</span><span class="fl">:</span>
+                                    <span class="fl qg_cd_num seconds">00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pr-price buying-goods">
+                        <p class="pr-price-top">会员价：<span>￥<i>
+                            <if condition="$show">
+                                <!--{$result[$model::$priceMember_d]}    --meng  -->
+                                {$price_level}
+                                <else/>
+                                注册会员更显优惠
+                            </if>
+
+                        </i> </span></p>
+                        <p class="pr-price-mar">市场价：<span>￥<strike>
+                            {$result[$model::$priceMarket_d]}
+                        </strike> </span></p>
+                    </div>
+                <else/>
+                <!--超市商品-->
+                    <div class="pr-price buying-goods">
+                        <p class="pr-price-top">会员价：<span>￥<i>
+                            <if condition="$show">
+                                <!--{$result[$model::$priceMember_d]}  --meng -->
+                                {$price_level}
+                                <else/>
+                                注册会员更显优惠
+                            </if>
+
+                        </i> </span></p>
+                        <p class="pr-price-mar">市场价：<span>￥<strike>
+                            {$result[$model::$priceMarket_d]}
+                        </strike> </span></p>
+                        <p class="q_dotted_line"></p>
+                        <div class="q_ensure clearfix">
+                            <p class="fl">服务：</p>
+                            <span class="fl"><i class="fl"></i>
+                                100%正规渠道</span>
+                            <span class="fl"><i class="fl"></i>
+                                无忧购物</span>
+                            <span class="fl"><i class="fl"></i>
+                                进口产品海外直采</span>
+                            <span class="fl"><i class="fl"></i>
+                                商品价格优惠</span>
+                        </div>
+                    </div>
+                </if>
+                <if condition="$coupons">
+                    <div class="coupons clearfix">
+                        <span class="coupon_tit fl">优惠卷：</span>
+                        <if condition="$c_num gt 3">
+                            <i class="more_btn"></i>
+                        </if>
+                        <div class="coupons_items">
+
+                            <foreach name="coupons" item="coup">
+                                <div class="coupons_list">
+                                    <span class="quan_item">
+                                        <s></s>
+                                        <b></b>
+                                        <span class="text">
+                                            <if condition="$coup['goods_class_type'] == 0">
+                                                通用卷&nbsp;
+                                                <else/>
+                                                指定卷&nbsp;
+                                            </if>
+                                            <if condition="$coup['reduced_type'] == 1">
+                                                满{$coup['condition']}减{$coup['money']}
+                                                <else/>
+                                                满{$coup['condition']}打{$coup['discount']}折
+                                            </if>
+                                        </span>
+                                    </span>
+                                    <span class="coupon_info">{$coup['name']}</span>
+                                    <span class="get_coupon" href="{:U('Coupon/getCoupon')}" data-id="{$coup['id']}" onclick=" getCoupon(this);" id="coupon_btn">领取</span>
+                                </div>
+                            </foreach>
+                        </div>
+                    </div>
+                </if>
+
+
+                </div>
+
+
+
+                <div class="promotion-main">
+					<div class="promotion-fr fl" id="main">
+						<!--<if condition="!empty($promotionInformation)">-->
+							<!--<div class="pr-information">-->
+								<!--<h5 class="fl">促销信息：</h5>-->
+										<!--<p class="clearfix">-->
+											<!--<em class="fl">{$promotionInformation['promotion']}</em>-->
+											<!--<span class="fl">{$promotionInformation['discount']}</span>-->
+											<!--<a href="javascript:;" class="fl">立即参加</a>-->
+										<!--</p>-->
+										<!--<p class="clearfix margin" >-->
+							<!--</div>-->
+						<!--</if>-->
+						<if condition="!empty($spcClassData)">
+							<foreach name="spcClassData" key ="key" item="item">
+							<div class="pr-sps clearfix spec">
+								<h5 class="fl" value="{$item[$goodsSpecModel::$id_d]}">{$item[$goodsSpecModel::$name_d]}：</h5>
+                                <div class="fl"  style="width: 550px">
+                                    <if condition="!empty($item['children'])">
+                                        <foreach name="item['children']" key="itemKey" item="value">
+                                            <span style="display: inline-block"  class=' <if condition="false !== strpos($specParseArray[$_GET['id']][$specModel::$key_d],$value[$goodsSpecItemModel::$id_d])">active</if>'
+                                    value="{$value[$goodsSpecItemModel::$id_d]}"
+                                    onclick="GoodsObj.getBySpecForPrice(this, 'main','{:U('goodsDetails', null, null)}')">
+                                    {$value[$goodsSpecItemModel::$item_d]}
+                                            </span>
+                                        </foreach>
+                                    </if>
+                                </div>
+
+							</div>
+							</foreach>
+						</if>
+						<div class="pr-quantity clearfix">
+							<h5 class="fl">购买数量：</h5>
+							<div class="choice fl">
+								<a href="javascript:;" class="fl">-</a>
+								<input id="goodsNum" type="text" class="fl" value="1">
+								<a href="javascript:;" class="fl">+</a>
+							</div>
+							<div class="fl" id="detailstock">
+								{$result[$model::$stock_d]}
+							</div>
+						</div>
+
+<!-- 						<div class="clearfix">
+							<h5 class="fl">发货地点：</h5>
+							<div class="pr-goodplace fl">
+								<div class="pr-goodplace-default"><span value="{ $default[$sendModel::$id_d] }">{ $default[$sendModel::$stockName_d] }</span><i></i></div>
+								<div class="pr-goodplace-up clearfix">
+									<  if condition="!empty($address)"   >
+										<   foreach name="address" key ='key' item="value"   >
+											<span value="{$key}" class="fl">{$value}</span>
+										<    /  foreach     >
+									<  /  if>
+								</div>
+							</div>
+						</div>
+ -->						<div class="pr-button">
+							<form action="{$requstURL}" method="post" id="myForm">
+								<input type="hidden" value="{$result[$model::$id_d]}" name="goods_id" class="goods_id">
+								<input type="hidden" value="{$_SESSION['formId']}" name="formId">
+								<input type="hidden" value="1" name="goods_num">
+								<input type="hidden" value="{$gift_id}" name="gift_id">
+								<input type="hidden" value="{$result[$model::$priceMember_d]}" name="price_new">
+                                <!--<div class="fl">--><div class="fl">
+                                <input type="submit" value="立即购买"  onclick="return mysubmit()" class="collection" id="submit" data-value="{$result['statime']}" data-time="{$result['time']}" style="display: none">
+                                <input type="button"  value="还未开抢"  class="collection black" id="submit2" data-value="{$result['statime']}" >
+                            </div>
+                                <if condition="!$result['is_customs']">
+                                <input type="button" onclick="Cart.newAddCart(this, 'goodsNum', '{:U('Cart/new_cart_add')}')" value="加入购物车" class="fl join">
+                                <!--</div>-->
+                                </if>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--商品-->
+		<!--<div class="pr-commodity" id="goods_recommend">-->
+
+		<!--</div>-->
+		<!--商品评论-->
+		<div class="eva-comment">
+			<!--<div class="productDetaLeft fl" id="bestSelling">-->
+				<!---->
+			<!--</div>-->
+
+			<!--商品介绍记录-->
+			<div class="productDetafr fl">
+				<ul class="prod-title clearfix">
+					<li class="fl active"><span class="q_tit">商品介绍</span></li>
+					<li class="fl"><span class="q_tit">商品评价</span>
+                        <!--<span class="q_num">&nbsp;{$comment_number|default=0}</span>-->
+                    </li>
+					<li class="fl"><span class="q_tit">商品咨询</span>
+                        <!--<span>&nbsp;</span>-->
+                    </li>
+				</ul>
+				<!--介绍-->
+				<dl class="pro-comment active">
+					<dt class="clearfix">
+						<ol class="three">
+							<li>品牌：{$result[$model::$brandId_d]} </li>
+							<!--<li>产品简介：{$result[$model::$description_d]}</li>-->
+						</ol>
+					</dt>
+					<dd class="introduce">
+						{$result[$detailModel::$detail_d]}
+					</dd>
+				</dl>
+				<!--评价-->
+				<div class="pro-comment">
+					
+					<div class="comment-parentNode" id="comment">
+			
+					</div>
+				</div>
+				<!--咨询-->
+				<dl class="pro-comment" id="Consultation">
+				
+				</dl>
+				<!--最近浏览-->
+				<div class="guessYouLike clearfix" id="guess">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public/rightHtml"/>
+<script type="text/javascript">
+    var REC_URL         = "{:U('bestSelling')}";
+    var CON_URL         = "{:U('ajaxGetGoodsConsulation')}";
+    var COMMENT_URL     = "{:U('ajaxGetGoodsComment')}";
+    var RECOMMEND_URL   = "{:U('ajaxGetGoodsRecommend')}";
+    var falg = true;
+</script>
+<script type="text/javascript" src="__JS__/evaluate.js"></script>
+<script type="text/javascript" src="__JS__/expansion.js"></script>
+<script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+<script type="text/javascript" src="__COMMON__/js/cookie.js"></script>
+<script type="text/javascript" src="__JS__/toastr.min.js"></script>
+<script type="text/javascript" src="__JS__/goods/cart.js"></script>
+<script type="text/javascript" src="__JS__/goods/goods.js"></script>
+<script>
+    {:sort($specParseArray)};
+    GoodsObj.value      = {:json_encode($specParseArray)};
+    GoodsObj.connectUrl = "{:U('ajaxGetGuessLove')}";
+    GoodsObj.goodsId    = {$_GET['id']};
+    $('.procDetailInner .procDeta-fr .pr-price .pr-price-bottom .code-move').hover(function(){
+        $(this).find('.code-up').stop().fadeIn();
+    },function(){
+        $(this).find('.code-up').stop().fadeOut();
+    })
+</script>
+<script>
+    var stime;
+    var timestamp;
+    var int ;
+    window.onload=function(){
+        var stock = $("#detailstock").html();
+        stock = stock.trim();
+        if(stock == '该商品已售完，敬请期待'){
+            $("input[class='collection']").val('已售空');
+            $("input[class='collection']").click(function(){
+                return false;
+            });
+
+        }
+
+        stime = $("#submit").attr('data-value');
+        timestamp = $("#submit").attr('data-time');
+        stime = parseInt(stime);
+        timestamp = parseInt(timestamp);
+        int = self.setInterval("clock()",1000);
+    };
+    function clock(){
+        timestamp = timestamp + 1;
+        if(stime != NaN || timestamp != NaN){
+            if(timestamp > stime){
+                var t = timestamp - stime;
+            }else{
+                var t = stime - timestamp;
+            }
+            var h = Math.floor(t/60/60);
+            var i = Math.floor(t/60%60);
+            var s = Math.floor(t%60);
+            h = h < 10 ? "0" + h : h;
+            i = i < 10 ? "0" + i : i;
+            s = s < 10 ? "0" + s : s;
+            $(".hour").html(h);
+            $(".minute").html(i);
+            $(".seconds").html(s);
+
+            if(timestamp>=stime){
+                $("#submit2").css("display","none");
+                $("#submit").css("display","block");
+//                window.clearInterval(int);
+                $(".span1").html('正在秒杀中');
+                $(".span2").html('已开始秒杀时间');
+                return false;
+            }else{
+//                var t = stime - timestamp;
+
+                $("#submit2").val('还未开抢');
+
+//              window.clearInterval(int);
+            }
+        }
+    }
+    // 领取优惠卷
+    function getCoupon(ent){
+        var url = $(ent).attr('href');
+        var cid = $(ent).attr('data-id');
+        $.post(url, {coupon_id:cid}, function(res){
+            if (res.status == 0) {
+                layer.msg(res.message);
+                return false;
+            }else{
+                layer.msg(res.message);
+            }
+        });
+    }
+    $('.coupons .more_btn').click(function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            $('.coupons .coupons_items').removeClass('active');
+        }else{
+            $(this).addClass('active');
+            $('.coupons .coupons_items').addClass('active');
+        }
+    })
+
+    $(document).ready(function(){
+        $('.gift_hidden').css('display','none');
+    })
+    $('.gift_price').mouseover(function(){
+        $('.gift_hidden').css('display','inline');
+    })
+    $('.gift_price').mouseout(function(){
+        $('.gift_hidden').css('display','none');
+    })
+
+    var checkSubmitFlg = false;
+    function mysubmit() {
+        if (!checkSubmitFlg) {
+        // 第一次提交
+            checkSubmitFlg = true;
+            return true;
+        } else {
+        //重复提交
+            alert("正在创建订单中");
+            return false;
+        }
+    }
+
+
+</script>
+
+</block>

@@ -1,0 +1,75 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr personaM-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">实名认证</a></li>
+				</ul>
+			</div>
+			<form action="{:U('TrueName/save_true_name')}" method="post" onsubmit="return save_true_name()">
+				<dl class="content-main">
+
+					<dd class="clearfix">
+						<span class="fl">*真实名称：</span>
+						<input type="text" value="{$data.true_name}" class="txt fl" name="true_name" id="true_name">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">*身份证号：</span>
+						<input type="text" value="{$data.card_id}" class="txt fl" name="card_id" id="card_id" >
+					</dd>
+                    <dd class="clearfix">
+                        <span class="fl">*身份证正面：</span>
+
+                            <input  type="file"  onchange="bindAvatar1(this)" id="front_img2">
+                        <if condition="$data.front_img">
+                            <img class="lazy" style="width: 100px;height:100px;"  src="{$data.front_img}" title="点击更换图片" >
+                        <else/>
+                            <img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >
+                        </if>
+
+                            <!--<img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >-->
+                            <input  type="hidden" name="front_img" id="front_img" value="{$data.front_img}">
+
+                    </dd>
+                    <dd class="clearfix">
+                        <span class="fl">*身份证反面：</span>
+
+                            <input  type="file"  onchange="bindAvatar1(this)" id="back_img2">
+                        <if condition="$data.front_img">
+                            <img class="lazy" style="width: 100px;height:100px;"  src="{$data.back_img}" title="点击更换图片" >
+                            <else/>
+                            <img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >
+                        </if>
+                            <!--<img style="width: 100px;height:100px;"  src="__PUBLIC__/Home/img/failure.png" title="点击更换图片" >-->
+                            <input  type="hidden" name="back_img" id="back_img" value="{$data.back_img}">
+
+                    </dd>
+
+					<dd class="clearfix">
+						<span class="fl"></span>
+                        <notempty name="$data.id">
+                            <input type="hidden" name="id" value="{$data.id}">
+                        </notempty>
+						<input type="submit" value="保存" class="sub">
+					</dd>
+				</dl>
+			</form>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script>
+    var addImg = "{:U('addImg')}";
+</script>
+<script src="__JS__/truename/true_name.js"></script>
+<!-- <script src="js/header.js"></script> -->
+
+</block>

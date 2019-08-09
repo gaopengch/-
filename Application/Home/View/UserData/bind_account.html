@@ -1,0 +1,85 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr bindcout-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">账号绑定</a></li>
+				</ul>
+			</div>
+			<ul class="content-main">
+				<li class='clearfix <if condition="count($list[3]) gt 0">active</if> '>
+					<div class="fl clearfix">
+						<span class="fl show"></span>
+						<span class="fl">支付宝绑定</span>
+						<span class="fl data"><if condition="empty($list[3])">未绑定<else />绑定</if></span>
+					</div>
+					<div class="fr">
+						<if condition="count($list[3]) eq 0">
+	 						<a href="{:U('bindAlipay', ['act'=>1])}">绑定</a>
+ 						<else />
+	 						<a href="{:U('bindAlipay', ['act'=>2])}">解绑</a>
+						</if>
+					</div>
+				</li>
+				<!--<li class='clearfix <if condition="count($list[4]) gt 0">active</if> '>-->
+					<!--<div class="fl clearfix">-->
+						<!--<span class="fl show"></span>-->
+						<!--<span class="fl">QQ绑定</span>-->
+						<!--<span class="fl data"><if condition="empty($list[4])">未绑定<else />绑定</if></span>-->
+					<!--</div>-->
+					<!--<div class="fr">-->
+						<!--暂不支持-->
+						<!--&lt;!&ndash; <if condition="count($list[4]) eq 0">-->
+	 						<!--<a href="{:U('bindQQ', ['act'=>1])}">绑定</a>-->
+ 						<!--<else />-->
+	 						<!--<a href="{:U('bindQQ', ['act'=>2])}">解绑</a>-->
+						<!--</if> &ndash;&gt;-->
+					<!--</div>-->
+				<!--</li>-->
+				<li class='clearfix <if condition="count($list[5]) gt 0">active</if> '>
+					<div class="fl clearfix">
+						<span class="fl show"></span>
+						<span class="fl">微信绑定</span>
+						<span class="fl data"><if condition="empty($list[5])">未绑定<else />绑定</if></span>
+					</div>
+					<div class="fr">
+						暂不支持
+						<!-- <if condition="count($list[5]) eq 0">
+	 						<a href="{:U('bindWechat', ['act'=>1])}">绑定</a>
+ 						<else />
+	 						<a href="{:U('bindWechat', ['act'=>2])}">解绑</a>
+						</if> -->
+					</div>
+				</li>
+				<!--<li class='clearfix <if condition="count($list[6]) gt 0">active</if> '>-->
+					<!--<div class="fl clearfix">-->
+						<!--<span class="fl show"></span>-->
+						<!--<span class="fl">微博绑定</span>-->
+						<!--<span class="fl data"><if condition="empty($list[6])">未绑定<else />绑定</if></span>-->
+					<!--</div>-->
+					<!--<div class="fr">-->
+						<!--<if condition="count($list[6]) eq 0">-->
+	 						<!--<a href="{:U('bindWeibo', ['act'=>1])}">绑定</a>-->
+ 						<!--<else />-->
+	 						<!--<a href="{:U('bindWeibo', ['act'=>2])}">解绑</a>-->
+						<!--</if>-->
+						<!---->
+					<!--</div>-->
+				<!--</li>-->
+			</ul>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

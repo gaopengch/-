@@ -1,0 +1,76 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i> 我的团队
+                    </h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <td class="text-left">上级会员账号：</td>
+                                <td class="text-left">{$top_user[0]['user_name']} </td>
+                                <td class="text-left">上级会员手机</td>
+                                <td class="text-left">{$top_user[0]['mobile']} </td>
+                                <td class="text-left ">
+                                    <button style="margin-left: 20px" type="button" class="export-down" data-value="{$self}">导出下级</button>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="text-left">下级会员ID</td>
+                                <td class="text-left">下级会员账号</td>
+                                <td class="text-left">下级会员手机</td>
+                                <td class="text-left">消费额（元）</td>
+                                <td class="text-left">返利额（元）</td>
+                                <!--<td class="text-left">详情</td>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <if condition="!empty($data)">
+                                <volist name="data" id="list" key="k">
+                                    <tr>
+                                        <td class="text-left">{$list['id']}</td>
+                                        <td class="text-left">{$list['user_name']}</td>
+                                        <td class="text-left">{$list['mobile']}</td>
+                                        <td class="text-left">{$list['money']}</td>
+                                        <td class="text-left">{$list['rebate_money']}</td>
+                                        <!--<td class="text-left"></td>-->
+                                    </tr>
+                                </volist>
+                            <else />
+                                <tr>
+                                    <td colspan="5" style="text-align: center">
+                                        暂无下级
+                                    </td>
+                                </tr>
+                            </if>
+
+                            </tbody>
+
+                        </table>
+                        <div class="page">{$page}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+
+<script src="__JS__/user/excel2.js"></script>
+<script>
+    var EXP_URL =  '{:U("User/exportDown")}';
+</script>
+
+</block>

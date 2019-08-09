@@ -1,0 +1,53 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr atest-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl hover active"><a href="javascript:;">售后管理</a></li>
+				</ul>
+			</div>
+			<dl class="con-main">
+				<dt class="clearfix">
+					<span class="fl sales-nr">售后编号</span>
+					<span class="fl order-nr">订单编号</span>
+					<span class="fl sales-reason">售后原因</span>
+					<span class="fl state">状态</span> 
+					<span class="fl timer">申请时间</span>
+					<span class="fl operation">操作</span>
+				</dt>
+				<volist name="data.res" id="vo">
+					<dd class="clearfix">
+						<span class="fl sales-nr">{$vo.id}</span>
+						<span class="fl order-nr">{$vo.order_id}</span>
+						<span class="fl sales-reason"><empty name="vo.tuihuo_case">&nbsp;<else/>{$vo.tuihuo_case|substr=0,45}</empty></span>
+						<span class="fl state">
+							<switch name="vo.status">
+								<case value="0">审核中</case>
+								<case value="1">审核失败</case>
+								<case value="2">审核通过</case>
+								<case value="3">退货中</case>
+								<case value="4">退款中</case>
+								<case value="4">完成</case>	
+							</switch>
+						</span>
+						<span class="fl timer">{$vo.create_time|date="Y-m-d H:i",###}</span>
+						<a href="{:U('Service/check_detail',array('id'=>$vo['id']))}" class="fl operation">查看详情 </a>
+					</dd>
+				</volist>
+			</dl>
+			<div class="page">
+				{$data.page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+</block>

@@ -1,0 +1,41 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr modpaw-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">修改手机号</a></li>
+				</ul>
+			</div>
+			<ul class="content-main">
+				<li class="clearfix">
+					<span class="fl">原手机号码：</span>
+					<input type="text" class="txt fl">
+				</li>
+				<li class="clearfix">
+					<span class="fl">新手机号码：</span>
+					<input type="text" class="txt fl">
+				</li>
+				<li class="clearfix">
+					<span class="fl">确认新手机号码：</span>
+					<input type="text" class="txt fl">
+				</li>
+				<li class="clearfix">
+					<span class="fl"></span>
+					<input type="submit" class="btn fl">
+				</li>
+			</ul>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

@@ -1,0 +1,92 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr bindset-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">手机绑定设置</a></li>
+				</ul>
+			</div>
+			<div class="content-main clearfix">
+				<div class="con-left-main fl">
+					<p>
+						绑定手机号码，可以直接使用手机号登录，方便快捷。
+					</p>
+					<p>绑定成功，您还可以使用手机号登陆，方便快速哦！</p>
+					<h2 class="mobil">已有手机号绑定</h2>
+					<form action="{:U('UserSet/bound_phone')}" method="post" onsubmit="return bound_phone()"> 
+						<div class="form">
+							<div class="usermobile">
+								<input type="text" placeholder="手机号" id="tel" name="mobile" class="txt">
+								<em class="Verification" id="V-btn">发送验证码</em>
+							</div>
+							<div class="usermobile"><input type="text" placeholder="请验证码" id="code" name="code" class="txt"></div>
+							<input type="submit" class="sub" value="绑定">
+						</div>
+					</form>
+				</div>
+				<div class="con-right-main fr clearfix">
+					<h2>您登陆的商城账号为</h2>
+					<div class="images-parent">
+						<img src="__SERVER__/{$data.user_header}" height="50" width="50" class="fl">
+						<h5 class="fl">会员名：<em>{$data.user_name}</em></h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script type="text/javascript" src="__JS__/userset/address.js"></script>	
+<!-- <script src="js/header.js"></script> -->
+<script>
+
+var bFlag = false;
+$('#V-btn').on('click',function(){
+	if(bFlag == true)return;
+    bFlag = true;
+    var N = 60;
+    var timer = null;
+    var _this = $(this);
+	//发送验证码的接口
+	var url = "{:U('ApiPhone/bound_phone')}";
+	var tel = $('#tel').val();
+	if (tel == "") {
+		layer.tips('请输入手机号', '#tel');
+		bFlag = false;
+		return false;
+	}
+	if(!/^1[345789]\d{9}$/.test(tel)){
+  		layer.tips('请输入正确的手机号', '#tel');
+  		bFlag = false;
+		return false;
+	}
+	var data = {tel: $('#tel').val()};
+	$.post(url, data, function (response) {
+		console.log(response);
+	});
+    _this.addClass('active');
+	timer = setInterval(function(){
+		N--;
+		if(N <= 0){
+			N = 60;
+			clearInterval(timer);
+			_this.html('重新获取验证码');
+			_this.removeClass('active');
+			bFlag = false;
+
+		}else{
+			_this.html(N+'秒后重试');
+		}
+
+	},1000);
+});	
+</script>
+</block>

@@ -1,0 +1,47 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr reair-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">上门维修</a></li>
+				</ul>
+			</div>
+			<form action="{:U('Service/repair')}" method="post" onsubmit="return check_repair();">
+				<div class="content-main">
+					<p class="clearfix">
+						<span class="fl">维修项目：</span>
+						<input type="text" name="tuihuo_case" id="tuihuo_case" class="txt">
+					</p>
+					<p class="clearfix">
+						<span class="fl">维修时间：</span>
+						<input type="date" name="update_time" id="update_time" class="txt">
+					</p>
+					<p class="clearfix">
+						<span class="fl">维修地点：</span>
+						<input type="text" name="address" id="address" class="txt">
+					</p>
+					<p class="clearfix">
+						<span class="fl">联系电话：</span>
+						<input type="text" name="tel" id="tel" class="txt">
+					</p>
+					<p class="clearfix">
+						<span class="fl"></span>
+						<input type="submit" class="btn" value="立即申请">
+					</p>
+				</div>
+			</form>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

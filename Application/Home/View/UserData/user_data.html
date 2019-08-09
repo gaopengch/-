@@ -1,0 +1,70 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr personaM-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">个人资料</a></li>
+				</ul>
+			</div>
+			<form action="{:U('UserData/user_data')}" method="post" onsubmit="return user_data()">
+				<dl class="content-main">
+					<dt>亲爱的 {$data.nick_name}，填写真实的资料，有助于好友找到你哦。</dt>
+					<dd class="clearfix">
+						<span class="fl">当前头像：</span>
+						<div class="fl img-parent">
+							
+							<notempty name="data.user_header">
+								<a href="{:U('UserData/head_edit')}">  
+									<img src="{$data.user_header}" height="83" widht="83">
+								</a>
+							<else/>
+								<a href="{:U('UserData/head_edit')}">
+									暂时没有头像!
+								</a>
+							</notempty>
+							
+						</div>
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">*昵称：</span>
+						<input type="text" value="{$data.nick_name}" class="txt fl" name="nick_name" id="nick_name">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">账号名：</span>
+						<input type="text" value="{$data.user_name}" class="txt fl" name="user_name" id="user_name" disabled>
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">手机号码：</span>
+						<input type="text" value="{$data.mobile}" class="txt fl" name="mobile" id="mobile" disabled="disabled">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">邮箱：</span>
+						<input type="text" value="{$data.email}" class="txt fl" name="email" id="email">
+					</dd>
+					<dd class="clearfix">
+						<span class="fl">性别：</span>
+						<label class="fl sex"><input type="radio" name="sex" value="男"<if condition="$data.sex eq '男'">checked</if>>男</label>
+						<label class="fl sex"><input type="radio" name="sex" value="女"<if condition="$data.sex eq '女'">checked</if>>女</label>
+					</dd>
+					<dd class="clearfix">
+						<span class="fl"></span>
+						<input type="hidden" name="id" value="{$data.id}">
+						<input type="submit" value="保存" class="sub">
+					</dd>
+				</dl>
+			</form>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/userset/user_data.js"></script>
+<!-- <script src="js/header.js"></script> -->
+</block>

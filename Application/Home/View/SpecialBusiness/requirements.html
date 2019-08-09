@@ -1,0 +1,187 @@
+<extend name="Order/personalEdit"/>
+<include file="Order/personalHeaderTwo"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr requts-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">采购需求单</a></li>
+				</ul>
+			</div>
+			<form action="{:U('SpecialBusiness/requirements')}" method="post" onsubmit="return purchase();" class="form">
+				<div class="con-wrap clearfix">
+					<div class="prompt"><em>温馨提示：</em>该功能只对企业用户开放。</div>
+					<div class="level-title">
+						<div class="clearfix subject">
+							<span class="fl">标题：</span>
+							<input type="text" name="purchase_title" id="purchase_title" class="fl">
+						</div>
+						<div class="demandType clearfix">
+							<span class="fl">需求类型：</span>
+							<label class="fl"><input type="radio" name="purchase_type" value="1"> 询货</label>
+							<label class="fl"><input type="radio" name="purchase_type" value="2"> 询价</label>
+							<label class="fl"><input type="radio" name="purchase_type" value="3"> 询交期</label>
+						</div>
+						<div class="demandType clearfix">
+							<span class="fl">采购商品：</span>
+						</div>
+					</div>
+					<div class="table-main">
+						<div class="title-bg"></div>
+						<table class="goods">
+							<tr>
+							    <th width="40">全选<input id="checkAll" type="checkbox"style="width:15px;height:15px;" class="parentNode"/></th>
+								<th width="100">商品编号</th>
+								<th width="274">* 商品名称</th>
+								<th width="142">商品分类</th>
+								<th width="97">* 所需数量</th>
+								<th width="93">预算单价(元)</th>
+								<th width="140">说明</th>
+								<th width="83">商品图片</th>
+								<th width="40" class="border-r">操作</th>
+							</tr>
+							<volist name="goods" id="goods">
+								<tr class="goods_list" id="del{$goods.purchase_product_id}">
+								    <td><input type="checkbox" data="goods_id" name="goods_id[]" style="width:20px;height:20px;" value="{$goods.purchase_product_id}"></td>
+								    <td>{$goods.purchase_product_id}</td>
+									<td>{$goods.productname}</td>
+									<td>{$goods.productclass}</td>
+									<td class="number">{$goods.productnum}</td>
+									<td class="price">{$goods.productbudget}</td>
+									<td class="shuoming">{$goods.productexplain|substr=0,30}</td>								
+									<td>
+										<img src="{$goods.productimg}" width="50" height="50">
+									</td>
+									<td class="delete_list" data-value="{$goods.purchase_product_id}"><a href="javascript:;" class="delete"></a></td>
+								</tr>
+							</volist>
+						</table>
+						<div class="budget-main">
+							<div class="budget">总预算：<em><input type="text" name="total_price" id="total_price" readOnly="true" style="border:0;color:red;font-size:25px;overflow: visible;" value="0.00元" class="price-number" /></em></div>
+							<div class="addCommd clearfix" >
+								<a href="javascript:;" class="fl Popover">+ 点击添加商品</a>
+							</div>
+						</div>
+
+						<dl class="demand-main">
+							<dt>采购要求</dt>
+							<dd class="clearfix">
+								<span class="fl"><em>*</em> 联系人：</span>
+								<input type="text" name="contacts" id="contacts" class="fl txt">
+							</dd>
+							<dd class="clearfix">
+								<span class="fl"><em>*</em> 联系电话：</span>
+								<input type="text" name="tel" id="tel" class="fl txt">
+							</dd>
+							<dd class="clearfix">
+								<span class="fl">收货日期：</span>
+								<input type="text" class="fl txt" name="overtime" id="overtime" onClick="new Calendar().show(this)">
+								<b class="fl">(不填写则默认商城配送时间)</b>
+							</dd>
+							<dd class="clearfix">
+								<span class="fl">支付方式：</span>
+								<label class="fl"><input type="radio" class="rdo" name="pay_type" value="1"> 在线支付</label>
+								<label class="fl"><input type="radio" class="rdo" name="pay_type" value="2"> 合约客户支付</label>
+							</dd>
+							<dd class="clearfix">
+								<span class="fl">发票信息：</span>
+								<label class="fl"><input type="radio" class="rdo" name="invoice" value="1"> 普通发票</label>
+								<label class="fl"><input type="radio" class="rdo" name="invoice" value="2"> 增值发票</label>
+							</dd>
+						</dl>
+
+						<div class="explain">
+							<h2>补充说明：</h2>
+							<textarea name="explain" id="explain"></textarea>
+						</div>
+						<div class="submit-main clearfix">
+							<input type="hidden" name="state" value="" class="state">
+							<input type="button" class="fl one" value="提&nbsp;交">
+							<input type="button" class="fl two" value="保&nbsp;存">
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	<!--樊恩材新加弹出框- -->
+	<div class="add_Commodity">
+		<div class="add_Commodity_Title">
+			添加需求单商品
+			<a href="javascript:;"><img src="__IMG__/tianjia_gb.png" alt=""/></a>
+		</div>
+		<div class="add_Commodity_Filter">
+			<span class="Filter_span">筛选：</span>
+			<select class="add_Commodity_Filter_select class">
+				<option value ="">请选择</option>
+				<volist name="class_one" id="vo">
+				<option value ="{$vo.id}">{$vo.class_name}</option>
+				</volist>
+			</select>
+			<div class="add_Cutting_line"></div>
+			<select class="add_Commodity_Filter_select class_one">
+				<option value ="">请选择</option>
+				<option value ="">2</option>
+				<option value="">3</option>
+				<option value="">4</option>
+			</select>
+			<div class="add_Cutting_line"></div>
+			<select class="add_Commodity_Filter_select class_two">
+				<option value ="">请选择</option>
+				<option value ="">2</option>
+				<option value="">3</option>
+				<option value="">4</option>
+			</select>
+		</div>
+		<form action="{:U('SpecialBusiness/goods_add')}" method="post" onsubmit="return check_goods_add()">
+			<div class="add_Commodity_Content">
+				<div class="add_Commodity_Content_top" id="xuanze">
+					<div class="add_option">选择</div>
+					<div class="add_Number">商品编号</div>
+					<div class="add_Name">商品名称</div>
+					<div class="add_Sort">商品分类</div>
+					<div class="add_price">商品单价</div>
+					<div class="add_img">商品图片</div>
+				</div>
+			</div>
+			<!--分页王波有-->
+			<div class="add_fenye">
+			    <input type="hidden" id="page" value="0">
+	            <span class="fl">共有0条数据</span><a href="javascript:;" id="Prev" class="fl">上一页</a><a href="javascript:;" id="next" class="fl">下一页</a>
+			</div>
+			<div class="add_feed">
+				<div class="add_feed">
+					<div class="add_feed_Loop">
+						<div class="add_feed_Loop_Title"><span>*</span>所需数量</div><input type="number" class="add_feed_Loop_input" name="num" id="num" />
+					</div>
+					<div class="add_feed_Loop">
+						<div class="add_feed_Loop_Title"><span>*</span>预算单价/（元）</div><input type="number" class="add_feed_Loop_input" name="price" id="price" />
+					</div>
+				</div>
+				<div class="add_feed_sm">
+					<textarea name="productexplain" id="productexplain" class="fl shuomimg" placeholder="采购说明" ></textarea>
+				</div>
+			</div>
+			<input type="submit" class="bottom_input" value="添加至采购需求单（1）"/>
+        </form>
+	</div>
+	<!--樊恩材新加背景颜色-->
+	<div class="add_Commodity_bg">
+
+	</div>
+	
+<!-- <script src="js/header.js"></script> -->
+<script src="__JS__/Special/Purchase.js"></script>
+<script src="__JS__/Calendar.js"></script>
+
+</block>

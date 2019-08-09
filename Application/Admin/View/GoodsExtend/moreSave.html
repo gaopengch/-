@@ -1,0 +1,114 @@
+<extend name="Public/publicHTML"/>
+<block name="nav">
+    <div class="nav">
+        <div class="nav_title">
+            <h4><img class="nav_img" src="__IMG__/tab.gif" /><span class="nav_a">跨境购商品</span></h4>
+        </div>
+    </div>
+    <br/><br/>
+</block>
+
+<block name="content">
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"  href="__COMMON__/bootstrap/css/font-awesome.min.css"/>
+    <style>
+        .date{
+            width: 110px;
+        }
+        .short{
+            width: 50px;
+        }
+    </style>
+    <section class="content">
+        <!-- Main content -->
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-list"></i> 跨境购商品批量编辑</h3>
+                </div>
+                <div class="panel-body">
+                    <!--表单数据-->
+                    <form method="post" action="{:U('save_post')}" >
+                        <!--通用信息-->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_tongyong">
+
+                                <table class="table table-bordered">
+                                    <tbody>
+                                    <volist name="save_data" id="data">
+                                        <input type="hidden" value="{$data.id}" name="goods[{$data.id}][goods_id]">
+                                        <tr>
+                                            <td>商品名称:</td>
+                                            <td>
+                                                <input type="text" value="{$data.title}" name="goods[{$data.id}][title]" class="form-control" style="width:400px; " disabled/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>设置:</td>
+                                            <td>
+
+                                                原产国{$data['country_id']}&nbsp;&nbsp;<select name="goods[{$data.id}][country_id]" class="date">
+                                                <if condition="!$data['country_id']">
+                                                    <option selected>请选择国家</option>
+                                                    <foreach name="countrys" item="coun">
+                                                        <option value="{$coun.country_id}">
+                                                        {$coun.name}
+                                                        </option>
+                                                    </foreach>
+                                                <else/>
+                                                    <foreach name="countrys" item="coun">
+                                                        <option value="{$coun.country_id}" <if condition="$coun.id eq $data['country_id']">selected</if>>
+                                                        {$coun.name}
+                                                        </option>
+                                                    </foreach>
+                                                </if>
+                                            </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                海关单位{$data['unit_id']}&nbsp;&nbsp;<select name="goods[{$data.id}][unit_id]" class="date">
+                                                <if condition="!$data['unit_id']">
+                                                    <option selected >请选择单位</option>
+                                                    <foreach name="units" item="unit">
+                                                        <option value="{$unit.unit_id}" >
+                                                        {$unit.unit_name}
+                                                        </option>
+                                                    </foreach>
+                                                <else/>
+                                                    <foreach name="units" item="unit">
+                                                        <option value="{$unit.unit_id}" <if condition="$unit.id eq $data['unit_id']">selected</if>>
+                                                        {$unit.unit_name}
+                                                        </option>
+                                                    </foreach>
+                                                </if>
+                                            </select>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <input type="submit" class="btn btn-primary" data-toggle="tooltip"   data-original-title="保存" value='保存'>
+                        </div>
+                    </form><!--表单数据-->
+                </div>
+            </div>
+        </div>    <!-- /.content -->
+    </section>
+    <script type="text/javascript" src="__COMMON__/js/alert.js?a={:time()}"></script>
+    <js href='__COMMON__/js/jquery-1.11.3.min.js'/>
+    <script type='text/javascript'>
+        $(function(){
+            //回显公告状态
+            $('.status').val([{$row.status|default=1}]);
+        //回显公告类型
+        $('.type').val([{$row.type|default=0}]);
+        });
+    </script>
+
+</block>
+
+

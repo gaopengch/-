@@ -1,0 +1,87 @@
+<volist name="data" id="list">
+	<tr>
+		<td class="text-center"><input type="checkbox" name="selected[]" value="{$list.id}"> </td>
+		<td class="text-center">{$list.id}</td>
+		<td class="text-center">{$list.drawal_id}</td>
+		<td class="text-center">{$list.user_name}</td>
+		<td class="text-center">{$list.mobile}</td>
+		<if condition="$list.bank_num eq '0'">
+			<td class="text-center"></td>
+		<else/>
+			<td class="text-center">{$list.bank_num}</td>
+        </if>
+        <if condition="$list.bank_num">
+            <td class="text-center"></td>
+        <else/>
+            <td class="text-center">{$list.bank_name}</td>
+        </if>
+        <if condition="$list.bank_user">
+            <td class="text-center"></td>
+        <else/>
+            <td class="text-center">{$list.bank_user}</td>
+        </if>
+        <!--<td class="text-center">{$list.bank_name}</td>-->
+        <!--<td class="text-center">{$list.bank_user}</td>-->
+        <if condition="$list.ali_account eq '0'">
+        	<td class="text-center"></td>
+        <else/>
+        <td class="text-center">{$list.ali_account}</td>
+    	</if>
+        <td class="text-center">{$list.money}</td>
+        <td class="text-center">{$list.result}</td>
+        <if condition="$list.admin eq '0'">
+        	<td class="text-center"></td>
+        <else/>
+        	<td class="text-center">{$list.admin}</td>
+    	</if>
+    	<if condition="$list.last_time eq '0'">
+    		<td class="text-center"></td>
+    	<else/>
+        	<td class="text-center">{$list.last_time|date="Y-m-d H:i:s",###}</td>
+    	</if>
+		<td class="text-center">
+			<if condition="$list.status eq '2'">
+				<a href="javascript:;" class="btn btn-info goods_list">提现完成</a>
+			<else/>
+				<a onclick="shenhe('{$list.id}')" data-toggle="tooltip" title="审核" class="btn btn-info" data-original-title="审核"><i class="fa fa-send"></i>
+				</a>
+			</if>
+	</tr>
+</volist>
+	<tr>
+		<td class="text-center" colspan="14"><div class="page">{$page}</div></td>
+    </tr>
+<script type="text/javascript">
+	/*
+ * ajax数据分页
+ * 触发ajax
+ * @param data 要传送的数据
+ * @param page_href_url 点击分页无刷新跳转请求地址
+ */
+    $(".page a").on("click",function(){
+        var page=$(this).attr("data-p");
+        clickAjax(page);
+        return false;
+
+    });
+    function  clickAjax(page){
+        var url = "{:U('ajaxGetData')}";  
+        var timeStart = $('#timeStart').val();
+        var timeEnd = $('#timeEnd').val();
+        var mobile = $('#mobile').val();
+        var status = $('#status').val();  
+        $.post('ajaxGetData',{"timeStart":timeStart,"timeEnd":timeEnd,"mobile":mobile,"status":status,"page":page},function(date){
+                $('#ajaxGetData').html(date);
+            })
+    }
+    function shenhe(id){
+    	parent.layer.open({
+		type: 2,
+		shadeClose: true,
+		shade: 0.5,
+		area: ['200px', '200px'],
+		title: '审核状态',
+		content: "{:U('shenhe')}/id/"+id
+	    });
+    }
+</script>

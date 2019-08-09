@@ -1,0 +1,290 @@
+<extend name="Supermarket/indexEdit"/>
+<block name="content">
+    <link rel="stylesheet" href="__CSS__/toastr.min.css"/>
+    <style>
+        #loading {
+            height: 45px;
+            font-size: 16px;
+            font-weight: 800;
+            text-align: center;
+            line-height: 45px;
+        }
+    </style>
+	<!--轮播-->
+    <div class="q_g_nav">
+        <div class="hpTopNews clearfix">
+            <div class="q_null fl"></div>
+            <div class="hpTopBanner fl">
+                <ul class="fl slides clearfix">
+                    <li class="fl"><a href="javscript:;"><img></a></li>
+                    <li class="fl"><a href="javscript:;"><img></a></li>
+                </ul>
+                <!--<a href="javascript:;" class="left"><</a>-->
+                <!--<a href="javascript:;" class="right">></a>-->
+                <div class="page">
+                    <input type="hidden" id="banner_url" value="{:U('Supermarket/banner')}"/>
+                </div>
+            </div>
+            <div class="jq_ensure fl">
+                <div class="moq_ensure">
+                    <div class="moq_ensure_item">
+                        <div class="moq_ensure_unit">
+                            <span class="moq_real_thing moq_ico"></span>
+                            <p class="moq_ensure_tit">正规渠道保证</p>
+                            <p class="moq_describe"><span class="moq_des">正品保证 放心购物</span></p>
+                        </div>
+                    </div>
+                    <div class="moq_divider"></div>
+                    <div class="moq_ensure_item">
+                        <div class="moq_ensure_unit">
+                            <span class="moq_preferential moq_ico"></span>
+                            <p class="moq_ensure_tit">宝贝价格实惠</p>
+                            <p class="moq_describe"><span class="moq_des">一切只为会员</span></p>
+                        </div>
+                    </div>
+                    <div class="moq_divider"></div>
+                    <div class="moq_ensure_item">
+                        <div class="moq_ensure_unit">
+                            <span class="moq_service moq_ico"></span>
+                            <p class="moq_ensure_tit">无忧购物</p>
+                            <p class="moq_describe"><span class="moq_des">专业售后团队</span></p>
+                        </div>
+                    </div>
+                    <div class="moq_divider"></div>
+                    <div class="moq_ensure_item">
+                        <div class="moq_ensure_unit">
+                            <span class="moq_overseas moq_ico"></span>
+                            <p class="moq_ensure_tit">海外直采</p>
+                            <p class="moq_describe"><span class="moq_des">跨境合作</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fl hpLeftBanner">
+                <div class="q_news_l">
+                    <p class="q_news_title">公告</p>
+                    <div class="news_list">
+                        <foreach name="announcements" item="announce">
+                        <p class="q_news_item">
+                            <a href="{:U('Service/getAnnouDetails',array('id'=>$announce['id']))}">
+                                <em class="fl">【公告】</em>
+							<span class="fl">
+                               {$announce.title|msubstr=0,12,'utf-8',true}
+                            </span>
+                                <if condition="$announce.type eq 1">
+                                <span><img src="__IMG__/new.gif" alt=""></span>
+                                </if>
+                            </a>
+                        </p>
+                        </foreach>
+                    </div>
+                </div>
+                <div class="app_download">
+                    <p class="app_tip">下载APP方便购物</p>
+                    <div class="app_code">
+                        <img src="/Uploads/conf/wx_qrcode.jpg" alt="app-二维码"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!--1f-->
+	<!--<volist name="indexInfor" id="big" key="a">-->
+
+            <!--<div class="home-section{$a} home-section" >-->
+                <!--<div class="floor-main-top clearfix">-->
+                    <!--<em class="fl">{$a}F</em>-->
+                    <!--<h2 class="fl">-->
+                        <!--<b><a href="{$big.url}" style="color:black;">{$big.name}</a></b>-->
+                    <!--</h2>-->
+                <!--</div>-->
+                <!--<div class="floor-main w clearfix">-->
+                    <!--<ul class="saleZone-fl fl">-->
+                        <!--<li class="saleInfo">-->
+                            <!--<a href="{$big.url}">-->
+                                <!--<img class="lazy" data-original="__SERVER__{$big.pic_url}" src="__IMG__/load3.jpg" height="495" width="196">-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--&lt;!&ndash;<li class="saleNav clearfix">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<h4 class="fl"></h4>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--</ul>-->
+
+                    <!--<div class="saleZone-fr fl">-->
+                        <!--<div class="content-main clearfix">-->
+                            <!--<div class="fl">-->
+                                <!--<dl class="clearfix con fl active">-->
+                                    <!--<if condition="$big['one']!=null">-->
+                                        <!--<dd class="fl">-->
+                                            <!--<a href="{:U('Goods/goodsDetails',['id'=>$big['one']['id']])}">-->
+                                                <!--<div class="img-parent-warp">-->
+                                                    <!--<div class="x_move" style="width: 140px;height: 140px;position: absolute;top: 15px;left: 50%;margin-left: -70px;">-->
+                                                        <!--<img class="lazy" data-original="__SERVER__{$big.one.pic_url}" src="__IMG__/load4.jpg" alt="">-->
+                                                        <!--<if condition="!$big['one']['stock']">-->
+                                                            <!--<img class="lazy sellout" data-original="__SERVER__/Public/Home/img/sellout2.jpg" src="__IMG__/load4.jpg" alt="">-->
+                                                        <!--</if>-->
+                                                    <!--</div>-->
+
+                                                <!--</div>-->
+                                                <!--<p>{$big.one.title}</p>-->
+                                                <!--<if condition="$show">-->
+                                                    <!--<span>￥{$big.one.price_member}</span>-->
+                                                    <!--<strike>￥{$big.one.price_market}</strike>-->
+                                                <!--<else/>-->
+                                                    <!--<span>￥{$big.one.price_market}</span>-->
+                                                    <!--<strike>会员价更低</strike>-->
+                                                <!--</if>-->
+
+                                            <!--</a>-->
+                                        <!--</dd>-->
+                                    <!--<else/>-->
+                                        <!--<dd class="fl">-->
+                                            <!--<a href="">-->
+                                                <!--<div class="img-parent-warp">-->
+                                                    <!--<img class="lazy"  src="__IMG__/load4.jpg" alt="">-->
+                                                <!--</div>-->
+                                                <!--<p></p>-->
+                                                <!--<span></span>-->
+                                                <!--<strike></strike>-->
+                                            <!--</a>-->
+                                        <!--</dd>-->
+                                    <!--</if>-->
+                                    <!--<dt class="fl">-->
+                                        <!--<a href="{$big.middle_pic.ad_link}"><img class="lazy" data-original="{$big.middle_pic.pic_url}" src="__IMG__/load5.jpg" alt=""></a>-->
+                                    <!--</dt>-->
+                                    <!--<volist name="big.goods" id="goods">-->
+                                        <!--<dd class="fl">-->
+                                            <!--<a href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}">-->
+                                                <!--<div class="img-parent-warp">-->
+                                                    <!--<div class="x_move" style="width: 140px;height: 140px;position: absolute;top: 15px;left: 50%;margin-left: -70px;">-->
+                                                    <!--<img class="lazy" data-original="__SERVER__{$goods.pic_url}" src="__IMG__/load4.jpg" alt="">-->
+                                                    <!--<if condition="!$goods['stock']">-->
+                                                        <!--<img class="lazy sellout" data-original="__SERVER__/Public/Home/img/sellout2.jpg" src="__IMG__/load4.jpg" alt="">-->
+                                                    <!--</if>-->
+                                                <!--</div>-->
+                                                <!--</div>-->
+                                                <!--<p>{$goods.title}</p>-->
+                                                <!--<if condition="$show">-->
+                                                    <!--<span>￥{$goods.price_member}</span>-->
+                                                    <!--<strike>￥{$goods.price_market}</strike>-->
+                                                <!--<else/>-->
+                                                    <!--<span>￥{$goods.price_market}</span>-->
+                                                    <!--<strike>会员价更低</strike>-->
+                                                <!--</if>-->
+                                            <!--</a>-->
+                                        <!--</dd>-->
+                                    <!--</volist>-->
+                                <!--</dl>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--&lt;!&ndash;<if condition="$big['ad']!=null">&ndash;&gt;-->
+            <!--<div class="advertisement1">-->
+                <!--<a data="{$big.ad.ad_link}" gg="{$big.ad.id}" onclick="addAd(this)" href="javascript:;">-->
+                    <!--<img class="lazy" data-original="__SERVER__/{$big.ad.pic_url}" src="__IMG__/load5.jpg" alt="{$big.ad.title}" height="110">-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--&lt;!&ndash;</if>&ndash;&gt;-->
+
+	<!--</volist>-->
+	</div>
+	</div>
+    <div class="q_goods_class">
+        <div class="w">
+            <div class="q_class_list">
+                <p class="q_class_tit">{$goodsData['class_name']} <span>{$goodsData['english_name']}</span></p>
+                <div class="q_class_content clearfix">
+                    <div class="q_class_banner fl">
+                        <img class="q_nav_img" src="{$goodsData['ad']['pic_url']}" alt="banner"/>
+                        <div class="q_nav_tit">
+                            <p class="q_zone">{$goodsData['class_name']}专区</p><p class="q_zone_describe">{$goodsData['description']}</p>
+                            <a target="_blank" href="{:U('Supermarket/ProductList',['cid'=>$goodsData['id']])}">
+                                <div class="q_buy_now q_buy_color1 fl">BUY NOW ></div>
+                            </a>
+                        </div>
+                        <div class="q_nav_class">
+                            <foreach name="goodsData['classChilds']" item="classChild">
+                                <a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$classChild['id']])}"><span class="q_class_name q_tit_color1">{$classChild['class_name']}</span></a>
+                            </foreach>
+                        </div>
+                    </div>
+                    <div class="q_goods_list fl">
+                        <ul class="clearfix" style="width: 970px;">
+                            <foreach name="goodsData['goods']" item="goods">
+                                <li class="fl">
+                                    <a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}">
+                                        <div class="q_goods_img">
+                                            <img src="{$goods['pic_url']}" alt=""/>
+                                            <if condition="!$goods['stock']">
+                                                <img class="no_stock" src="/Public/Home/img/sellout2.jpg" alt=""/>
+                                            </if>
+                                        </div>
+                                        <div class="q_goods_info clearfix">
+                                            <p class="goods_info_name">{$goods['title']}</p>
+                                            <if condition="$show">
+                                                <div class="goods_info_price fl">
+                                                    <i>￥</i><span>{$goods['price_member']}</span>
+                                                </div>
+                                                <span class="fl goods_info_tip"><i>￥</i>{$goods['price_market']}</span>
+                                            <else/>
+                                                <div class="goods_info_price fl">
+                                                    <i>￥</i><span>{$goods['price_market']}</span>
+                                                </div>
+                                                <span class="fl goods_info_tip">会员价更低</span>
+                                            </if>
+                                            <if condition="!$goods['is_customs']">
+                                            <img class="fr buy_cart" data-id="{$goods['id']}" src="/Public/Home/img/buy_cart.png" alt=""/>
+                                            </if>
+                                        </div>
+                                    </a>
+                                </li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="goods_class"></div>
+    </div>
+	<!--左侧下楼梯菜单-->
+	<!--<div id="menu">-->
+		<!--<ul>-->
+			<!--<volist name="bigInfor" id="big">-->
+				<!--<li>{$big.name}<span>{$big.name}</span></li>-->
+			<!--</volist>-->
+		<!--</ul>-->
+	<!--</div>-->
+	<input type="hidden" id="loading" value="__SERVER__"/>
+	<script src="__CDN_LAZYLOAD_JS__"></script>
+	<script src="__JS__/index.js"></script>
+    <script>
+        var newGoodsClassUrl = "{:U('Supermarket/getGoodsClass')}";//获取分类接口(新)
+        var ProductListUrl = "{:U('Supermarket/ProductList')}";
+        var goodsDetailsUrl = "{:U('Goods/goodsDetails')}";
+        var IS_LOGIN = "{$show}";
+        var NewAddCart = "{:U('Cart/new_cart_add')}";
+        console.log(IS_LOGIN)
+    </script>
+
+    <script src="__JS__/clear-shop-supermarket.js"></script>
+    <script src="__JS__/clear-shop.js"></script>
+    <script type="text/javascript" src="__JS__/toastr.min.js"></script>
+    <script>
+        $('.q_goods_list').on('click','.buy_cart',function(){
+            var id = $(this).data('id');
+            var json = {
+                goods_id : id ,
+                goods_num : 1
+            }
+            AddCart(json);
+            return false;
+        })
+    </script>
+</block>

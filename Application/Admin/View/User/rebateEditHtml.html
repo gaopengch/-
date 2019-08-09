@@ -1,0 +1,79 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+<section class="content ">
+	<!-- Main content -->
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 编辑会员等级
+				</h3>
+			</div>
+			<div class="panel-body ">
+				<!--表单数据-->
+				<form method="post" id="formLevel"
+					action="{:U('Admin/User/saveEditRebate')}">
+					<!--通用信息-->
+					<div class="tab-content col-md-10">
+						<div class="tab-pane active" id="tab_tongyong">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td class="col-sm-2">等级名称：</td>
+										<td class="col-sm-4"><input type="text"
+											value= "{$data['grade_name']}"
+											class="form-control" name="grade_name">
+											<span id="err_attr_grade_name"
+											class="user_level"></span></td>
+										<td class="col-sm-4">设置会员等级名称</td>
+									</tr>
+									<tr>
+										<td>折扣率：</td>
+										<td><input type="text" class="form-control"
+											value="{$data['discount_rate']}"
+											onkeyup="Tool.replaceNumber(this)"
+											onblur="Tool.replaceNumber(this)"
+											name="discount_rate"></td>
+										<td class="col-sm-4">折扣率单位为百分比，如输入90，表示该会员等级的用户可以以商品原价的90%购买</td>
+									</tr>
+                                    <tr>
+                                        <td>返利率：</td>
+                                        <td><input type="text" class="form-control"
+                                                   value="{$data['rebate_ratio']}"
+                                                   onkeyup="Tool.replaceNumber(this)"
+                                                   onblur="Tool.replaceNumber(this)"
+                                                   name="rebate_ratio"></td>
+                                        <td class="col-sm-4">返利率单位为百分比，如输入5，表示该会员等级的用户可以以商品原价的5%返利</td>
+                                    </tr>
+									<tr>
+										<td>等级描述：</td>
+										<td><textarea rows="5" cols="30"
+												name="description">{$data['description']}</textarea></td>
+										<td class="col-sm-4">会员等级描述信息</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td class="col-sm-4"><input type="hidden" name="id" value = "{$data['id']}"/></td>
+										<td class="text-right"><input class="btn btn-primary"
+											type="button" onclick="UserLevel.addUserLevel('formLevel', '{:U('saveEditRebate')}');" value="保存"></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</form>
+				<!--表单数据-->
+			</div>
+		</div>
+	</div>
+</section>
+<script src="__JS__/jquery.form.js"></script>
+<script src="__COMMON__/js/alert.js"></script> 
+<script src="__JS__/user/user.js"></script>
+</block>

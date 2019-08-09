@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<ul>
+    <form action="" method="post">
+    <li>	<div class="clearfix receiptCh">
+        <h6 class="fl">收货人信息</h6>
+        <a href="javascript:;" class="fr sd">新增加收货地址</a>
+    </div>
+        <div id="receive" class="receive">{$data['prov']}{$data['city']}{$data['dist']}</div>
+    </li>
+
+    <li><h5>支付方式</h5>
+        <div class="payment clearfix">
+            <if condition="!empty($pay)">
+                <foreach name="pay" key="key" item="value">
+                    <span class='fl balance_money <if condition="$value[$payModel::$isDefault_d] == 1"> active</if>'
+                    value="{$value[$payModel::$id_d]}">{$value[$payModel::$typeName_d]}<em></em>
+                    </span>
+            </foreach>
+            </if>
+        </div>
+    </li>
+
+    <li class="distribution" id="expressData">
+        <h5>配送方式</h5>
+        <div class="payment clearfix" id="expressSellect">
+            <if condition="!empty($expressData)">
+                <foreach name="expressData" key="key" item="value">
+                    <span class='fl' value="{$key}" discount="{$value[$expressModel::$discount_d]}" >{$value[$expressModel::$name_d]}<em></em></span>
+                </foreach>
+            </if>
+        </div>
+    </li>
+
+
+
+    <li>
+        <div class="clearfix titPart">
+            <h4 class="fl">确认订单信息</h4>
+
+        </div>
+        <div class="payment clearfix">
+            <div class="subject clearfix">
+                <span class="fl ition">商品信息</span>
+                <span class="fl price">单价</span>
+                <span class="fl number">数量</span>
+                <span class="fl sual"></span>
+                <span class="fl sual">小计</span>
+            </div>
+            <if condition="!empty($goodsSpec)">
+                            <div class="paymentCon clearfix">
+                                <div class="con-parent clearfix fl">
+                                    <a href="javascript:;" class="fl position-parent">
+                                        <img src="{$goodsSpec['images']}" width="80">
+                                        <span>{$goodsSpec['title']}</span>
+                                    </a>
+
+                                </div>
+                                <div class="fl price">{$goodsSpec['price_sum']}</div>
+                                <div class="fl number">1</div>
+                                <div class="fl sual" id="sslh">{$goodsSpec['price_sum']}</div>
+                            </div>
+
+            </if>
+            <!--订单备注-->
+            <div class="rderNote clearfix">
+                <span class="fl">添加订单备注：</span> <input type="text" class="fl"
+                                                       name="remarks" placeholder="提示：请勿填写有关支付、收货、发票方面的信息"
+            value="">
+
+            </div>
+        </div>
+    </li>
+    <li>
+        <span>应付金额：￥</span><span>{$goodsSpec['price_sum']}</span>
+    </li>
+    <li>
+        <input type="hidden" name="code" value="{$goodsSpec['id']}">
+        <input type="hidden" id="check" name="check" value="{$check}" /><!--防止表单多次提交验证-->
+        <input type="button" onclick="return InterAddress.submitOrder('formId')" value="去支付" class="fr" id="tijiao" />
+    </li>
+    </form>
+</ul>
+</body>
+</html>

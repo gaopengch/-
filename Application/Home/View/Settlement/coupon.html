@@ -1,0 +1,48 @@
+<div class="Coupon_Title">
+	<h6>使用优惠</h6>
+</div>
+<!--<if condition="!empty($data['notUse'])">-->
+	<!--<div class="Coupon_Click">-->
+		<!--<foreach name="data['notUse']" key="key" item="value">-->
+			<!--<a href="javascript:;" conpouId="{$value[$mCouponList::$id_d]}" eventMonery="{$value[$model::$money_d]}" class="Selection_Selection" onclick="SettlementCoupon.ck(this, '{:U('validateCouponUse')}')">-->
+				<!--<div class="Selection_Selection_top">-->
+					<!--<input type="hidden" value="{$value[$mCouponList::$id_d]}"  name="{$mCouponList::$id_d}"/>-->
+					<!--<input type="hidden" value="{$value[$mCouponList::$cId_d]}" name="{$mCouponList::$cId_d}"/>-->
+					<!--<span class="Amount" monery="{$value[$model::$money_d]}">￥{$value[$model::$money_d]}</span> <span class="Fullness">满{$value[$model::$condition_d]}</span>-->
+				<!--</div>-->
+				<!--<div class="Coupon_validity">有效期至{$value[$model::$useEnd_time_d]|date="Y-m-d", ###}</div>-->
+				<!--<div class="Coupon_Bottom">[{$value[$model::$name_d]}] [限本网站商品]</div>-->
+			<!--</a>-->
+		<!--</foreach>-->
+	<!--</div>-->
+<!--</if>-->
+<if condition="!empty($couponData)">
+    <div class="Coupon_Click">
+        <foreach name="couponData" key="key" item="value">
+            <a href="javascript:;" conpouId="{$value['id']}" eventMonery="{$value[$model::$money_d]}"
+               eventDiscount="{$value[$model::$discount_d]}" reduced_type="{$value['reduced_type']}" class="Selection_Selection" onclick="SettlementCoupon.changeMonery(this)">
+                <div class="Selection_Selection_top">
+                    <input type="hidden" value="{$value[$mCouponList::$id_d]}"  name="{$mCouponList::$id_d}"/>
+                    <input type="hidden" value="{$value[$mCouponList::$cId_d]}" name="{$mCouponList::$cId_d}"/>
+                    <span class="Amount" monery="{$value[$model::$money_d]}">
+                        <if condition="$value['reduced_type'] eq 1">
+                            ￥{$value[$model::$money_d]}
+                        <else/>
+                            {$value['discount']}折
+                        </if>
+                    </span>
+                    <span class="Fullness">满{$value[$model::$condition_d]}</span>
+                </div>
+                <div class="Coupon_validity">有效期至{$value[$model::$useEnd_time_d]|date="Y-m-d", ###}</div>
+                <div class="Coupon_Bottom">[{$value[$model::$name_d]}] [限本网站商品]</div>
+            </a>
+        </foreach>
+    </div>
+</if>
+<div class="Coupon_Summary" id="conpouMonery">
+	金额抵用<span class="Coupon_Summary_erd" id="useConpon"><em>￥</em>0.00 </span> 优惠券0张，优惠<span>0.00</span>元
+</div>
+<script type="text/javascript" src="__JS__/Coupon/coupon.js"></script>
+<script type="text/javascript">
+SettlementCoupon.undo();
+</script>

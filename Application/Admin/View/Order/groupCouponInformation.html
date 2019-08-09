@@ -1,0 +1,161 @@
+
+<extend name="Public/publicHTML" />
+
+<block name="content">
+	<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet"
+		  href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<nav class="navbar navbar-default"></nav>
+					<div class="panel-heading">
+						<h3 class="panel-title text-center">参团信息</h3>
+					</div>
+					<div>
+						<div class="panel-body">
+							<table class="table table-bordered" border="1" width="80%" >
+								<tbody>
+								<tr>
+									<td class="text-center">订单id</td>
+									<td class="text-right">订单号:</td>
+									<td class="text-center">用户id</td>
+									<td class="text-center">会员</td>
+									<td class="text-right">支付时间</td>
+									<td class="text-center">订单状态</td>
+									<td class="text-center">团单状态</td>
+									<td class="text-center">是否团长</td>
+								</tr>
+								<foreach name="UserData" item="vo" >
+									<tr>
+										<td class="text-right">{$vo.id}</td>
+										<td class="text-center">{$vo.order_sn_id}</td>
+										<td class="text-right">{$vo.user_id}</td>
+										<td class="text-center">{$vo.user_name}</td>
+										<if condition="$vo.pay_time eq 0 ">
+											<td class="text-center">---</td>
+											<else />
+											<td class="text-center">{$vo.pay_time|date='Y-m-d H:i',###}</td>
+										</if>
+										<foreach name="orderStatus" item="vo1" key="k1">
+											<if condition="$vo.order_status eq $k1">
+												<td class="text-center">{$vo1}</td>
+											</if>
+										</foreach>
+										<switch name="vo.group_status">
+											<case value="1"><td class="text-center">拼团中</td></case>
+											<case value="2"><td class="text-center">拼团成功</td></case>
+											<case value="3"><td class="text-center">拼团失败</td></case>
+											<default /><td class="text-center">---</td>
+										</switch>
+
+										<if condition="$vo.is_host eq 1">
+											<td class="text-center">是</td>
+											<else/>
+											<td class="text-center">否</td>
+										</if>
+									</tr>
+								</foreach>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+					<!--新订单列表 基本信息-->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title text-center">基本信息</h3>
+						</div>
+						<div class="panel-body">
+							<table class="table table-bordered">
+								<tbody>
+								<form >
+									<tr>
+										<td>订单 ID:</td>
+										<td>订单号:</td>
+										<td>会员:</td>
+										<td>E-Mail:</td>
+										<td>电话:</td>
+										<td>应付:</td>
+										<td>订单状态:</td>
+										<td>下单时间:</td>
+										<td>支付时间:</td>
+										<td>支付方式:</td>
+									</tr>
+									<tr>
+										<td >{$orderData['id']}</td>
+										<td>{$orderData['order_sn_id']}</td>
+										<td>{$user['nick_name']}</td>
+										<td>{$user['email']}</td>
+										<td>{$orderData['mobile']}</td>
+										<td>{$orderData['price_sum']}</td>
+										<td >
+											<foreach name="orderStatus" item="vo1" key="k1">
+												<if condition="$k1 eq $orderData['order_status']">
+													<span >{$vo1}</span>
+												</if>
+											</foreach>
+										</td>
+										<td>{$orderData['create_time']|date='Y-m-d
+											H:i',###}</td>
+										<if condition="$orderData.pay_time eq 0 ">
+											<td>---</td>
+											<else />
+											<td>{$orderData['pay_time']|date='Y-m-d H:i',###}</td>
+										</if>
+										<td id="pay-type">{$orderData['pay_type']|default='微信支付'}</td>
+									</tr>
+									<tr>
+										<td colspan="2">用户订单备注信息</td>
+										<td colspan="8">{$orderData['remarks']}</td>
+									</tr>
+									<tr>
+										<td colspan="2">用户团单备注信息</td>
+										<td colspan="8">{$orderData['group_cause']}</td>
+										</td>
+									</tr>
+									<!--<tr>-->
+										<!--<td colspan="10">-->
+											<!--<input type="button" value="确认修改" id="button" onclick="Sender.editOrderStuaus()">-->
+										<!--</td>-->
+									<!--</tr>-->
+								</form>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--新订单列表 收货人信息-->
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title text-center">收货信息</h3>
+						</div>
+						<div class="panel-body">
+							<table class="table table-bordered">
+								<tbody>
+								<tr>
+									<td>收货人:</td>
+									<td>联系方式:</td>
+									<td>地址:</td>
+									<!--<td>配送方式:</td>-->
+									<!--<td>快递号:</td>-->
+								</tr>
+								<tr>
+									<td>{$user_address['realname']}</td>
+									<td>{$user_address['telphone']}</td>
+									<td>{$user_address['prov']}、{$user_address['city']}、{$user_address['dist']}、{$user_address['address']}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="__COMMON__/js/alert.js"></script>
+	<script src="__JS__/sendGoods.js?a={:time()}"></script>
+
+</block>

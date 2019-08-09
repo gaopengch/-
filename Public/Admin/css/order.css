@@ -1,0 +1,14 @@
+
+.order-info{
+    background-color: #F1F1F1;
+}
+.order-info span{
+    padding-left: 10px;
+}
+.order-info .operation{
+    float: right;
+}
+.img{
+    width:40px;
+    height: 40px
+}

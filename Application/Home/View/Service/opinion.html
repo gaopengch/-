@@ -1,0 +1,83 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr opini-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">意见建议</a></li>
+				</ul>
+			</div>
+			<div class="content-main">
+				<div class="nav clearfix">
+					<span class="fl left-main">选择订单</span>
+					<!-- <span class="fr right-main">
+						<input type="text" placeholder="商品名称、商品编号、订单编号" id="search" class="txt"><input type="button" value="查询" class="btn">
+					</span> -->
+				</div>
+				<dl class="content">
+					<dt class="clearfix">
+						<span class="fl numbre">订单编号</span>
+						<span class="fl comm">订单商品</span>
+						<span class="fl timer">下单时间</span>
+						<span class="fl oper">操作</span>
+					</dt>
+					<volist name="data" id="vo">
+						<dd class="clearfix">
+							<div class="fl numbre">{$vo.order_id}</div>
+							<div class="fl comm clearfix">
+								<a href="{:U('Goods/goodsDetails',array('id'=>$vo['goods_id']))}">
+									<div class="screenshot fl"><img src="__SERVER__/{$vo.images}"></div>
+									<div class="products-description fr">
+										<p>{$vo.title}</p>
+										<span>￥{$vo.price_member}</span>
+									</div>
+								</a>
+							</div>
+							<div class="fl timer">
+								{$vo.create_time|date="Y-m-d",###}<br>
+								{$vo.create_time|date="H:i:s",###}
+							</div>
+							<div class="oper fl"><a <if condition="$userId['user_name']==null">href='{:U('public/login')}'<else/>href='javascript:;' onclick='easemobim.bind({
+        //请使用自己的租户ID
+         tenantId: "39449",
+         //是否隐藏小的悬浮按钮
+         hide: true
+        })'</if>>联系卖家</a></div>
+						</dd>
+					</volist>
+				</dl>
+			</div>
+			<div class="page">
+				{$page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/Service/service.js"></script>
+<script src='//kefu.easemob.com/webim/easemob.js'></script>
+<script>
+	window.easemobim = window.easemobim || {};
+	var trueName = '{$userId.user_name}';
+	easemobim.config = {
+		//访客信息，以下参数支持变量
+		visitor: {
+			trueName:trueName,
+			qq: '',
+			phone:trueName,
+			companyName: '',
+			userNickname:trueName,
+			description: '',
+			email: ''
+		},
+	};
+</script>	
+<!-- <script src="js/header.js"></script> -->
+</block>

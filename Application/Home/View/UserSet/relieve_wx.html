@@ -1,0 +1,61 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr bindset-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">微信解绑设置</a></li>
+				</ul>
+			</div>
+			<div class="content-main clearfix">
+				<div class="con-left-main fl">
+					<p>
+						绑定微信，可以直接使用手机在微信公众号中自动登录登录，方便快捷。
+					</p>
+					<p>解绑微信后，您可以换一个微信账号绑定从而在公众号中自动登录！</p>
+					<!--<h2 class="mobil">已有手机号验证</h2>-->
+					<form action="{:U('UserSet/relieve_wx')}" method="post" onsubmit="return sures()">
+						<div class="form" style="margin-top: 90px">
+							<!--<div class="usermobile">-->
+								<!--<input type="text" placeholder="手机号" id="tel" name="mobile" class="txt">-->
+								<!--<em class="Verification" id="V-btn">发送验证码</em>-->
+							<!--</div>-->
+							<!--<div class="usermobile"><input type="text" placeholder="请验证码" id="code" name="code" class="txt"></div>-->
+							<input type="submit" class="sub" value="解绑" style="margin-left: 320px" >
+						</div>
+					</form>
+				</div>
+				<div class="con-right-main fr clearfix">
+					<h2>您登陆的商城账号为</h2>
+					<div class="images-parent">
+						<img src="__SERVER__/{$data.user_header}" height="50" width="50" class="fl">
+						<h5 class="fl">会员名：<em>{$data.user_name}</em></h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script type="text/javascript" src="__JS__/userset/address.js"></script>	
+<!-- <script src="js/header.js"></script> -->
+<script>
+    function sures(){
+        if(confirm("确认解除当前微信绑定？")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+</script>
+</block>

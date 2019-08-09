@@ -1,0 +1,48 @@
+<?php
+
+
+namespace Home\Model;
+use Think\Page;
+use Common\TraitClass\callBackClass;
+use Common\Tool\Tool;
+use Common\Model\BaseModel;
+use Common\TraitClass\ParsePromotionTrait;
+
+class GroupModel extends BaseModel
+{
+    public static $id_d;
+    public static $startTime_d;
+    public static $endTime_d;
+    public static $goodsId_d;
+    public static $price_d;
+    public static $goodsNum_d;
+    public static $buyNum_d;
+    public static $orderNum_d;
+    public static $virtualNum_d;
+    public static $description_d;
+    public static $recommended_d;
+    public static $lookNum_d;
+    public static $updateTime_d;
+    public static $createTime_d;
+    public static $stock_d;
+    public static $pic_url_d;
+    /**
+     * 获取团购列表
+     */
+    public function getGroupLists()
+    {
+        $groupList = $this->select();
+        return $groupList;
+    }
+    /**
+     * 获取团购详情
+     */
+    public function getDetail($id)
+    {
+        $groupDetail = $this->where([self::$id_d => $id])->find();
+        return $groupDetail;
+    }
+
+
+
+}

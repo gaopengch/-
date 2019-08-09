@@ -1,0 +1,41 @@
+<extend name="Public/publicHTML" />
+<block name="content">
+<div class="list">
+	  <table width="100%" border="0" cellpadding="0" cellspacing="0" class="details">
+        <tbody>
+          <tr>
+            <td>审核状态：</td>
+            <td>
+            	<select name="status" style="width:100px;height:30px" id="status">
+					<option value="0">待审批</option>
+					<option value="1">审核完成</option>
+					<option value="2">已打款</option>
+					<option value="-1">未通过</option>
+				</select>
+            </td>
+          </tr>
+        </tbody>
+  </table>
+    <input type="hidden" id="withdrawal_id" value="{$withdrawal_id}">
+</div>
+<div class="footer">
+     <button type="button" class="button" id="button" style="min-width:160px;" onclick="save_status();">确 认</button>
+</div>
+<script type="text/javascript">
+	function save_status(){
+		var status = $('#status').val();
+		var id = $('#withdrawal_id').val();
+		$.post('shenhe',{'status':status,'id':id},function(data){
+			if(data==0){
+				layer.msg('修改成功',function(){
+					window.parent.iframe.location.reload();   //局部刷新
+		            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引  
+		            parent.layer.close(index);
+				});
+			}else{
+				layer.msg('修改失败');
+			}
+		})
+	}
+</script>
+</block>

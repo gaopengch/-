@@ -1,0 +1,70 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr suplis-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">打印机租凭-补充耗材</a></li>
+				</ul>
+			</div>
+			<form action="{:U('SpecialBusiness/supplies')}" method="post">
+				<div class="content-main">
+					<div class="expired clearfix">
+						<span class="fl">已填耗材：</span>
+						<ul class="fl clearfix">
+						
+						</ul>
+					</div>
+					<ul class="numberinput-main">
+						<li class="clearfix"> 
+							<span class="fl">所需耗材：</span>
+							<input type="text" id="consumables" class="fl txt">
+						</li>
+						<li class="clearfix">
+							<span class="fl">所需数量：</span>
+							<input type="textr" id="num" class="fl txt">
+						</li>
+						<li class="clearfix">
+							<span class="fl content-hidden">提交按钮：</span>
+							<input type="button" class="fl button" value="确&nbsp;定">
+							<b>提示：可填写多个所需耗材，点击确认提交所填耗材。</b>
+						</li>
+					</ul>
+					<div class="remarks">
+						<h2>详细备注：</h2>
+						<textarea name="remark" id="remark"></textarea>
+					</div>
+					<input type="hidden" name="id" value="{$id}">
+					<input type="submit" class="submit" value="确认提交">
+				</div>
+			</form>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+
+<script> 
+	$('.suplis-content-wrap .content-main').on('click','li em',function(){
+		$(this).parent().remove();
+	});
+
+    $('.suplis-content-wrap .content-main .numberinput-main li input[type=button]').on('click',function(){
+    	var supplies = $('#consumables').val();
+    	var num = $('#num').val();
+    	if (supplies != '' && num != '') {
+    	$('.suplis-content-wrap .content-main .expired ul').append('<li class="fl clearfix"><p class="fl"><input type="text" name="consumables[]" value="'+supplies+'" readOnly="true" size="31"><input type="text" name="num[]" value="'+num+'" readOnly="true" size="6"></p><em class="fl"></em></li>');
+    	};
+    	$('#consumables').val('');
+    	$('#num').val('');
+    })
+</script>
+</block>

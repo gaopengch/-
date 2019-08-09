@@ -1,0 +1,125 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr sysetti-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">设置密保问题</a></li>
+				</ul>
+			</div>
+			<dl class="content-main">
+				<dt>安全保护问题将作为重要的身份验证方式，请认真设置！</dt>
+				<empty name="data">
+					<form action="{:U('UserSet/security_question')}" method="post" onsubmit="return question()">
+						<dd class="clearfix">
+							<span class="fl">问题一</span>
+							<div class="fl select">
+								<select name="problem1" id="problem1">
+									<option>请选择</option>
+									<option>您的初恋叫什么名字?</option>
+									<option>您最喜欢的颜色是?</option>
+									<option>您高中的班主任叫什么名字?</option>
+									<option>您最喜欢的运动是什么?</option>
+									<option>您初中的班主任叫什么名字?</option>
+									<option>您小学的班主任叫什么名字?</option>
+		                            <option>您最熟悉的童年好友名字是?</option>
+									<option>您的学号(或工号)是?</option>
+								</select>
+							</div>
+						</dd>
+						<dd class="clearfix">
+							<span class="fl">答案</span>
+							<input type="text" name="answer1" id="answer1" class="txt">
+						</dd>
+						<dd class="clearfix">
+							<span class="fl">问题二</span>
+							<div class="fl select">
+								<select name="problem2" id="problem2">
+									<option>请选择</option>
+									<option>您的初恋叫什么名字?</option>
+									<option>您最喜欢的颜色是?</option>
+									<option>您高中的班主任叫什么名字?</option>
+									<option>您最喜欢的运动是什么?</option>
+									<option>您初中的班主任叫什么名字?</option>
+									<option>您小学的班主任叫什么名字?</option>
+		                            <option>您最熟悉的童年好友名字是?</option>
+									<option>您的学号(或工号)是?</option>
+								</select>
+							</div>
+						</dd>
+						<dd class="clearfix">
+							<span class="fl">答案</span>
+							<input type="text" name="answer2" id="answer2" class="txt">
+						</dd>
+						<dd class="clearfix">
+							<span class="fl">问题三</span>
+							<div class="fl select">
+								<select name="problem3" id="problem3">
+									<option>请选择</option>
+									<option>您的初恋叫什么名字?</option>
+									<option>您最喜欢的颜色是?</option>
+									<option>您高中的班主任叫什么名字?</option>
+									<option>您最喜欢的运动是什么?</option>
+									<option>您初中的班主任叫什么名字?</option>
+									<option>您小学的班主任叫什么名字?</option>
+		                            <option>您最熟悉的童年好友名字是?</option>
+									<option>您的学号(或工号)是?</option>
+								</select>
+							</div>
+						</dd>
+						<dd class="clearfix">
+							<span class="fl">答案</span>
+							<input type="text" name="answer3" id="answer3" class="txt">
+						</dd>
+						<dd class="clearfix">
+							<span class="fl"></span>
+							<input type="submit" class="button" value="确定">
+						</dd>
+					</form>
+				<else/>
+				    <form action="{:U('UserSet/question_edit')}" method="post">
+					<volist name="data" id="vo" key="key">
+						<dd class="clearfix">
+							<span class="fl">问题{$key}</span>
+							<div class="fl select">
+								<select name="problem{$key}" id="problem{$key}">
+									<option>{$vo.problem}</option>
+									<option>您的初恋叫什么名字?</option>
+									<option>您最喜欢的颜色是?</option>
+									<option>您高中的班主任叫什么名字?</option>
+									<option>您最喜欢的运动是什么?</option>
+									<option>您初中的班主任叫什么名字?</option>
+									<option>您小学的班主任叫什么名字?</option>
+		                            <option>您最熟悉的童年好友名字是?</option>
+									<option>您的学号(或工号)是?</option>
+								</select>
+							</div>
+						</dd>
+						<dd class="clearfix">
+							<span class="fl">答案</span>
+							<input type="hidden" name="id{$key}" value="{$vo.id}">
+							<input type="text" name="answer{$key}" id="answer{$key}" class="txt" value="{$vo.answer}">
+						</dd>
+						</volist>
+					<dd class="clearfix">
+						<span class="fl"></span>
+						<input type="submit" class="button" value="修改">
+					</dd>
+				</form>
+				</empty>
+			</dl>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/userset/address.js"></script>	
+<!-- <script src="js/header.js"></script>
+ -->
+</block>

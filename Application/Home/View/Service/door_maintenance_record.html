@@ -1,0 +1,57 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr reqoer-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl  "><a href="{:U('Service/return_repair')}">返修/退换货记录</a></li>
+					<li class="fl active hover"><a href="{:U('Service/door_maintenance_record')}">上门维修记录</a></li>
+				</ul>
+			</div> 
+			<div class="content-main">
+				<div class="already">
+					<dl class="content">
+						<dt class="clearfix">
+							<span class="fl option">上门维修编号</span>
+							<span class="fl option">要求</span>
+							<span class="fl option">维修项目</span>
+							<span class="fl option">申请时间</span>
+							<span class="fl option">状态</span>
+						</dt>
+						<volist name="data.data" id="vo">
+							<dd class="clearfix">
+								<span class="fl option">{$vo.id}</span>
+								<span class="fl option">
+                                	上门维修	
+								</span>
+								<span class="fl option">{$vo.repair_project}</span>
+								<span class="fl option">{$vo.add_time|date="Y-m-d H:i;s",###}</span>
+								<span class="fl option">
+									<switch name="vo.status">
+                                		<case value="0">预约中</case>
+                                		<case value="1">上门维修中</case>
+                                		<case value="2">完成</case>
+                                	</switch>
+								</span>
+							</dd>
+						</volist>	
+					</dl>
+				</div>
+			</div>
+			<div class="page">
+				{$data.page}
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

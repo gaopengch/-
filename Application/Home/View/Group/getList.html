@@ -1,0 +1,41 @@
+<ul>
+    <foreach name="groupList" item="group">
+        <li class="fl" data-val="{$group['id']}">
+            <a target="_blank" href="{:U('Group/detail',['id'=>$group['id']])}">
+                <div class="q_group_img">
+                    <img src="{$group['pic_url']}" alt=""/>
+                </div>
+                <div class="q_group_info clearfix">
+                    <p class="group_info_name">{$group['title']}</p>
+                    <div class="group_info_price fl">
+                        <span>距活动结束时间还剩  天  时  分
+                            <php>echo date("H:i:s",(int)$group['end_time'] - (int)time());</php>
+                        </span>
+                        <!--倒计时留给前端去写把-->
+                    </div>
+                    <div class="group_info_price fl">
+                        <i>￥</i><span>{$group['price']}</span>
+                    </div>
+
+                </div>
+            </a>
+            <a target="_blank" href="{:U('Group/startGroup',['id'=>$group['id']])}"><button id="kt">我要开团</button></a>
+            <form action="{:U('Group/detail')}" method="post">
+                <input type="hidden" name="id" value="{$group['id']}">
+                <input type="submit" name="dosubmit" value="我要参团">
+            </form>
+
+        </li>
+    </foreach>
+</ul>
+<div class="page">
+    {$page}
+</div>
+<div>共{$count}条记录</div>
+<script>
+    $(".page a").on("click",function(){
+        var path=$(this).attr("href");
+        getlist(path);
+        return false;
+    });
+</script>

@@ -1,0 +1,113 @@
+<extend name="Order/personalEdit"/>
+<include file="Order/personalHeaderTwo"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr requts-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">采购需求单详情</a></li>
+				</ul>
+			</div>
+				<div class="con-wrap clearfix">
+					<div class="prompt"><em>温馨提示：</em>该功能只对企业用户开放。</div>
+					<div class="level-title">
+						<div class="clearfix subject">
+							<span class="fl">标题：</span>
+							<input type="text" name="purchase_title" id="purchase_title" class="fl" value="{$data.purchase_title}" readOnly="true">
+						</div>
+						<div class="demandType clearfix">
+							<span class="fl">需求类型：</span>
+							<label class="fl"><input type="radio" <if condition="$data.purchase_type eq '1'">checked</if>> 询货</label>
+							<label class="fl"><input type="radio" <if condition="$data.purchase_type eq '2'">checked</if>> 询价</label>
+							<label class="fl"><input type="radio" <if condition="$data.purchase_type eq '3'">checked</if>> 询交期</label>
+						</div>
+						<div class="demandType clearfix">
+							<span class="fl">采购商品：</span>
+						</div>
+					</div>
+					<div class="table-main">
+						<div class="title-bg"></div>
+						<table class="goods">
+							<tr>
+								<th width="100">商品编号</th>
+								<th width="274">* 商品名称</th>
+								<th width="142">商品分类</th>
+								<th width="97">* 所需数量</th>
+								<th width="93">预算单价(元)</th>
+								<th width="140">说明</th>
+								<th width="83">商品图片</th>
+							</tr>
+							<volist name="data.goods" id="goods">
+								<tr class="goods_list" id="del{$goods.purchase_product_id}">
+								    <td>{$goods.purchase_product_id}</td>
+									<td>{$goods.productname}</td>
+									<td>{$goods.productclass}</td>
+									<td class="number">{$goods.productnum}</td>
+									<td class="price">{$goods.productbudget}</td>							
+									<td class="shuoming">{$goods.productexplain|substr=0,30}</td>				
+									<td>
+										<img src="{$goods.productimg}" width="50" height="50">				
+									</td>
+								</tr>
+							</volist>
+						</table>
+						<div class="budget-main">
+							<div class="budget">总预算：<em><input type="text" name="total_price" id="total_price" readOnly="true" style="border:0;color:red;font-size:25px;overflow: visible;" value="{$data.total_price}" class="price-number" /></em></div>
+							<div class="addCommd clearfix" >
+								
+							</div>
+						</div>
+
+						<dl class="demand-main">
+							<dt>采购要求</dt>
+							<dd class="clearfix">
+								<span class="fl"><em>*</em> 联系人：</span>
+								<input type="text" readOnly="true" value="{$data.contacts}" class="fl txt">
+							</dd>
+							<dd class="clearfix">
+								<span class="fl"><em>*</em> 联系电话：</span>
+								<input type="text" readOnly="true" value="{$data.tel}" class="fl txt">
+							</dd>
+							<dd class="clearfix">
+								<span class="fl">收货日期：</span>
+								<input type="text" class="fl txt" name="overtime" id="overtime" value="{$data.overtime}">
+							</dd>
+							<dd class="clearfix">
+								<span class="fl">支付方式：</span>
+								<label class="fl"><input type="radio" class="rdo" name="pay_type" value="1"  <if condition="$data.pay_type eq '1'">checked</if>> 在线支付</label>
+								<label class="fl"><input type="radio" class="rdo" name="pay_type" value="2" <if condition="$data.pay_type eq '2'">checked</if>> 合约客户支付</label>
+							</dd>
+							<dd class="clearfix">
+								<span class="fl">发票信息：</span>
+								<label class="fl"><input type="radio" class="rdo" name="invoice" value="1" <if condition="$data.invoice eq '1'">checked</if>> 普通发票</label>
+								<label class="fl"><input type="radio" class="rdo" name="invoice" value="2" <if condition="$data.invoice eq '2'">checked</if>> 增值发票</label>
+							</dd>
+						</dl>
+
+						<div class="explain">
+							<h2>补充说明：</h2>
+							<textarea name="explain" id="explain">{$data.explain}</textarea>
+						</div>
+						<div class="submit-main clearfix">
+						    <if condition="$data.state eq '1'">
+							<input type="button" class="fl three" value="提&nbsp;交" data-value="{$data.purchase_id}">	
+							</if>						
+						</div>
+					</div>
+				</div>
+		</div> 
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+<script src="__JS__/Special/Purchase.js"></script>
+<script src="__JS__/Calendar.js"></script>
+
+</block>

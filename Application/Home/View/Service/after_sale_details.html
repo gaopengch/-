@@ -1,0 +1,79 @@
+<extend name="Order/personalEdit"/> 
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr asmd-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl">
+					<li class="fl hover active"><a href="javascript:;">售后管理</a></li>
+				</ul>
+			</div>
+			<dl class="content-main">
+				<dt>售后服务
+				    <switch name="data.status">
+						<case value="0">审核中</case>
+						<case value="1">审核失败</case>
+						<case value="2">审核通过</case>
+						<case value="3">退货中</case>
+						<case value="4">退款中</case>
+						<case value="5">完成</case>
+						<case value="6">已撤销</case>
+					</switch>
+				</dt>
+				<dd><i>售后编号：</i><span>{$data.id}</span></dd>
+				<dd><i>售后类型：</i><span>{$data.tuihuo_case}</span></dd>
+				<dd><i>售后要求：</i>
+					<span>
+						<switch name="data.type">
+							<case value="1">要求退货</case>
+							<case value="2">要求退款</case>
+							<case value="3">要求维修</case>
+						</switch>
+					</span>
+				</dd>
+				<dd><i>售后状态：</i>
+					<span>
+						<switch name="data.status">
+							<case value="0">审核中</case>
+							<case value="1">审核失败</case>
+							<case value="2">审核通过</case>
+							<case value="3">退货中</case>
+							<case value="4">退款中</case>
+							<case value="5">完成</case>
+							<case value="6">已撤销</case>
+						</switch>
+					</span>
+				</dd>
+				<dd><i>货物状态：</i>
+					<span>
+					    <if condition="$data.is_receive eq 1">
+					    未收到货
+					    <else/>
+					    已收到货
+					    </if>
+					</span>
+				</dd>
+				<notempty name="data.explain">
+				<dd><i>问题描述：</i><span>{$data.explain}</span></dd>
+				</notempty>
+				<dd><i>申请时间：</i><span>{$data.create_time|date="Y-m-d H:i:s",###}</span></dd>
+				<if condition="$data.status eq 6">
+					<dd><i>撤销时间：</i><span>{$data.revocation_time|date="Y-m-d H:i:s",###}</span></dd>
+				</if>
+				<notempty name="data.price">
+				<dd><i>退款金额：</i><span><b>{$data.price}</b> 元</span></dd>
+				</notempty>
+			</dl>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

@@ -1,0 +1,48 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+<block name='content'>
+    <script src="__JS__/header.js"></script>
+    <div class="person-section clearfix">
+         <!--左分类-->
+        <include file="Public/assets_header"/>      
+        <div class="mordrMain fr securityS-content-wrap">
+            <div class="title clearfix">
+                <ul class="clearfix fl">
+                    <li class="fl hover active"><a href="javascript:;">经销商团队 {$count2}人</a></li>
+                </ul>
+            </div>
+            <div id="ajaxData" class="balance-detailed"><dl>
+                <dt class="clearfix">
+                    <span class="fl timer">账号</span>
+                    <span class="fl deposit">手机号</span>
+                    <span class="fl expenditure">团队人数</span>
+                    <span class="fl remarks">消费总额</span>
+                </dt>
+                <foreach name="info" item="v">
+                <dd class="clearfix">
+                    <span class="fl timer"><if condition="$v['count'] egt 30"><font color="red">{$v['user_name']}</font><else/>{$v['user_name']}</if></span>
+                    <span class="fl deposit">{$v['mobile']}</span>
+                    <span class="fl expenditure">{$v['count']}</span>
+                    <span class="fl remarks">{$v['money']}</span>
+                </dd>
+                </foreach>
+                <dd class="clearfix">
+                </dl>
+            </div>
+            
+        <!--</body>-->
+        <!--</html>-->
+            <script>
+                var url = "{:U('getInfo')}";
+            </script>
+    <!--右侧一键到顶 and 客服-->
+            </div>
+        <include file="Order/personalHomeTop"/>
+    </div>
+    <!--尾部-->
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/Calendar.js"></script>
+    <script src="__JS__/assets/assets.js"></script>
+    <script src="__JS__/distribution.js"></script>
+</block>

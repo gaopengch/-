@@ -1,0 +1,98 @@
+<extend name="Order/personalEdit"/>
+<block name="ad_top"></block>
+<block name="assets_header"></block>
+<block name="content">
+    <!--当前位置-->
+    <!--<div class="paper-current-main w">-->
+    <!--当前位置：<span>首页</span> > <span>招商加盟</span>-->
+    <!--</div>-->
+    <div class="person-section clearfix">
+    <!--左侧分类-->
+      <script src="__JS__/header.js"></script>
+      <include file="Public/assets_header"/>
+         
+        <div class="fr join-cententFr">
+            <div class="join-cententFr-child active">
+                <dl>
+                    <h4>供货说明</h4>
+                    <dd><br/>
+                        2天聚清致力于全球寻找好货，以清仓的价格回馈会员。如果您有好货想清仓，请留言给我们，我们会安排工作人员第一时间联系您！
+                    </dd><br/>
+                    <dd>
+                        清仓商品需要保证质量，做到价优质美，为我们的会员提供真正物美价廉的产品！
+                    </dd><br/>
+                </dl>
+            </div><br/>
+            <div class="join-cententFr-child">
+                <div class="join-cententFr-title">
+                    <span><h4>我要留言</h4></span>
+                </div>
+                <div class="mordrMain fr personaM-content-wrap">
+                    <form id="mYform">
+                        <dl class="content-main">
+                            <dd class="clearfix">
+                                <span class="fl">商品名称：</span>
+                                <input type="text" id="goods_title" title="商品名称"  class="txt fl" name="goods_title" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">供货商：</span>
+                                <input type="text" id="supplier" title="供货商" class="txt fl" name="supplier" >
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">联系电话：</span>
+                                <input type="text" id="mobile"  title="联系电话" class="txt fl" name="mobile">
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">邮箱地址：</span>
+                                <input type="text" id="email"  title="邮箱地址" class="txt fl" name="email">
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="fl">商品描述：</span>
+                                <textarea class="fl" id="goods_dec" rows="3" cols="20"  title="商品描述" name="goods_dec" ></textarea>
+                            </dd>
+
+                            <dd class="clearfix">
+                                <span class="fl"></span>
+                                <input type="button" onclick="sub()" value="提交" class="sub">
+                            </dd>
+                        </dl>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+   
+    <script src="__JS__/Calendar.js"></script>
+    <script src="__JS__/expansion.js"></script>
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/latestPromotion.js"></script>
+    <script src="__JS__/navbannerurl.js"></script>
+
+    <script>
+        /*$('.mordrMain fr .clearfix fl li a').on('click', function () {
+            $('.mordrMain fr .clearfix fl li a').removeClass('active').eq($(this).index() - 1).addClass('active');
+            $('.person-section .join-cententFr .join-cententFr-child').removeClass('active').eq($(this).index() - 1).addClass('active');*/
+        });
+        function sub() {
+            var formObj = $('#mYform').serializeArray();
+            var json = {};
+            for(var i = 0;i<formObj.length;i++){
+                var _this = formObj[i];
+                if(!formObj[i].value){
+                    layer.tips($('#'+_this.name).attr('title')+'不能为空', '#'+_this.name);
+                    return false;
+                }
+                json[_this.name] = _this.value;
+            }
+
+            $.post("{:U('add')}",json,function (res) {
+                layer.msg(res.message);
+                if(res.status == 1){
+                    location.replace(location.href);
+                }
+            },'json');
+        };
+    </script>
+</block>

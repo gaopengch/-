@@ -1,0 +1,51 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+    <div class="person-section clearfix">
+        <include file="Public/assets_header"/>
+        <!--内容-->
+        <div class="mordrMain fr securityS-content-wrap">
+            <div class="title clearfix">
+                <ul class="clearfix fl nav">
+                    <li class="fl active hover"><a href="javascript:;">推荐列表</a></li>
+                </ul>
+            </div>
+            <div class="content-wrap">
+                <div class="content-info" style="height: 400px">
+                    <h2>您的推荐信息</h2>
+                    <if condition="$data['member_status'] eq 1">
+                        <li>您没有推荐分销权限，申请成为分销代理，请按照以下步骤：</li>
+                        <li>1. 添加公众微信号：Tg_2tianqc。</li>
+                        <li>2. 向客服索取微信群号与分销代理协议。</li>
+                        <li>3. 建立对应的微信群，并添加微信成员达到50人。</li>
+                        <li>4. 分销代理协议签字后拍照发送给客服。</li>
+                        <li>5. 向客服提供登录帐号索取分销代码。</li>
+                        <li>6. 客服分配推荐权限。</li>
+                    <else/>
+                        <ul>
+                            <li>PC端链接</li>
+                            <li>推荐链接：{$data.pc_url}</li>
+                        </ul>
+                        <hr>
+                        <ul>
+                            <li>移动端链接</li>
+                            <li>推荐链接：{$data.url}</li>
+                            <li>推荐二维码：<img src="{$data.code_path}" weight="200px" height="200px"></li>
+                        </ul>
+                    </if>
+                </div>
+
+            </div>
+        </div>
+        <!--右侧一键到顶 and 客服-->
+        <include file="Order/personalHomeTop"/>
+    </div>
+    <!--尾部-->
+    <script src="__JS__/header.js"></script>
+    <script src="__JS__/Calendar.js"></script>
+    <script src="__JS__/assets/assets.js"></script>
+    <script src="__JS__/jquery-1.7.2.min.js"></script>
+    <script src="__JS__/header.js"></script>
+</block>

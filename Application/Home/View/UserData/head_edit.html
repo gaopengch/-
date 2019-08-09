@@ -1,0 +1,76 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr editad-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">编辑头像</a></li>
+				</ul>
+			</div>
+			<div class="con-wrap clearfix">
+				<form action="{:U('UserData/head_edit')}" enctype="multipart/form-data" method="post">
+					<div class="file-main clearfix">
+						<div class="file-amin"><input type="file" name="header" id="file_upload">选择您要上传的头像</div>
+						<div class="prompt">仅支持JGP、GFI、PNG图片文件，且文件小于5M</div>
+					</div>
+					<div class="content-main">
+						<div class="left-main fl">
+							<div class="images-parent">
+								<div class="img-b image_container">
+									<img src="__IMG__/w39.jpg" height="150" width="150" class="preview">
+								</div>
+							</div>
+							<input type="submit" value="保存" class="btn">
+						</div>
+						<div class="right-main fr">
+							<p class="data-title">你上传的头像会自动生成2种尺寸，请注意中小尺寸是否清晰</p>
+							<div class="smc">
+								<div class="img-m-cont">
+									<div class="img-s image_container">
+										<img src="__IMG__/w39.jpg" height="100" width="100" class="preview">
+									</div>
+									100*100像素
+									<div class="img-m image_container">
+										<img src="__IMG__/w39.jpg" height="50" width="50" class="preview">
+									</div>
+									50*50像素
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+<script>
+	//图案选择
+	$("#file_upload").change(function() {
+		var _file = $(this);
+		var fileObj = _file[0];
+		var windowURL = window.URL || window.webkitURL;
+		var dataURL;
+		var _img = $(".editad-content-wrap .con-wrap .preview");
+		 
+		if(fileObj && fileObj.files && fileObj.files[0]){
+			dataURL = windowURL.createObjectURL(fileObj.files[0]);
+			_img.attr('src',dataURL);
+		}else{
+			dataURL = _file.val();
+			var imgObj = $(".editad-content-wrap .con-wrap .preview");
+			imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+			imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+		}
+	});
+</script>
+</block>

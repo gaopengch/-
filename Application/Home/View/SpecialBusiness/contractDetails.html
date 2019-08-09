@@ -1,0 +1,97 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr contdet-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">打印机租凭-合同详情</a></li>
+				</ul>
+			</div>
+			<div class="content-main">
+				<div class="products-wrap clearfix">
+					<div class="screenshot fl">
+						<img src="__SERVER__/{$goods.images}" width="110" height="110">
+					</div>
+					<dl class="products-model fl">
+						<dt>租赁机器型号:</dt>
+						<dd>{$goods.title}</dd>
+						<dd><b>租赁到期日期：</b><em class="colorRed">{$data.start_time|date="Y-m-d",###} 至 {$data.due_time|date="Y-m-d",###}</em></dd>
+						<dd><b>租赁单价：</b><b class="colorRed">{$data.lease_price}</b>元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;彩色: {$data.colour_price}元/张 ， 黑白: {$data.black_price}元/张</dd>
+					</dl>
+					<ul class="products-term fr">
+						<li><em class="colorRed font16">
+						    <if condition="$data.status eq '0'">
+						        租赁期内
+						    <else/>
+						        租赁过期
+						    </if>
+						 </em></li>
+						<li><b>已交租赁押金：</b><em class="colorRed font20">{$data.deposit}</em>元 </li>
+						<li>{$data.meter_reading_time}</li>
+					</ul>
+				</div>
+				<div class="table-main">
+					<div class="caption clearfix">
+						<h2>最近抄表</h2>
+						<a href="{:U('SpecialBusiness/Record',array('id'=>$data['id']))}" class="fr gray">查看补充耗材记录</a>
+						<a href="{:U('SpecialBusiness/public_payment',array('id'=>$data['id']))}" class="fr blue">查看抄表记录</a>
+					</div>
+					<div class="header-bg"></div>
+					<table>
+						<tr>
+							<th>抄表日期</th>
+							<th>抄表总数</th>
+							<th>彩色数</th>
+							<th>黑色数</th>
+							<th>支付费用</th>
+							<th>支付状态</th>
+						</tr>
+						<empty name="meter">
+						    <td></td>
+						    <td></td>
+						    <td>暂时没有记录!</td>
+						    <td></td>
+						    <td></td>
+						    <td></td>
+						<else/>
+						<tr>
+							<td>{$meter.meter_time|date="Y-m-d",###}</td>
+							<td>{$meter.meter_reading}</td>
+							<td>{$meter.colour_num}</td>
+							<td>{$meter.black_num}</td>
+							<td>￥{$meter.pay_price}</td>
+							<td class="red">
+                                <switch name="meter.pay_status">
+                                	<case value="0">未支付</case>
+                                	<case value="1">已支付</case>
+                                	<case value="2">对公支付</case>
+                                </switch>
+							</td>
+						</tr>
+						</empty>
+					</table>
+				</div>
+				<div class="btn-main">
+					<a href="javascript:history.go(-1);">返&nbsp;回</a>
+					<a href="javascript:;">故障报修</a>
+					<a href="{:U('SpecialBusiness/supplies',array('id'=>$data['id']))}" class="bg-orange">补充耗材</a>
+					<if condition="$meter.pay_status eq '0'">
+					<a href="javascript:;" class="bg-red">需支付费用{$meter.pay_price}元</a>
+					</if>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

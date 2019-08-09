@@ -1,0 +1,154 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <style>
+        .content{
+            position: relative;
+        }
+        .look-img{
+            display: none;
+            width: 580px;
+            height: 390px;
+            position: absolute;
+            top: 13%;
+            left: 50%;
+            margin-left: -250px;
+        }
+        .look-img img{
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+<section class="content">
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-list"></i> 支付订单列表
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="navbar navbar-default">
+					<form  id="conditionForm" class="navbar-form form-inline" method="get" url="{:U('ajaxGetData')}">
+
+						<div class="form-group">
+							<label class="control-label" for="input-order-id">支付订单ID</label>
+							<div class="input-group">
+								<input type="text" name="id" placeholder="订单编号"
+									id="input-order-id" class="input-sm" >
+							</div>
+						</div>
+                        <div class="form-group">
+                            <label class="control-label" for="pay-order-id">支付订单编号</label>
+                            <div class="input-group">
+                                <input type="text" name="pay_order_id" placeholder="订单编号"
+                                       id="pay-order-id" class="input-sm" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="pay-order-id">商品订单ID</label>
+                            <div class="input-group">
+                                <input type="text" name="order_id_str" placeholder="订单编号"
+                                       id="order_id_str" class="input-sm" >
+                            </div>
+                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<select name="status" class="input-sm" id="status">-->
+                                <!--<option value="">支付订单状态</option>-->
+                                <!--<option value="0">未支付</option>-->
+                                <!--<option value="1">已支付</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+
+						<div class="form-group" style="padding-left: 20px">
+                            <input type="submit" value="筛选" style="width: 100px;height: 30px;">
+                            <!--<input type="submit" value="筛选" onclick="ajaxForMyOrder('conditionForm', 1)"  style="width: 100px;height: 30px;">-->
+						</div>
+                        <div class="form-group " style="width: 220px;height: 30px;float: right">
+                            对照图点击放大 <img src="{$img}" style="width: 100px;height: 30px;cursor: pointer;">
+						</div>
+
+					</form>
+				</div>
+				<!--<div id="ajaxGetReturn"></div>-->
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover font_size">
+                        <thead>
+                        <tr>
+                            <td style="width: 1px;" class="text-center"><input
+                                    type="checkbox"
+                                    onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></td>
+                            <td class="text-center cursor">支付订单ID</td>
+                            <td class="text-center cursor">支付订单编号</td>
+                            <td class="text-center cursor">对应商品订单ID</td>
+                            <td class="text-center">支付状态</td>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="data" id="list">
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selected[]" value="6">
+                                    <input type="hidden" name="shipping_code[]" value="flat.flat"></td>
+                                <td class="text-center">{$list['id']}</td>
+                                <td class="text-center">{$list['pay_order_id']}</td>
+                                <td class="text-center">{$list['order_id_str']}</td>
+                                <td class="text-center">{$list['status']}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-left"></div>
+                    <div class="col-sm-6 text-right">
+                        {$page}
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+    <div class="look-img"><img src="" alt=""/></div>
+</section>
+<script src="__COMMON__/My97Date/WdatePicker.js"></script> 
+<script src="__COMMON__/js/jquery-form.js"></script>
+<script src="__COMMON__/js/alert.js"></script>
+<script>
+    $(".form-group").on("click","img",function(){
+        var link = $(this).attr("src");
+        $(".look-img img").attr("src",link)
+        $(".look-img").show();
+
+    })
+    $(".look-img").on("click",function(){
+        $(this).hide();
+
+    })
+
+
+
+//    function ajaxForMyOrder (id, page) {
+//        this.page = page;
+//        if (!$('#' + id).length || !this.isNumer(page)) {
+//            layer.msg('参数错误');
+//            return false;
+//        }
+//        var data = $('#' + id).serialize();
+//        var url = document.getElementById(id).getAttribute('url')+'?p='+page;
+//        this.dataType = '';
+//        return this.post(url, data, function(res) {
+//            $("#ajaxGetReturn").html('');
+//            $("#ajaxGetReturn").append(res);
+//        })
+//    }
+</script>
+<!--<script src="__JS__/order.js"></script>-->
+<script>
+
+</script>
+</block>

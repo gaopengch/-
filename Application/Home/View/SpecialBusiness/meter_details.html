@@ -1,0 +1,56 @@
+<extend name="Order/personalEdit"/>
+<include file="Order/personalHeaderTwo"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr otheros-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">打印机租凭</a></li>
+				</ul>
+			</div>
+			<div class="con-wrap clearfix">
+				<ul class="con-tailed clearfix"></ul>
+				<table class="content-main">
+					<tr class="Header">
+						<th width="165">抄表日期</th>
+						<th width="153">抄表总数</th>
+						<th width="170">彩色数</th>
+						<th width="170">黑色数</th>
+						<th width="178">支付费用</th>
+						<th>支付状态</th>
+					</tr>
+					<tr>
+						<td>2016-12-05</td>
+						<td>20</td>
+						<td>10</td>
+						<td>10</td>
+						<td>￥100.00</td>
+						<td><span>已支付</span></td>
+					</tr>
+					<tr>
+						<td>2016-12-05</td>
+						<td>20</td>
+						<td>10</td>
+						<td>10</td>
+						<td>￥100.00</td>
+						<td><span class="bg-red">未支付</span></td>
+					</tr>
+				</table>
+				<div class="return-btn">
+					<a href="javascript:;">返回</a>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

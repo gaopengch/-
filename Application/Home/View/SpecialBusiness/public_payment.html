@@ -1,0 +1,68 @@
+<extend name="Order/personalEdit"/>
+<include file="Order/personalHeaderTwo"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr otheros-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">打印机租凭-抄表记录</a></li>
+				</ul>
+			</div>
+			<div class="con-wrap clearfix">
+				<ul class="con-tailed clearfix"></ul>
+				<table class="content-main">
+					<tr class="Header">
+						<th width="165">抄表日期</th>
+						<th width="153">抄表总数</th>
+						<th width="170">彩色数</th>
+						<th width="170">黑色数</th>
+						<th width="178">支付费用</th>
+						<th>支付状态</th>
+					</tr>
+					<empty name="data.res">
+					    <td></td>
+					    <td></td>
+					    <td>暂时没有记录!</td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					<else/>
+						<volist name="data.res" id="vo">
+							<tr>
+								<td>{$vo.meter_time|date="Y-m-d",###}</td>
+								<td>{$vo.meter_reading}</td>
+								<td>{$vo.colour_num}</td>
+								<td>{$vo.black_num}</td>
+								<td>￥{$vo.pay_price}</td>
+								<td>
+									<span>
+		                                <switch name="vo.pay_status">
+		                                	<case value="0">未支付</case>
+		                                	<case value="1">已支付</case>
+		                                	<case value="2">对公支付</case>
+		                                </switch>
+									</span>
+								</td>
+							</tr>
+						</volist>
+					</empty>
+				</table>
+				<div class="page">{$data.page}</div>
+				<div class="return-btn">
+					<a href="javascript:history.go(-1);">返回</a>
+				</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

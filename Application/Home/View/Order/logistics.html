@@ -1,0 +1,67 @@
+<extend name="Order/personalEdit"/>
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="logistWrap fr">
+			<div class="title">
+				<span>查看物流</span>
+			</div>
+			<div class="detail-panel">
+			    <if condition="$data.message eq 'ok'">
+				<div class="panel-package">
+					<div class="package-title">
+						<if condition="$data.ischeck eq '1'">
+							您的包裹已被签收
+                        <else/>
+                            您的包裹未签收
+                        </if> 
+					</div>
+					<ul class="centent">
+					    <volist name="data.data" id="data" kay="key">
+							<li <if condition="$key eq '0'">class="active"</if>>
+								<em></em>
+								<span class="date">{$data.time}</span>
+								<span class="text">{$data.context}</span>
+							</li>
+						</volist>
+					</ul>
+				</div>
+				<ul class="logistinf">
+					<li>
+						<span>运单号码： <b>{$express.express_id}</b></span>
+						<span>物流公司： <b>{$express.express_title}</b></span>
+						<span>客服电话： <b>{$express.tel}</b></span>
+					</li>
+					<li>商家名称： <b>  恬果（上海）食品有限公司</b></li>
+					<li>发货地址： <span class="active">{$shipping_address.addr_alone}</span>  <b>{$shipping_address.zipcode}</b>  <b>{$shipping_address.realname}</b>   <b>{$shipping_address.mobile}</b></li>
+					<li>收货地址： <span class="active">{$receiving_address.addr_alone}</span>  <b>{$receiving_address.zipcode}</b>  <b>{$receiving_address.realname}</b>   <b>{$receiving_address.mobile}</b></li>
+					<volist name="goods" id="goods">
+						<li class="iamgesPtt">
+							<a href="javscript:;" class="iamgesPt">
+								<img src="{$goods.images}">
+							</a>
+							<span title="{$goods.title}">{$goods.title}</span>
+							<span>{$goods.goods_price}×{$goods.goods_num}</span>
+						</li>
+					</volist>
+				</ul>
+				<else/>
+					<div <div class="panel-package">
+					    <div class="package-title">{$data.message}</div>
+					</div>
+				</if>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script> -->
+</block>

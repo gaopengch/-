@@ -1,0 +1,90 @@
+<form method="post" enctype="multipart/form-data" target="_blank"
+	id="form-order">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover font_size">
+			<thead>
+				<tr>
+					<td class="text-center cursor">图片</td>
+					<td class="text-center cursor">商品信息</td>
+                    <td class="text-center cursor">数量</td>
+					<td class="text-center cursor">商品销售价</td>
+					<td class="text-center">商品实付金额</td>
+					<td class="text-center">物流信息</td>
+					<td class="text-center">发货仓库</td>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="order.data" id="list">
+				<tr>
+					<td class="order-info" colspan="8">
+                        <span>
+                            <input type="checkbox" name="selected[]" value="{$list[$model::$id_d]}">
+                            <input type="hidden" name="shipping_code[]" value="flat.flat">
+                        </span>
+                        <span>订单ID：{$list[$model::$id_d]}</span>
+                        <span>订单编号：{$list[$model::$orderSn_id_d]}</span>
+                        <span>订单总金额：{$list[$model::$priceSum_d]}</span>
+                        <if condition="$list[$model::$payTime_d]">
+                            <span>付款时间：{$list[$model::$payTime_d]|date='Y-m-d H:i',###}</span>
+                        </if>
+                        <span class="operation">
+                            <a href="{:U('orderDetail',array('order_id' => $list[$model::$id_d]))}" data-toggle="tooltip" title="" class="btn btn-info" data-original-title="查看详情"><i class="fa fa-eye"></i></a>
+                        </span>
+                        <span class="operation">
+                           <span>订单状态：{$list.OrderStatus}</span>
+                        </span>
+                        <!--meng-->
+                        <if condition="$list[$model::$groupId_d] neq 0">
+                        <span class="operation">
+                            <a href="{:U('groupCouponInformation',array('order_id' =>  $list[$model::$id_d]))}" >拼购订单详情</a>
+                        </span>
+                        </if>
+                        <!--meng-->
+                    </td>
+				</tr>
+                    <volist name="list.goods" id="goods">
+                    <if condition="$goods['title']">
+                        <tr>
+                            <td class="text-center" ><img class="img" src="__SERVER__{$goods['img']}"></td>
+                            <!--meng-->
+                            <if condition="$list[$model::$groupId_d] neq 0">
+                                <td class="text-center">{$goods['group_title']}</td>
+                                <else/>
+                                <td class="text-center">{$goods['title']}</td>
+                            </if>
+                            <!--meng-->
+                            <td class="text-center">{$goods['goods_num']}</td>
+                            <td class="text-center">{$goods['goods_price']}</td>
+                            <td class="text-center">{$goods['goods_price'] * $goods['goods_num']}</td>
+                        <if condition="$list['express_id']">
+                            <td class="text-center">{$list['express']}:{$list['express_id']}</td>
+                        <else/>
+                            <td class="text-center">未发货</td>
+                        </if>
+                        <td class="text-center">{$goods['stock_name']}</td>
+                        </tr>
+                    </if>
+                    </volist>
+                    <if condition="$list['remarks']">
+                        <tr>
+                           <td >买家留言：</td>
+                           <td colspan="7">{$list['remarks']}</td>
+                        </tr>
+                    </if>
+				</volist>
+			</tbody>
+		</table>
+	</div>
+</form>
+<div class="row">
+	<div class="col-sm-6 text-left"></div>
+	<div class="col-sm-6 text-right">
+		{$order.page}
+	</div>
+</div>
+<script>
+$(".pagination a").click(function(){
+    var page = $(this).data('p');
+    Order.ajaxForMyOrder('conditionForm', page);
+});
+</script>

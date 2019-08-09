@@ -1,0 +1,112 @@
+<extend name="Public/publicHTML" />
+
+<block name="content">
+<link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+<div class="wrapper">
+	<section class="content ">
+		<!-- Main content -->
+		<div class="container-fluid">
+			<div class="pull-right">
+				<a href="javascript:history.go(-1)" data-toggle="tooltip" title=""
+					class="btn btn-default" data-original-title="返回"><i
+					class="fa fa-reply"></i></a>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<i class="fa fa-list"></i>申请售后
+					</h3>
+				</div>
+				<div class="panel-body ">
+					<!--表单数据-->
+					<form method="post" id="return_form" action="{:U('return_goods_add')}" enctype="multipart/form-data">
+						<!--通用信息-->
+						<div class="tab-content col-md-10">
+							<div class="tab-pane active" id="tab_tongyong">
+								<table class="table table-bordered">
+										<tr>
+											<td class="col-sm-2">订单编号：</td>
+											<td class="col-sm-8"><a
+												href="{:U('orderDetail',array('order_id' =>$order['order_sn_id']))}">{$order['order_sn_id']}</a>
+											</td>
+										</tr>
+										<tr>
+											<td>用户：</td>
+											<td>{$user['user_name']}</td>
+										</tr>
+										<tr>
+											<td>商品名称：</td>
+											<td><a
+												href="{:U('Home/Goods/goodsInfo',array('id'=>$return_goods[goods_id]))}"
+												target="_blank">{$goods['title']}</a></td>
+										</tr>
+                                        <tr>
+                                            <td>退款金额：</td>
+                                            <td><input type="text" name="price" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td>申请数量：</td>
+                                            <td><input type="text" name="number" ></td>
+                                        </tr>
+                                        <tr>
+                                            <td>是否收到货：</td>
+                                            <td>
+                                                <input type="radio" name="is_receive" value="1">未收到	&nbsp;	&nbsp;
+
+                                                <input type="radio" name="is_receive" value="2">已收到
+                                            </td>
+                                        </tr>
+										<tr>
+											<td>退换货：</td>
+											<td>
+                                                <div class="form-group col-xs-3">
+                                                    <select class="form-control" name="type">
+                                                        <option  value="0">换货</option>
+                                                        <option  value="1">退货</option>
+                                                        <option  value="2">退款</option>
+                                                    </select>
+                                                </div>
+
+											</td>
+										</tr>
+                                        <tr>
+                                            <td>申请售后原因：</td>
+                                            <td><textarea form="return_form" name="tuihuo_case" id="tuihuo_case" cols="" rows="" class="area returnGoods"></textarea>
+                                            </td>
+                                        </tr>
+										<tr>
+											<td>申请售后描述：</td>
+											<td><textarea form="return_form" name="explain" id="reason" cols="" rows="" class="area returnGoods"></textarea>
+											</td>
+										</tr>
+										<tr>
+											<td>商品照片：</td>
+											<td>
+                                                <div class="filePt fl">
+                                                    <input type="file" name="voucher[]" id="voucher" multiple='multiple'>
+                                                </div>
+                                            </td>
+										</tr>
+										<tr>
+											<td class="text-right" colspan="2">
+                                                <input type="hidden" name="goods_id" value="{$goods.goods_id}">
+                                                <input type="hidden" name="order_id" value="{$goods.order_id}">
+                                                <input type="hidden" name="user_id" value="{$user['id']}">
+                                                <input class="" type="submit" value="保存">
+                                            </td>
+										</tr>
+								</table>
+							</div>
+						</div>
+					</form>
+					<!--表单数据-->
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<script src="__COMMON__/js/jquery-form.js"></script>
+<script src="__COMMON__/js/alert.js"></script>
+</block>

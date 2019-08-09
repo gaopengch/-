@@ -1,0 +1,435 @@
+<extend name="Public/indexEdit"/>
+<block name="content">
+    <link rel="stylesheet" href="__CSS__/toastr.min.css"/>
+    <!--轮播-->
+    <div class="q_g_nav">
+        <div class="hpTopNews clearfix">
+            <div class="null fl"></div>
+            <div class="hpTopBanner fl">
+                <ul class="fl slides clearfix">
+                    <li class="fl"><a href="javscript:;"></a></li>
+                    <li class="fl"><a href="javscript:;"></a></li>
+                </ul>
+                <!--<a href="javascript:;" class="left"><</a>-->
+                <!--<a href="javascript:;" class="right">></a>-->
+                <div class="page">
+                    <input type="hidden" id="banner_url" value="{:U('Index/banner')}"/>
+                </div>
+            </div>
+            <div class="fl hpLeftBanner">
+                <div class="jdnews">
+                    <if condition="$show != 1">
+                        <div class="user-avatars">
+                            <img src="/Public/Home/img/user-img.png" alt="user-img"/>
+                        </div>
+                    <else/>
+                        <div  class="user-avatars login-avatars">
+                            <img src="{$userData['img']}" alt="user-img"/>
+                        </div>
+                    </if>
+                    <div class="t-info">
+                        <if condition="$show != 1">
+                            <p class="user-name">hi！ 您好！</p>
+                            <div class="t-btn clearfix">
+                                <a class="fl" href="{:U('public/login')}">登录</a>
+                                <a class="fr" href="{:U('public/reg')}">注册</a>
+                            </div>
+                        <else/>
+                            <p class="user-name" >hi， {$userData['name']}</p>
+                            <div  class="t-box clearfix">
+                                <a class="look-order fl" href="{:U('Order/order_myorder')}">查看订单</a>
+                                <span></span>
+                                <a class="t-address fr" href="{:U('UserSet/address',['active'=>7])}">收货地址</a>
+                            </div>
+                        </if>
+
+
+                    </div>
+
+                    <!--<h3 class="clearfix">-->
+                    <!--<b class="fl">2天聚清公告</b>-->
+                    <!--<a href="{:U('Service/getAnnounceList')}" class="fr">更多></a>-->
+                    <!--</h3>-->
+                    <div class="t-notice-list">
+                        <foreach name="announcements" item="announce">
+                            <p class="t-notice">
+                                <a href="{:U('Service/getAnnouDetails',array('id'=>$announce['id']))}" class="clearfix">
+                                    <em class="fl">【公告】</em>
+								<span class="fl">
+									{$announce.title|msubstr=0,12,'utf-8',true}
+								</span>
+                                    <if condition="$announce.type eq 1">
+                                        <span><img src="__IMG__/new.gif" alt=""></span>
+                                    </if>
+                                </a>
+                            </p>
+                        </foreach>
+                    </div>
+                    <div class="app-code">
+                        <img src="/Uploads/conf/wx_qrcode.jpg" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="q_content">
+        <div class="q_today To_snap_up">
+            <p class="today_title">今日秒抢</p>
+            <div class="q_goods">
+                <ul class="clearfix period_of_time today_time">
+
+                    <foreach name="soldnames" item="soldname">
+                        <if condition="$soldname['id'] LT $todayData['flag']">
+                            <li class="fl">
+                                <div class="time_info">
+                                    <span class="rob_status">已开启</span>
+                                    <span class="time q_cd_font" data-value="true" data-cid="1" data-sid="{$soldname.id}" data-starttime="{$soldname.starttime}">{$soldname.name}</span>
+                                </div>
+                            </li>
+                        <elseif condition="$soldname.id EQ $todayData['flag']" />
+                            <li class="fl active">
+                                <div class="time_info">
+                                    <span class="rob_status">正在抢购</span>
+                                    <span class="time q_cd_font" data-value="true" data-cid="1" data-sid="{$soldname.id}" data-starttime="{$soldname.starttime}">{$soldname.name}</span>
+                                </div>
+                            </li>
+                        <elseif condition="$soldname.id GT $todayData['flag']" />
+                            <li class="fl">
+                                <div class="time_info">
+                                    <span class="rob_status">未开抢</span>
+                                    <span class="time q_cd_font" data-value="true" data-cid="1" data-sid="{$soldname.id}" data-starttime="{$soldname.starttime}">{$soldname.name}</span>
+                                </div>
+                            </li>
+                        </if>
+
+                    </foreach>
+
+                </ul>
+                <div class="q_goods_list today_goods">
+                    <div class="q_cd">
+                        <div class="q_time fl">
+                            <i class="q_ico fl"></i>
+                            <div class="fl q_cd_tit" >
+                                <span class="fl q_cs_cd">距离本场秒杀结束还有</span>
+                                <div class="cd_item fl">
+                                    <span class="q_cd_text hour">00</span>
+                                </div>
+                                <span class="fl q_d">:</span>
+                                <div class="cd_item fl">
+                                    <span class="q_cd_text minute">00</span>
+                                </div>
+                                <span class="fl q_d">:</span>
+                                <div class="cd_item fl">
+                                    <span class="q_cd_text seconds">00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <if condition="$todayData['today_clear']['goods']">
+                        <div class="q-goods-li clearfix">
+                            <foreach name="todayData['today_clear']['goods']" item="todayGoods">
+                                <div class="q_slider_item fl">
+                                    <a class="q_item_lk" target="_blank" href="{:U('Goods/goodsDetails',['id'=>$todayGoods['id']])}">
+                                        <div class="q_item_img">
+                                            <img src="{$todayGoods.pic_url}" alt=""/>
+                                            <if condition="!$todayGoods['stock']">
+                                            <img class="no_stock" src="__SERVER__/Public/Home/img/sellout2.jpg" alt=""/>
+                                            </if>
+                                        </div>
+                                        <div class="q_inventory">
+                                            库存：{$todayGoods.stock}
+                                        </div>
+                                        <div class="q_item_name">{$todayGoods.title}</div>
+                                        <div class="q_item_price">
+                                    <if condition="$show">
+                                        <span class="new_price fl">
+                                            <i>￥</i><span>{$todayGoods.price_member}</span>
+                                        </span>
+                                        <span class="origin_price fl">
+                                            <i>￥</i><span>{$todayGoods.price_market}</span>
+                                        </span>
+                                    <else/>
+                                        <span class="new_price fl">
+                                            <i>￥</i><span>{$todayGoods.price_market}</span>
+                                        </span>
+                                        <span class="origin_price fl">
+                                            <span>会员价更低</span>
+                                        </span>
+                                    </if>
+                                            <if condition="!$todayGoods['is_customs']">
+                                            <img class="fr q_buy_cart" data-id="{$todayGoods['id']}" src="/Public/Home/img/buy_cart.png"   alt=""/>
+                                            </if>
+                                        </div>
+                                    </a>
+                                </div>
+                            </foreach>
+                        </div>
+                    <else/>
+                        <div class="q-goods-li clearfix">
+                            <div class="q_no_data">本时段暂无商品</div>
+                        </div>
+                    </if>
+                </div>
+            </div>
+        </div>
+        <div class="q_tomorrow To_snap_up">
+            <p class="tomorrow_title">明日预告</p>
+            <div class="q_goods">
+                <ul class="clearfix period_of_time tomorrow_time">
+                    <foreach name="soldnames" item="soldname">
+                        <if condition="$soldname['id'] EQ $tomorrowData['flag']">
+                            <li class="fl active">
+                                <div class="time_info">
+                                    <span class="rob_status">未开启</span>
+                                    <span class="time q_cd_font" data-cid="3" data-sid="{$soldname.id}" data-starttime="{$soldname.starttime}">{$soldname.name}</span>
+                                </div>
+                            </li>
+                        <else/>
+                            <li class="fl">
+                                <div class="time_info">
+                                    <span class="rob_status">未开抢</span>
+                                    <span class="time q_cd_font" data-cid="3" data-sid="{$soldname.id}" data-starttime="{$soldname.starttime}">{$soldname.name}</span>
+                                </div>
+                            </li>
+                        </if>
+
+                    </foreach>
+                </ul>
+
+                <div class="q_goods_list tomorrow_goods">
+                    <if condition="$tomorrowData['tomorrow_clear']['goods']">
+                        <div class="q-goods-li clearfix">
+                            <foreach name="tomorrowData['tomorrow_clear']['goods']" item="tomorrowGoods">
+                                <div class="q_slider_item fl">
+                                    <a class="q_item_lk" target="_blank" href="{:U('Goods/goodsDetails',['id'=>$tomorrowGoods['id']])}">
+                                        <div class="q_item_img">
+                                            <img src="{$tomorrowGoods.pic_url}" alt=""/>
+                                            <if condition="!$tomorrowGoods['stock']">
+                                                <img class="no_stock" src="__SERVER__/Public/Home/img/sellout2.jpg" alt=""/>
+                                            </if>
+                                        </div>
+                                        <div class="q_inventory">
+                                            库存：{$tomorrowGoods.stock}
+                                        </div>
+                                        <div class="q_item_name">{$tomorrowGoods.title}</div>
+                                        <div class="q_item_price">
+                                    <if condition="$show">
+                                        <span class="new_price fl">
+                                            <i>￥</i><span>{$tomorrowGoods.price_member}</span>
+                                        </span>
+                                        <span class="origin_price fl">
+                                            <i>￥</i><span>{$tomorrowGoods.price_market}</span>
+                                        </span>
+                                    <else/>
+                                        <span class="new_price fl">
+                                            <i>￥</i><span>{$tomorrowGoods.price_market}</span>
+                                        </span>
+                                        <span class="origin_price fl">
+                                            <span>会员价更低</span>
+                                        </span>
+                                    </if>
+                                            <if condition="!$tomorrowGoods['is_customs']">
+                                        <img class="fr q_buy_cart" data-id="{$tomorrowGoods['id']}" src="/Public/Home/img/buy_cart.png" alt=""/>
+                                            </if>
+
+                                        </div>
+                                    </a>
+                                </div>
+                            </foreach>
+                        </div>
+                    <else/>
+                        <div class="q-goods-li clearfix">
+                            <div class="q_no_data">本时段暂无商品</div>
+                        </div>
+                    </if>
+
+                </div>
+            </div>
+        </div>
+        <div class="q_yesterday To_snap_up">
+            <p class="yesterday_title">昨日尾单</p>
+            <div class="q_goods">
+                <div class="q_goods_list yesterday_goods">
+                    <if condition="$yesterdayData['yesterday_clear']['goods']">
+                        <div class="q-goods-li q_yesterday_bro clearfix">
+                            <foreach name="yesterdayData['yesterday_clear']['goods']" item="yesterdayGoods">
+                                <div class="q_slider_item fl">
+                                    <a class="q_item_lk" target="_blank" href="{:U('Goods/goodsDetails',['id'=>$yesterdayGoods['id']])}">
+                                        <div class="q_item_img">
+                                            <img src="{$yesterdayGoods.pic_url}" alt=""/>
+                                            <if condition="!$yesterdayGoods['stock']">
+                                                <img class="no_stock" src="__SERVER__/Public/Home/img/sellout2.jpg" alt=""/>
+                                            </if>
+                                        </div>
+                                        <div class="q_inventory">
+                                            库存：{$yesterdayGoods.stock}
+                                        </div>
+                                        <div class="q_item_name">{$yesterdayGoods.title}</div>
+                                        <div class="q_item_price">
+                                    <if condition="$show">
+                                        <span class="new_price fl">
+                                            <i>￥</i><span>{$yesterdayGoods.price_member}</span>
+                                        </span>
+                                        <span class="origin_price fl">
+                                            <i>￥</i><span>{$yesterdayGoods.price_market}</span>
+                                        </span>
+                                    <else/>
+                                        <span class="new_price fl">
+                                            <i>￥</i><span>{$yesterdayGoods.price_market}</span>
+                                        </span>
+                                        <span class="origin_price fl">
+                                            <span>会员价更低</span>
+                                        </span>
+                                    </if>
+                                            <if condition="!$yesterdayGoods['is_customs']">
+                                            <img class="fr q_buy_cart" data-id="{$yesterdayGoods['id']}" src="/Public/Home/img/buy_cart.png" alt=""/>
+                                            </if>
+                                        </div>
+                                    </a>
+                                </div>
+                            </foreach>
+                        </div>
+                    <else/>
+                        <div class="q_no_data">暂无商品</div>
+                    </if>
+
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--1f-->
+	<!--<volist name="indexInfor" id="big" key="a">-->
+
+            <!--<div class="home-section{$a} home-section" >-->
+                <!--<div class="floor-main-top clearfix">-->
+                    <!--<em class="fl">{$a}F</em>-->
+                    <!--<h2 class="fl">-->
+                        <!--<b><a href="{$big.url}" style="color:black;">{$big.name}</a></b>-->
+                    <!--</h2>-->
+                <!--</div>-->
+                <!--<div class="floor-main w clearfix">-->
+                    <!--<ul class="saleZone-fl fl">-->
+                        <!--<li class="saleInfo">-->
+                            <!--<a href="{$big.url}">-->
+                                <!--<img class="lazy" data-original="__SERVER__{$big.pic_url}" src="__IMG__/load3.jpg" height="495" width="196">-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--&lt;!&ndash;<li class="saleNav clearfix">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<h4 class="fl"></h4>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--</ul>-->
+
+                    <!--<div class="saleZone-fr fl">-->
+                        <!--<div class="content-main clearfix">-->
+                            <!--<div class="fl">-->
+                                <!--<dl class="clearfix con fl active">-->
+                                    <!--<if condition="$big['one']!=null">-->
+                                        <!--<dd class="fl">-->
+                                            <!--<a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$big['one']['id']])}" target="_blank">-->
+                                                <!--<div class="img-parent-warp">-->
+                                                    <!--<div class="x_move" style="width: 140px;height: 140px;position: absolute;top: 15px;left: 50%;margin-left: -70px;">-->
+                                                        <!--<img class="lazy" data-original="__SERVER__{$big.one.pic_url}" src="__IMG__/load4.jpg" alt="">-->
+                                                        <!--<if condition="!$big['one']['stock']">-->
+                                                            <!--<img class="lazy sellout" data-original="__SERVER__/Public/Home/img/sellout2.jpg" src="__IMG__/load4.jpg" alt="">-->
+                                                        <!--</if>-->
+                                                    <!--</div>-->
+
+                                                <!--</div>-->
+                                                <!--<p>{$big.one.title}</p>-->
+                                                <!--<if condition="$show">-->
+                                                    <!--<span>￥{$big.one.price_member}</span>-->
+                                                    <!--<strike>￥{$big.one.price_market}</strike>-->
+                                                <!--<else/>-->
+                                                    <!--<span>￥{$big.one.price_market}</span>-->
+                                                    <!--<strike>会员价更低</strike>-->
+                                                <!--</if>-->
+
+                                            <!--</a>-->
+                                        <!--</dd>-->
+                                    <!--<else/>-->
+                                        <!--<dd class="fl">-->
+                                            <!--<a href="">-->
+                                                <!--<div class="img-parent-warp">-->
+                                                    <!--<img class="lazy"  src="__IMG__/load4.jpg" alt="">-->
+                                                <!--</div>-->
+                                                <!--<p></p>-->
+                                                <!--<span></span>-->
+                                                <!--<strike></strike>-->
+                                            <!--</a>-->
+                                        <!--</dd>-->
+                                    <!--</if>-->
+                                    <!--<dt class="fl">-->
+                                        <!--<a href="{$big.middle_pic.ad_link}"><img class="lazy" data-original="{$big.middle_pic.pic_url}" src="__IMG__/load5.jpg" alt=""></a>-->
+                                    <!--</dt>-->
+                                    <!--<volist name="big.goods" id="goods">-->
+                                        <!--<dd class="fl">-->
+                                            <!--<a target="_blank" href="{:U('Goods/goodsDetails',['id'=>$goods['id']])}">-->
+                                                <!--<div class="img-parent-warp">-->
+                                                    <!--<div class="x_move" style="width: 140px;height: 140px;position: absolute;top: 15px;left: 50%;margin-left: -70px;">-->
+                                                    <!--<img class="lazy" data-original="__SERVER__{$goods.pic_url}" src="__IMG__/load4.jpg" alt="">-->
+                                                    <!--<if condition="!$goods['stock']">-->
+                                                        <!--<img class="lazy sellout" data-original="__SERVER__/Public/Home/img/sellout2.jpg" src="__IMG__/load4.jpg" alt="">-->
+                                                    <!--</if>-->
+                                                <!--</div>-->
+                                                <!--</div>-->
+                                                <!--<p>{$goods.title}</p>-->
+                                                <!--<if condition="$show">-->
+                                                    <!--<span>￥{$goods.price_member}</span>-->
+                                                    <!--<strike>￥{$goods.price_market}</strike>-->
+                                                <!--<else/>-->
+                                                    <!--<span>￥{$goods.price_market}</span>-->
+                                                    <!--<strike>会员价更低</strike>-->
+                                                <!--</if>-->
+                                            <!--</a>-->
+                                        <!--</dd>-->
+                                    <!--</volist>-->
+                                <!--</dl>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--&lt;!&ndash;<if condition="$big['ad']!=null">&ndash;&gt;-->
+            <!--<div class="advertisement1">-->
+                <!--<a data="{$big.ad.ad_link}" gg="{$big.ad.id}" onclick="addAd(this)" href="javascript:;">-->
+                    <!--<img class="lazy" data-original="__SERVER__/{$big.ad.pic_url}" src="__IMG__/load5.jpg" alt="{$big.ad.title}" height="110">-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--&lt;!&ndash;</if>&ndash;&gt;-->
+
+	<!--</volist>-->
+	</div>
+	</div>
+	<!--左侧下楼梯菜单-->
+	<div id="menu">
+		<ul>
+			<volist name="bigInfor" id="big">
+				<li>{$big.name}<span>{$big.name}</span></li>
+			</volist>
+		</ul>
+	</div>
+	<input type="hidden" id="loading" value="__SERVER__"/>
+
+    <script>
+        var GET_ClearGood = "{:U('getSgoods')}";
+        var FirstStartTime = "{$todayData['starttime']}";
+        var FirstNowTime = "{$todayData['time']}";
+        var goodsDetailsUrl = "{:U('Goods/goodsDetails')}";
+        var NewAddCart = "{:U('Cart/new_cart_add')}";
+        var IS_LOGIN = "{$show}";
+    </script>
+
+	<script src="__CDN_LAZYLOAD_JS__"></script>
+	<script src="__JS__/index.js"></script>
+    <script src="__JS__/clear-shop.js"></script>
+    <script type="text/javascript" src="__JS__/toastr.min.js"></script>
+    <script>
+        (function(){
+            var now = parseInt(FirstNowTime);
+            var start =parseInt(FirstStartTime);
+            computationTime(now,start);
+        })()
+    </script>
+</block>

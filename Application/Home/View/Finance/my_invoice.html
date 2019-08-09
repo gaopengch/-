@@ -1,0 +1,93 @@
+<extend name="Order/personalEdit"/>
+
+<!-- 清空头部广告 -->
+<block name="ad_top"></block>
+
+<block name='content'>
+	<div class="person-section clearfix">
+		<!--左分类-->
+        <include file="Public/assets_header"/>
+		<!--内容-->
+		<div class="mordrMain fr otheros-content-wrap">
+			<div class="title clearfix">
+				<ul class="clearfix fl nav">
+					<li class="fl active hover"><a href="javascript:;">我的发票</a></li>
+				</ul>
+			</div>
+			<div class="con-wrap clearfix">
+				<div class="notes clearfix">
+					<span class="fl">{$user.id}&nbsp;&nbsp;&nbsp;{$user.user_name}</span>
+					<form action="{:U('Finance/my_invoice_search')}" method="post" onsubmit="return check()">
+					<div class="searchInput fr clearfix">
+						
+						<input type="text" name="name" id="name" class="fl txt" placeholder="发票号码,客户编码">
+						<input type="submit" value="查询" class="btn fl">
+					</div>
+					</form>
+				</div>
+				<table class="content-main">
+					<tr class="Header">
+						<th>客户编号</th>
+						<th>客户名称</th>
+						<th>订单号</th>
+						<th>订单类型</th>
+						<th>总金额</th>
+						<th>创建人</th>
+						<th>创建日期</th>
+						<th>操作</th>
+					</tr>
+					<empty name="data">
+						<dd class="clearfix">
+							<div style="width:100%;text-align:center;font-size:20px;">暂时没有数据哦!</div>
+						</dd>
+					<else/>
+					<volist	name="data" id="vo">
+						<tr>
+							<td class="number">{$vo.user_id}</td>
+							<td class="name">{$vo.user_name}</td>
+							<td class="order">{$vo.order_id}</td>
+							<td class="type">
+							    <switch name="vo.order_type">
+									<case value="0">普通订单</case>	
+									<case value="1">账期订单</case>
+								</switch></td>
+							<td class="dollar">{$vo.price}</td>
+							<td class="establish">{$vo.create_people}</td>
+							<td class="timer">{$vo.create_time|date="Y-m-d",###}</td>
+							<td class="operation"><a href="{:U('Finance/my_invoice_details',array('id'=>$vo['id']))}">查看</a></td>
+						</tr>
+					</volist>
+					</empty>
+				</table>
+				<div class="page">{$page}</div>
+				<div class="reminder">温馨提示：本期账单仅供您作为对账参考，最终数据以SAP提供的为准，如有疑问请联系我们的在线客服。</div>
+			</div>
+		</div>
+		<!--右侧一键到顶 and 客服-->
+		<include file="Order/personalHomeTop"/>
+	</div>
+	<!--尾部-->
+	
+<!-- <script src="js/header.js"></script>
+ -->
+<script>
+	//查询搜索框提示文字
+	$('.otheros-content-wrap .con-wrap .notes .searchInput .txt').on('input',function(){
+		if($(this).attr('value') != ''){
+			$(this).addClass('color');
+		}else{
+			$(this).removeClass('color');
+		}
+	});
+	function check(){
+		var name = $('#name').val();
+		if (name == '') {
+			layer.tips('不能为空!','#name',{
+        	 tips:[4,'#f29202']
+        });
+			return false;
+		};
+		return true;
+	}
+</script>
+</block>

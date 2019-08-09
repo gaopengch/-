@@ -1,0 +1,112 @@
+<extend name="Public/publicHTML" />
+<block name="nav"></block>
+
+
+<block name="content">
+    <link rel="stylesheet" href="__COMMON__/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="__COMMON__/bootstrap/css/font-awesome.min.css" />
+    <section class="content">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="fa fa-list"></i> 跨境购商品信息补充页面
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="navbar navbar-default">
+                        <form id="search-form2" class="navbar-form form-inline"
+                              method="post" action="{:U('index')}">
+                            <div class="form-group">
+                                <label for="input-order-id" class="control-label">商品名称:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="input-order-id"
+                                           placeholder="搜索词" value="" name="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" id="button-filter search-order"
+                                        type="submit">
+                                    <i class="fa fa-search"></i> 筛选
+                                </button>
+                            </div>
+                            <a href="javascript:;" onclick="$('#form2').submit()" class="btn btn-primary" >批量编辑</a>
+                        </form>
+
+                    </div>
+
+                    <div id="ajax_return">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <!--<th class="sorting text-left">序号</th>-->
+                                    <th class="sorting text-left">选项</th>
+                                    <th class="sorting text-left">商品ID</th>
+                                    <th class="sorting text-left">商品名称</th>
+                                    <th class="sorting text-left">原产国</th>
+                                    <th class="sorting text-left">海关单位</th>
+                                    <!--<th class="sorting text-left">操作</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <if condition="!empty($data)">
+                                    <form action="{:U('moreSave')}" method="post" id="form2">
+                                    <foreach name="data" item="row" >
+                                    <tr>
+                                        <!--<td class="text-right">{$key}</td>-->
+                                        <td class="text-left" width="50px"><input type="checkbox" name="checkbox[]" id="more_deleted" value="{$row.id}"></td>
+                                        <td class="text-right">{$row.id}</td>
+                                        <td class="text-left">{$row.title}</td>
+                                        <td class="text-left">{$extend[$row['id']]['country_name']}</td>
+                                        <td class="text-left">{$extend[$row['id']]['unit_name']}</td>
+                                        <!--<td>-->
+                                            <!--<a href="{:U('edit',['id'=>$row['id']])}" class="btn btn-primary">详情</a>-->
+                                        <!--</td>-->
+
+                                    </tr>
+                                    </foreach>
+                                    </form>
+                                </if>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="page">
+                            <div class="col-sm-6 text-left"></div>
+                            <div class="col-sm-6 text-right">{$page_show}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="__COMMON__/js/alert.js"></script>
+    <script>
+        /**
+         * 弹窗页面
+         */
+        function alertEdit (url, title, width, height) {
+            width = typeof width === 'undefined' ? 500 : width;
+            height = typeof height === 'undefined' ? 400 : height;
+
+            if (!url) {
+                layer.msg('来自网页的消息,未知错误');
+                return false;
+            }
+            title = title ? title : '添加关键词';
+            parent.layer.open({
+                type: 2,
+                shadeClose: true,
+                shade: 0.5,
+                area: [width + 'px', height + 'px'],
+                title: title,
+                content: url,
+            });
+        }
+    </script>
+
+</block>
+
